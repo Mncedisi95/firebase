@@ -1,0 +1,84 @@
+<header class="header-mini">
+    <div class="header-content">
+        <a class="header-item">Home</a>
+        <a class="header-item">Book-A-Room</a>
+    </div>
+</header>
+
+<!-- Section -->
+<section class="section">
+
+    <h1 class="section-subtitle">Book A Room</h1>
+
+    <div class="container">
+        <!-- Form Section -->
+        <form [formGroup]="bookRoomForm">
+            
+            <!--Check In Date -->
+            <div>
+                <label for="checkin">Check In:</label>
+                <input id="checkin" formControlName="checkIn" type="date" aria-label="CheckIn" />
+                <div *ngIf="bookRoomForm.get('checkIn')?.touched">
+                    <small *ngIf="bookRoomForm.get('checkIn')?.errors?.['required']">*Check In date is required!</small>
+                </div>
+            </div>
+    
+            <!-- Check Out Date -->
+            <div>
+                <label for="checkout">Check Out:</label>
+                <input id="checkout" formControlName="checkOut" type="date" aria-label="CheckOut" />
+                <div *ngIf="bookRoomForm.get('checkOut')?.touched">
+                    <small *ngIf="bookRoomForm.get('checkOut')?.errors?.['required']">*Check Out date is required!</small>
+                    <small *ngIf="bookRoomForm.errors?.['dateInvalid']">*Check Out date must be after Check In date!</small>
+                </div>
+            </div>
+    
+            <!-- Room -->
+             <div>
+                <label for="room">Room:</label>
+                <select id="room" formControlName="roomType" class="select-box" aria-label="RoomType">
+                    <option value="" disabled selected>Select A Room type</option>
+                    <option value="Double Room">Double Room</option>
+                    <option value="Deluxe Room">Deluxe Room</option>
+                    <option value="Premium King Room">Premium King Room</option>
+                </select>
+                <div *ngIf="bookRoomForm.get('roomType')?.touched">
+                    <small *ngIf="bookRoomForm.get('roomType')?.errors?.['required']">*Room Type is required!</small>
+                </div>
+             </div>
+    
+            <!-- Guests -->
+            <div>
+                <label for="guests">Guests:</label>
+                <select id="guest" formControlName="guest" class="select-box" aria-label="Guest">
+                    <option value="" disabled selected>Select Number of Guests</option>
+                    <option value="1 Adult">1 Adult</option>
+                    <option value="2 Adults">2 Adults</option>
+                    <option value="3 Adults">3 Adults</option>
+                    <option value="4 Adults">4 Adults</option>
+                    <option value="5 Adults">5 Adults</option>
+                    <option value="6 Adults">6 Adults</option>
+                </select>
+                <div *ngIf="bookRoomForm.get('guest')?.touched">
+                    <small *ngIf="bookRoomForm.get('guest')?.errors?.['required']">*Number of guests is required!</small>
+                </div>
+            </div>
+    
+            <!-- Book Room Button -->
+            <button type="submit" class="btn-primary" (click)="bookRoom()">Book Room</button>
+    
+            <!--Error Message -->
+            <div>
+                <input *ngIf="isErrorVisible" class="alert-danger" placeholder= {{errorMessage}} readonly />
+            </div>
+    
+            <!-- Check Availability Button -->
+            <button type="submit" class="btn-secondary">Check Availability</button>
+        </form>
+    </div>
+</section>
+
+
+
+
+

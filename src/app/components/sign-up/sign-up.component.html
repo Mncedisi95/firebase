@@ -1,0 +1,72 @@
+<div class="container">
+    <form [formGroup]="registerForm" (ngSubmit)="createAccount()">
+        <h1>Register</h1>
+
+        <!-- Name -->
+        <div>
+            <label for="name">Name:</label>
+            <input id="name" formControlName="fname" type="text" placeholder="Name" aria-label="Name"/>
+            <div *ngIf="registerForm.get('fname')?.touched">
+                <small *ngIf="registerForm.get('fname')?.errors?.['required']">*Name is required!</small>
+            </div>
+        </div>
+
+        <!--Email -->
+        <div>
+            <label for="email">Email:</label>
+            <input id="email" formControlName="email" type="email" placeholder="Email"  aria-label="Email"/>
+            <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                <small *ngIf="registerForm.get('email')?.errors?.['required']">*Email is required!</small>
+                <small *ngIf="registerForm.get('email')?.errors?.['email']">*Enter valid email.</small>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        <div>
+            <label for="profile">Profile:</label>
+            <input id="profile" formControlName="profile" type="file" aria-label="Profile Picture"/>
+            <div *ngIf="registerForm.get('profile')?.touched">
+                <small *ngIf="registerForm.get('profile')?.errors?.['required']">*Profile Picture is required!</small>
+            </div>
+        </div>
+
+        <!--Password -->
+        <div>
+            <label for="password">Password:</label>
+            <input id="password" formControlName="password" type="password" placeholder="Password" aria-label="Password"/>
+            <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+                <small *ngIf="registerForm.get('password')?.errors?.['required']">*Password is required!</small>
+                <small *ngIf="registerForm.get('password')?.errors?.['pattern']">
+                    *Password must atleast include:<br>*Minimum of 8 characters long,<br>*One uppercase letter,<br>*One lowercase letter,<br>*One number and <br>*One special character.
+                </small>
+            </div>
+        </div>
+
+        <!--Confirm Password -->
+        <div>
+            <label for="confirmPassword">Confirm Password:</label>
+            <input id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="Confirm Password" aria-label="Confirm Password"/>
+            <div *ngIf="registerForm.get('confirmPassword')?.touched">
+                <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">*Confirm Password is required!</small>
+            </div>
+            <div>
+                <small *ngIf="registerForm?.errors?.['mismatch']">*Password does not match!</small>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-primary">SignUp</button>
+
+        <!--Success Message -->
+
+        <div>
+            <input *ngIf="isSuccessVisible" class="alert-success" placeholder= {{successMessage}} />
+        </div>
+
+        <div>
+            <input *ngIf="isErrorVisible" class="alert-danger" placeholder= {{errorMessage}} />
+        </div>
+
+        <p>Already have an account?<a [routerLink]="['/login']">Sign In</a></p>
+    </form>
+</div>

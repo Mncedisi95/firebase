@@ -1,0 +1,142 @@
+nav{
+    display: block;
+}
+
+a{
+    color: #695aa6;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+ul{
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.container{
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media(min-width: 1200px){
+    .container{
+        max-width: 1200px;
+    }
+}
+
+.navbar{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: background-color 0.3s ease-in-out;
+    font-family: "Baloo Paaji", cursive;
+    background-color: transparent;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color:  #BA55D3;
+}
+
+.navbar .logo {
+    font-size: 25px;
+    text-decoration: none;
+    color: #fff;
+    z-index: 10;
+}
+
+.navbar .logo:hover{
+    color:  #DA70D6;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navbar .container{
+    flex-grow: 1;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.navbar .nav{
+    list-style-type: none;
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin-left: auto;
+}  
+
+.navbar .nav .nav-item{
+    margin: 0 10px;
+}
+
+.navbar .nav .nav-item .nav-link{
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.navbar .nav .nav-item .nav-link:hover{
+    color:  #DA70D6;
+    cursor: pointer;
+}
+
+.navbar .nav .nav-item .nav-link.active{
+    border-bottom: 2px solid #695aa6;
+    color: #695aa6;
+}
+
+.navbar.scrolled {
+    background-color: #695aa6; 
+    color: #fff;
+}
+
+.navbar.scrolled .logo,
+.navbar.scrolled .nav .nav-item .nav-link {
+    color: #fff;
+}
+
+.navbar-right {
+    position: relative;
+}
+
+.user-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid white;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    color:  #BA55D3;
+    border-radius: 4px;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 10px 0;
+    display: none;
+    font-family: "Baloo Paaji", cursive;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+  
+.dropdown-menu li:hover {
+    background-color: #f0f0f0;
+    color: #DA70D6;
+}  

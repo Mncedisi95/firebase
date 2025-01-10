@@ -1,0 +1,136 @@
+
+<!-- header Section-->
+<header class="header-mini">
+    <div class="header-content">
+        <a class="header-item">Home</a>
+        <a class="header-item">Edit Room</a>
+    </div>
+</header>
+
+<section class="section">
+
+    <h1 class="section-subtitle">Edit Room</h1>
+
+    <!-- Main Container -->
+    <div class="container">
+        <form [formGroup]="editRoomForm" (ngSubmit)="editRoom()" class="form-grid">
+        
+            <!-- Room Type -->
+            <div class="form-group">
+                <label for="roomType">Room Type:</label>
+                <select id="roomType" formControlName="roomType" class="select-box" aria-label="RoomType">
+                    <option value="" disabled selected>Select Room Type</option>
+                    <option value="Premium King Room">Premium King Room</option>
+                    <option value="Deluxe Room">Deluxe Room</option>
+                    <option value="Double Room">Double Room</option>
+                    <option value="Standard Room">Standard Room</option>
+                    <option value="Suite Room">Suite Room</option>
+                    <option value="Executive Room">Executive Room</option>
+                    <option value="Family Room">Family Room</option>
+                    <option value="Accessible Room">Accessible Room</option>
+                    <option value="Honeymoon Suite">Honeymoon Suite</option>
+                    <option value="Presidential Suite">Presidential Suite</option>
+                    <option value="Penthouse Suite">Penthouse Suite</option>
+                </select>
+                <small
+                    *ngIf="editRoomForm.get('roomType')?.touched && editRoomForm.get('roomType')?.errors?.['required']">
+                    *Room Type is required
+                </small>
+            </div>
+
+            <!-- Room Image -->
+            <div class="form-group">
+                <label for="roomImage">Room Image:</label>
+                <input id="roomImage" formControlName="roomImage" type="file" aria-label="Room Image" />
+                <small
+                    *ngIf="editRoomForm.get('roomImage')?.touched && editRoomForm.get('roomImage')?.errors?.['required']">
+                    *Room Image is required!
+                </small>
+            </div>
+
+            <!-- Room Price -->
+            <div class="form-group">
+                <label for="roomPrice">Room Price:</label>
+                <input id="price" formControlName="price" type="text" placeholder="Enter Room Price"
+                    aria-label="Room Price" />
+                <small *ngIf="editRoomForm.get('price')?.touched && editRoomForm.get('price')?.errors?.['required']">
+                    *Room Price is required!
+                </small>
+            </div>
+
+            <!-- Room Capacity -->
+            <div class="form-group">
+                <label for="roomCapacity">Room Capacity:</label>
+                <input id="capacity" formControlName="capacity" type="text" placeholder="Enter Room Capacity"
+                    aria-label="Room Capacity" />
+                <small
+                    *ngIf="editRoomForm.get('capacity')?.touched && editRoomForm.get('capacity')?.errors?.['required']">
+                    *Room Capacity is required!
+                </small>
+            </div>
+
+            <!-- Room Size -->
+            <div class="form-group">
+                <label for="roomSize">Room Size:</label>
+                <input id="size" formControlName="size" type="text" placeholder="Enter Room Size"
+                    aria-label="Room Size" />
+                <small *ngIf="editRoomForm.get('size')?.touched && editRoomForm.get('size')?.errors?.['required']">
+                    *Room Size is required!
+                </small>
+            </div>
+
+            <!-- Room Bed -->
+            <div class="form-group">
+                <label for="bedType">Room Bed:</label>
+                <select id="bedType" formControlName="bedType" class="select-box" aria-label="Room Bed">
+                    <option value="" selected disabled>Select Room Bed</option>
+                    <option value="Single Bed">Single Bed</option>
+                    <option value="Double Bed">Double Bed</option>
+                    <option value="King Bed">King Bed</option>
+                    <option value="Queen Bed">Queen Bed</option>
+                    <option value="Suite Bed">Suite Bed</option>
+                    <option value="Murphy Bed">Murphy Bed</option>
+                    <option value="Sofa Bed">Sofa Bed</option>
+                    <option value="Bunk Bed">Bunk Bed</option>
+                    <option value="Canopy Bed">Canopy Bed</option>
+                    <option value="Four-Poster Bed">Four-Poster Bed</option>
+                </select>
+                <small *ngIf="editRoomForm.get('bedType')?.touched && editRoomForm.get('bedType')?.errors?.['required']">
+                    *Room Bed is required!
+                </small>
+            </div>
+
+            <!-- Room Services -->
+            <div class="form-group">
+                <label for="roomServices">Room Services:</label>
+                <input id="services" formControlName="services" type="text" placeholder="Enter Room Services"
+                    aria-label="Room Services" />
+                <small
+                    *ngIf="editRoomForm.get('services')?.touched && editRoomForm.get('services')?.errors?.['required']">
+                    *Room Services is required!
+                </small>
+            </div>
+
+            <!-- Room Description -->
+            <div class="form-group description-group">
+                <label for="roomDescription">Room Description:</label>
+                <textarea id="description" formControlName="description"
+                    placeholder="Enter Room Description"></textarea>
+                <small
+                    *ngIf="editRoomForm.get('description')?.touched && editRoomForm.get('description')?.errors?.['required']">
+                    *Room Description is required!
+                </small>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-buttons">
+                <button type="submit" class="btn-primary">Edit Room</button>
+            </div>
+
+            <div>
+                <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
+            </div>
+        </form>
+    </div>
+
+</section>

@@ -1,0 +1,217 @@
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    margin-left: 100px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    align-items: center;
+    margin-left: 150px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.description-group {
+    grid-column: span 2;
+}
+
+textarea {
+    width: 91%;
+    min-height: 100px;
+    font-size: 12px;
+    animation: slideIn 1.5s ease-in-out forwards;
+}
+
+.form-buttons {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.btn-primary {
+    padding: 10px 40px;
+    background-color: #BA55D3;
+    color: #fff;
+    border: none;
+    width: 200px; 
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    animation: slideIn 1.8s ease-in-out forwards;
+}
+
+.btn-primary:hover {
+    background-color:  #DA70D6;
+}
+
+h1{
+   
+    font-family: "Baloo Paaji", cursive;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #BA55D3;
+    animation: slideIn 0.8s ease-in-out;
+}
+
+label{
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+    font-family: "Baloo Paaji", cursive;
+    font-size: 0.8rem;
+    color: #333;
+    animation: slideIn 1.2s ease-in-out;
+}
+
+input{
+    width: 400px;
+    height: 4px;
+    padding: 14px;
+    font-size: 12px;
+    border: 1.5px solid #ddd;
+    margin: 5px 0 10px;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+    animation: slideIn 1.5s ease-in-out forwards;
+}
+
+.select-box {
+    height: 35px;
+    width: 430px;
+    margin-bottom: 5px;
+    animation: slideIn 1.5s ease-in-out forwards;
+}
+
+input:focus,
+.select-box:focus,
+textarea:focus{
+    color: #495057;
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgba(105, 90, 166, 0.5);
+    border-color: #b4add3;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+input:hover,
+.select-box:hover,
+textarea:hover{
+    border-color: #b4add3;
+}
+
+small{
+    color: #d9534f;
+    margin-top: 5px;
+    font-size: 0.85rem;
+}
+
+.section {
+    padding: 30px 0;
+    background: #fff;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section .section-subtitle {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+    text-align: center;
+    font-family: "Baloo Paaji", cursive;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    color: #BA55D3;
+    animation: slideIn 0.8s ease-in-out;
+}
+
+.alert-danger,
+.alert-success {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    max-width: 100%;
+    border-radius: 0.2857rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.alert-success{
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.alert-danger{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.header-mini {
+    min-height: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: linear-gradient(135deg, #a59cca, #BA55D3);
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Baloo Paaji', cursive;
+}
+
+.header-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+    background-color: transparent;
+    border-radius: 0.25rem;
+    color: #695aa6;
+    font-weight: 500;
+}
+
+.header-item {
+    text-decoration: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 4px;
+}
+
+
+.header-item + .header-item {
+    padding-left: 0.5rem;
+}
+
+.header-item + .header-item::before {
+    padding-right: 0.5rem;
+    color: #fff;
+    content: "/";
+}
+
