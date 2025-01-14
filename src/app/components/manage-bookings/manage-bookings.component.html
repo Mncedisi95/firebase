@@ -1,0 +1,46 @@
+<!-- Section Start-->
+<section class="section">
+    <!-- Title -->
+    <h1 class="section-subtitle">Room Booking Overview</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+             <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+             <li>Bookings</li>
+        </ul>
+   </nav>
+
+    <!-- Main Container Start -->
+    <div>
+        <!-- Table Start-->
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Guest Name</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>201</td>
+                    <td>John Doe</td>
+                    <td>2025-01-15</td>
+                    <td>2025-01-20</td>
+                    <td>Confirmed</td>
+                    <td>
+                        <button (click)="goToViewBooking()">View More</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- End of Table-->
+    </div>
+    <!-- End of Main Container -->
+</section>
+<!-- End of Section -->
+

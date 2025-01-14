@@ -1,10 +1,11 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-add-room',
-  imports: [NgIf, ReactiveFormsModule],
+  imports: [NgIf, ReactiveFormsModule,RouterLink],
   templateUrl: './add-room.component.html',
   styleUrl: './add-room.component.css'
 })
@@ -40,6 +41,8 @@ export class AddRoomComponent {
     // Initialize the book room form with validation rules
     this.addRoomForm = this.formBuilder.group({
 
+      //Room Number: Required
+      roomNumber:['',[Validators.required]],
       // Room Type: Required
       roomType: ['', [Validators.required]],
       // Room Image: Required 

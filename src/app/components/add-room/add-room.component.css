@@ -13,7 +13,6 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 30px;
-    margin-left: 100px;
 }
 
 .form-grid {
@@ -21,7 +20,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     align-items: center;
-    margin-left: 150px;
+    margin-left: 120px;
 }
 
 .form-group {
@@ -48,13 +47,14 @@ textarea {
 }
 
 .btn-primary {
-    padding: 10px 40px;
-    background-color: #BA55D3;
-    color: #fff;
+    padding: 0.8rem 1.5rem;
     border: none;
-    width: 200px; 
-    border-radius: 8px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #BA55D3;
+    font-size: 1rem;
     cursor: pointer;
+    width: 200px;
     transition: background-color 0.3s ease, transform 0.2s ease;
     animation: slideIn 1.8s ease-in-out forwards;
 }
@@ -66,7 +66,8 @@ textarea {
 h1{
    
     font-family: "Baloo Paaji", cursive;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
+    margin: 1.5rem 0;
     margin-bottom: 20px;
     color: #BA55D3;
     animation: slideIn 0.8s ease-in-out;
@@ -124,22 +125,19 @@ small{
 }
 
 .section {
-    padding: 30px 0;
+    padding: 100px;
     background: #fff;
     margin-bottom: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.section .section-subtitle {
-    font-weight: bold;
-    margin-bottom: 1rem;
-    opacity: 0.6;
+.section-subtitle {
     text-align: center;
-    font-family: "Baloo Paaji", cursive;
-    font-size: 1.3rem;
-    margin-bottom: 20px;
     color: #BA55D3;
+    margin: 1.5rem 0;
+    font-size: 1.8rem;
+    font-family:"Baloo Paaji", cursive; 
     animation: slideIn 0.8s ease-in-out;
 }
 
@@ -151,6 +149,7 @@ small{
     border-radius: 0.2857rem;
     text-align: center;
     margin-top: 10px;
+    margin-left: 350px;
 }
 
 .alert-success{
@@ -165,53 +164,38 @@ small{
     border-color: #ebccd1;
 }
 
-.header-mini {
-    min-height: 6rem;
+.breadcrumb {
+    margin: 1rem 0 2rem;
+    font-size: 0.9rem;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    background: linear-gradient(135deg, #a59cca, #BA55D3);
-    color: #fff;
-    text-align: center;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: 'Baloo Paaji', cursive;
 }
 
-.header-content {
+.breadcrumb ul {
+    list-style: none;
+    padding: 0;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 1rem;
-    background-color: transparent;
-    border-radius: 0.25rem;
-    color: #695aa6;
-    font-weight: 500;
+    gap: 0.5rem;
 }
 
-.header-item {
+.breadcrumb li {
+    display: inline;
+}
+
+.breadcrumb a {
     text-decoration: none;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    color:  #BA55D3;
+    transition: color 0.3s ease;
 }
 
-.header-item:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    border-radius: 4px;
+.breadcrumb a:hover {
+    color:  #DA70D6;
+    cursor: pointer;
 }
 
-
-.header-item + .header-item {
-    padding-left: 0.5rem;
+.breadcrumb li:not(:last-child)::after {
+    content: '>';
+    margin: 0 0.5rem;
+    color: #6c757d;
 }
-
-.header-item + .header-item::before {
-    padding-right: 0.5rem;
-    color: #fff;
-    content: "/";
-}
-

@@ -1,16 +1,12 @@
-<header class="header-mini">
-    <div class="header-content">
-        <a class="header-item">Home</a>
-        <a class="header-item">Book-A-Room</a>
-    </div>
-</header>
-
 <!-- Section -->
 <section class="section">
 
-    <h1 class="section-subtitle">Book A Room</h1>
+    <!-- Title -->
+    <h1 class="section-subtitle">Your Reservation</h1>
 
+    <!-- Main Container -->
     <div class="container">
+
         <!-- Form Section -->
         <form [formGroup]="bookRoomForm">
             
@@ -67,16 +63,20 @@
             <!-- Book Room Button -->
             <button type="submit" class="btn-primary" (click)="bookRoom()">Book Room</button>
     
+            <!-- Check Availability Button -->
+            <button type="submit" class="btn-secondary">Check Availability</button>
+
             <!--Error Message -->
             <div>
                 <input *ngIf="isErrorVisible" class="alert-danger" placeholder= {{errorMessage}} readonly />
             </div>
     
-            <!-- Check Availability Button -->
-            <button type="submit" class="btn-secondary">Check Availability</button>
         </form>
+        <!-- End of Form -->
     </div>
+    <!-- End of Main Container -->
 </section>
+<!-- End of Section -->
 
 
 

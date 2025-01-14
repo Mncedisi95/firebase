@@ -1,0 +1,185 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.section {
+    padding: 100px;
+    background: #fff;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #BA55D3;
+    margin: 1.5rem 0;
+    font-size: 1.8rem;
+    font-family:"Baloo Paaji", cursive; 
+    animation: slideIn 0.8s ease-in-out;
+}
+
+.room-details{
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.2rem;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.room-title{
+    text-align: center;
+    font-size: 1.8rem;
+    color: #BA55D3;
+    font-family:"Baloo Paaji", cursive; 
+    margin-bottom: 1rem;
+}
+
+.room-content{
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.room-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.room-image:hover{
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.room-info{
+    list-style: none;
+    padding: 0;
+    flex: 1; 
+    animation: slideIn 0.7s ease-out;
+}
+
+.room-info li {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+
+.room-info p {
+    margin: 0.5rem 0;
+    color: #333;
+}
+
+.room-info strong {
+    font-weight: 600; 
+    color: #333; 
+}
+
+.room-description {
+    line-height: 1.6;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    color: #555;
+}
+
+.room-details p{
+    margin: 5px 0;
+}
+
+.room-item{
+    font-size: 15px;
+    font-family:"Baloo Paaji", cursive;   
+}
+
+.button-group {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.btn-primary,
+.btn-danger {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary {
+    background: #BA55D3;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background:  #DA70D6;
+    transform: scale(1.05);
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+
+.breadcrumb {
+    margin: 1rem 0 2rem;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.breadcrumb ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.breadcrumb li {
+    display: inline;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color:  #BA55D3;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color:  #DA70D6;
+    cursor: pointer;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: '>';
+    margin: 0 0.5rem;
+    color: #6c757d;
+}

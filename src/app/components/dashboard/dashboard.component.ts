@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { error } from 'console';
 
 
@@ -17,6 +17,11 @@ export class DashboardComponent {
   */
   menuOpen: boolean = false
 
+   /**
+  *@property {boolean} isDropdownOpen 
+  */
+  isDropdownOpen: boolean = false;
+
   /**
   * @constructor
   * @description 
@@ -28,6 +33,14 @@ export class DashboardComponent {
   toggleMenu = (): void => {
 
     this.menuOpen = !this.menuOpen
+  }
+
+  /**
+  * @method toggleDropdown 
+  */
+  toggleDropdown() {
+
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   logout(){

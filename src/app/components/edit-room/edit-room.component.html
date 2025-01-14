@@ -1,20 +1,34 @@
-
-<!-- header Section-->
-<header class="header-mini">
-    <div class="header-content">
-        <a class="header-item">Home</a>
-        <a class="header-item">Edit Room</a>
-    </div>
-</header>
-
+<!-- Section Start-->
 <section class="section">
 
+    <!-- Title -->
     <h1 class="section-subtitle">Edit Room</h1>
 
-    <!-- Main Container -->
+     <!-- Breadcrumb -->
+     <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']">Home</a></li>
+            <li><a [routerLink]="['/rooms']">View Rooms</a></li>
+            <li><a [routerLink]="['/room-details']">Room Details</a></li>
+            <li>Edit Room</li>
+        </ul>
+    </nav>
+
+    <!-- Main Container Start -->
     <div class="container">
         <form [formGroup]="editRoomForm" (ngSubmit)="editRoom()" class="form-grid">
-        
+
+            <!-- Room Number -->
+            <div class="form-group">
+                <label for="roomNumber">Room Number:</label>
+                <input id="roomNumber" formControlName="roomNumber" type="text" placeholder="Enter Room Number"
+                    aria-label="Room Number" />
+                <small
+                    *ngIf="editRoomForm.get('roomNumber')?.touched && editRoomForm.get('roomNumber')?.errors?.['required']">
+                    *Room Number is required!
+                </small>
+            </div>
+
             <!-- Room Type -->
             <div class="form-group">
                 <label for="roomType">Room Type:</label>
@@ -95,7 +109,8 @@
                     <option value="Canopy Bed">Canopy Bed</option>
                     <option value="Four-Poster Bed">Four-Poster Bed</option>
                 </select>
-                <small *ngIf="editRoomForm.get('bedType')?.touched && editRoomForm.get('bedType')?.errors?.['required']">
+                <small
+                    *ngIf="editRoomForm.get('bedType')?.touched && editRoomForm.get('bedType')?.errors?.['required']">
                     *Room Bed is required!
                 </small>
             </div>
@@ -125,12 +140,13 @@
             <!-- Submit Button -->
             <div class="form-buttons">
                 <button type="submit" class="btn-primary">Edit Room</button>
-            </div>
-
-            <div>
-                <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
+                <div>
+                    <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
+                </div>
             </div>
         </form>
+        <!-- End of Form -->
     </div>
-
+    <!-- End of Main Container -->
 </section>
+<!-- End Of Section -->

@@ -1,108 +1,188 @@
-nav{
-    display: block;
-}
-
-a{
-    color: #695aa6;
-    text-decoration: none;
-    background-color: transparent;
-}
-
-ul{
-    margin-top: 0;
-    margin-bottom: 1rem;
-}
-
-.container{
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@media(min-width: 1200px){
-    .container{
-        max-width: 1200px;
-    }
-}
-
-.navbar{
+.navbar {
     position: fixed;
-    display: flex;
-    justify-content: space-between;
     top: 0;
     left: 0;
     width: 100%;
-    transition: background-color 0.3s ease-in-out;
-    font-family: "Baloo Paaji", cursive;
-    background-color: transparent;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    background-color:  #BA55D3;
-}
-
-.navbar .logo {
-    font-size: 25px;
-    text-decoration: none;
-    color: #fff;
-    z-index: 10;
-}
-
-.navbar .logo:hover{
-    color:  #DA70D6;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.navbar .container{
-    flex-grow: 1;
-    min-height: 100px;
+    background-color: #ba55d3;
+    color: white;
     display: flex;
     align-items: center;
-    transition: all 0.3s;
+    justify-content: space-between;
+    padding: 0.8rem 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: background-color 0.3s ease;
 }
 
-.navbar .nav{
-    list-style-type: none;
-    padding-left: 0;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    margin-left: auto;
-}  
-
-.navbar .nav .nav-item{
-    margin: 0 10px;
-}
-
-.navbar .nav .nav-item .nav-link{
-    color: #fff;
-    font-weight: 500;
-    text-decoration: none;
-}
-
-.navbar .nav .nav-item .nav-link:hover{
-    color:  #DA70D6;
-    cursor: pointer;
-}
-
-.navbar .nav .nav-item .nav-link.active{
-    border-bottom: 2px solid #695aa6;
-    color: #695aa6;
+.navbar:hover {
+    background-color: #9a42b3;
 }
 
 .navbar.scrolled {
-    background-color: #695aa6; 
-    color: #fff;
+    background-color: #695aa6;
 }
 
-.navbar.scrolled .logo,
-.navbar.scrolled .nav .nav-item .nav-link {
-    color: #fff;
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+}
+
+.nav {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.nav-item .nav-link {
+    font-size: 1rem;
+    color: white;
+    transition: color 0.3s;
+    position: relative;
+    padding: 0.5rem;
+}
+
+.nav-link:hover {
+    color: #ffe4e1;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 70px; /* Adjust based on navbar height */
+    left: 0;
+    width: 220px;
+    height: 100%;
+    background-color: #695aa6;
+    padding: 1rem;
+    color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-menu {
+    list-style: none;
+    margin-top: 2rem;
+}
+
+.sidebar-link {
+    display: block;
+    padding: 0.8rem 1.2rem;
+    margin: 0.5rem 0;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.sidebar-link:hover {
+    background-color: #9a42b3;
+}
+
+/* Dashboard Section */
+.dashboard-section {
+    margin-left: 240px; /* Adjust for sidebar width */
+    padding: 2rem;
+}
+
+.dashboard-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #695aa6;
+}
+
+/* Data List */
+.data-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.data-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    flex: 1 1 calc(33.333% - 1rem); /* Three items per row */
+    max-width: calc(33.333% - 1rem);
+    transition: transform 0.3s ease;
+}
+
+.data-item:hover {
+    transform: translateY(-5px);
+}
+
+.data-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.data-item p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+button {
+    display: inline-block;
+    background-color: #ba55d3;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #9a42b3;
+    transform: translateY(-2px);
+}
+
+.btn-add {
+    background-color: #6a5acd;
+    margin-bottom: 1rem;
+}
+
+.btn-add:hover {
+    background-color: #483d8b;
+}
+
+.btn-edit {
+    background-color: #5cb85c;
+}
+
+.btn-edit:hover {
+    background-color: #4cae4c;
+}
+
+.btn-delete {
+    background-color: #d9534f;
+}
+
+.btn-delete:hover {
+    background-color: #c9302c;
 }
 
 .navbar-right {
     position: relative;
+    margin-left: 30px;
 }
 
 .user-avatar {
@@ -112,31 +192,3 @@ ul{
     cursor: pointer;
     border: 2px solid white;
 }
-
-.dropdown-menu {
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background-color: white;
-    color:  #BA55D3;
-    border-radius: 4px;
-    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
-    list-style: none;
-    padding: 10px 0;
-    display: none;
-    font-family: "Baloo Paaji", cursive;
-}
-
-.dropdown-menu.show {
-    display: block;
-}
-
-.dropdown-menu li {
-    padding: 10px 20px;
-    cursor: pointer;
-}
-  
-.dropdown-menu li:hover {
-    background-color: #f0f0f0;
-    color: #DA70D6;
-}  

@@ -1,0 +1,206 @@
+nav{
+    display: block;
+}
+
+a{
+    color: #695aa6;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+ul{
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.container{
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media(min-width: 1200px){
+    .container{
+        max-width: 1200px;
+    }
+}
+
+.navbar{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: background-color 0.3s ease-in-out;
+    font-family: "Baloo Paaji", cursive;
+    background-color: transparent;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color:  #BA55D3;
+}
+
+.navbar:hover{
+    background-color: #9A42B3; 
+    transition: background-color 0.3s ease-in-out;
+}
+
+.logo {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.container{
+    flex-grow: 1;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s;
+}
+
+.nav{
+    list-style-type: none;
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin-left: auto;
+}  
+
+.nav-item{
+    margin: 0 10px;
+    position: relative;
+}
+
+.nav-link{
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    font-weight: 500;
+    padding-bottom: 15px
+}
+
+.nav-link:hover{
+    cursor: pointer;
+    color: #fff;
+}
+
+.nav-link::after{
+    content: "";
+    position: absolute;
+    bottom: -10px; 
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color:#fff ; 
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%; 
+}
+
+.navbar.scrolled {
+    background-color: #695aa6; 
+    color: #fff;
+}
+
+.navbar.scrolled .logo,
+.navbar.scrolled .nav .nav-item .nav-link {
+    color: #fff;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
+
+.arrow {
+    display: inline-block;
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.arrow-open {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    margin-top: 7px;
+    left: 0;
+    background-color: #fff;
+    padding: 0.5rem 0;
+    list-style: none;
+    width: 150px;
+    display: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-menu.show {
+    display: block; 
+}
+
+.dropdown-menu .dropdown-item {
+    padding: 0.5rem 1rem;
+    color: #BA55D3;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    color: #DA70D6;
+    font-weight: bold;
+}
+  
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+  
+button{
+    width: 80px;
+    height: 33px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #DA70D6;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-left: 50px;
+}
+
+button:hover{
+    color: #fff;
+    background-color: #DA70D6;;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}
+
+.navbar-right {
+    position: relative;
+    margin-left: 30px;
+}
+
+.user-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid white;
+}

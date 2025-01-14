@@ -4,8 +4,8 @@
 
         <!-- Name -->
         <div>
-            <label for="name">Name:</label>
-            <input id="name" formControlName="fname" type="text" placeholder="Name" aria-label="Name"/>
+            <label for="name">Full Name:</label>
+            <input id="name" formControlName="fname" type="text" placeholder="Enter Full Name" aria-label="Name"/>
             <div *ngIf="registerForm.get('fname')?.touched">
                 <small *ngIf="registerForm.get('fname')?.errors?.['required']">*Name is required!</small>
             </div>
@@ -14,12 +14,22 @@
         <!--Email -->
         <div>
             <label for="email">Email:</label>
-            <input id="email" formControlName="email" type="email" placeholder="Email"  aria-label="Email"/>
+            <input id="email" formControlName="email" type="email" placeholder="Enter Email"  aria-label="Email"/>
             <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
                 <small *ngIf="registerForm.get('email')?.errors?.['required']">*Email is required!</small>
                 <small *ngIf="registerForm.get('email')?.errors?.['email']">*Enter valid email.</small>
             </div>
         </div>
+
+        <!-- Phone Number -->
+         <div>
+            <label for="phone">Phone Number:</label>
+            <input id="phone" formControlName="phone" type="text" placeholder="Enter Phone Number" aria-label="Phone Number" />
+            <div *ngIf="registerForm.get('phone')?.touched">
+                <small *ngIf="registerForm.get('phone')?.errors?.['required']">*Phone Number is required!</small>
+               <!-- <small *ngIf="registerForm.get('phone')?.errors?.['pattern']">Invalid phone number. Must be 10 digits.</small> --> 
+            </div>
+         </div>
 
         <!-- Profile -->
         <div>
@@ -30,10 +40,19 @@
             </div>
         </div>
 
+        <!-- Address -->
+        <div>
+            <label for="address">Address:</label>
+            <input id="address" formControlName="address" type="text" placeholder="Enter Address" aria-label="Address" />
+            <div *ngIf="registerForm.get('address')?.touched">
+                <small *ngIf="registerForm.get('address')?.errors?.['required']">*Address is required!</small>
+            </div>
+        </div>
+
         <!--Password -->
         <div>
             <label for="password">Password:</label>
-            <input id="password" formControlName="password" type="password" placeholder="Password" aria-label="Password"/>
+            <input id="password" formControlName="password" type="password" placeholder="Enter Password" aria-label="Password"/>
             <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
                 <small *ngIf="registerForm.get('password')?.errors?.['required']">*Password is required!</small>
                 <small *ngIf="registerForm.get('password')?.errors?.['pattern']">

@@ -1,19 +1,31 @@
-<!-- header Section-->
-<header class="header-mini">
-    <div class="header-content">
-        <a class="header-item">Home</a>
-        <a class="header-item">Add Room</a>
-    </div>
-</header>
-
+<!-- Section -->
 <section class="section">
 
-    <h1 class="section-subtitle">Add Room</h1>
+    <!-- Title -->
+    <h1 class="section-subtitle">Add New Room</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']">Home</a></li>
+            <li><a>Rooms</a></li>
+            <li>Add New Room</li>
+        </ul>
+    </nav>
 
     <!-- Main Container -->
     <div class="container">
         <form [formGroup]="addRoomForm" (ngSubmit)="addRoom()" class="form-grid">
-        
+
+            <!-- Room Number -->
+            <div class="form-group">
+                <label for="roomNumber">Room Number:</label>
+                <input id="roomNumber" formControlName="roomNumber" type="text" placeholder="Enter Room Number" aria-label="Room Number"/>
+                <small *ngIf="addRoomForm.get('roomNumber')?.touched && addRoomForm.get('roomNumber')?.errors?.['required']">
+                    *Room Number is required!
+                </small>
+            </div>
+
             <!-- Room Type -->
             <div class="form-group">
                 <label for="roomType">Room Type:</label>
@@ -62,8 +74,7 @@
                 <label for="roomCapacity">Room Capacity:</label>
                 <input id="capacity" formControlName="capacity" type="text" placeholder="Enter Room Capacity"
                     aria-label="Room Capacity" />
-                <small
-                    *ngIf="addRoomForm.get('capacity')?.touched && addRoomForm.get('capacity')?.errors?.['required']">
+                <small *ngIf="addRoomForm.get('capacity')?.touched && addRoomForm.get('capacity')?.errors?.['required']">
                     *Room Capacity is required!
                 </small>
             </div>
@@ -124,12 +135,13 @@
             <!-- Submit Button -->
             <div class="form-buttons">
                 <button type="submit" class="btn-primary">Add Room</button>
-            </div>
-
-            <div>
-                <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
+                <div>
+                    <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
+                </div>
             </div>
         </form>
+        <!-- End of Form -->
     </div>
-
+    <!-- End of Main Container-->
 </section>
+<!-- End of Section -->

@@ -1,0 +1,58 @@
+<!-- Navbar Start-->
+<nav class="navbar" *ngIf="!isAuthPage">
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Logo -->
+        <a class="logo">SuiteSync.</a>
+        <!-- Navigation Menu  -->
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link">Home</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link" (click)="toggleDropdown()">Rooms 
+                    <span class="arrow" [class.open]="isDropdownOpen">&#9662;</span>
+                </a>
+                <ul class="dropdown-menu" [class.show]="isDropdownOpen">
+                    <li><a class="dropdown-item" routerLink="/rooms">View Rooms</a></li>
+                    <li><a class="dropdown-item" routerLink="/add-room">Add Room</a></li>
+                </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link" (click)="toggleDropdown()">Bookings
+                    <span class="arrow" [class.open]="isDropdownOpen">&#9662;</span>
+                </a>
+                <ul class="dropdown-menu" [class.show]="isDropdownOpen">
+                    <li><a class="dropdown-item" routerLink="/view-booking">My Bookings</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link">About Us</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link">Contact</a>
+            </li>
+
+            <li>
+                <button type="submit" (click)="goToLogin()">Login</button>
+            </li>
+
+            <div class="navbar-right">
+                <div class="user-menu">
+                    <img src="assets/users/Fikile.jpg" alt="User" class="user-avatar" (click)="toggleMenu()"/>
+                    <ul class="dropdown-menu" [class.show]="menuOpen">
+                        <li>Profile</li>
+                        <li>Settings</li>
+                        <li (click)="logout()">Logout</li>
+                    </ul>
+                </div>
+            </div>
+        </ul>
+        <!-- End of Navigation Menu  -->
+    </div>
+</nav>
+<!-- End of Navbar -->

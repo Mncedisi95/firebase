@@ -1,0 +1,39 @@
+<!-- Section Start -->
+<section class="section">
+
+    <!-- Header Title -->
+    <h1 class="section-subtitle">Room Details</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']">Home</a></li>
+            <li><a [routerLink]="['/rooms']">Rooms</a></li>
+            <li>Room Details</li>
+        </ul>
+    </nav>
+
+    <!-- Room Details-->
+    <div class="room-details">
+        <h4 class="room-title">Deluxe Room</h4>
+        <div class="room-content">
+            <img src="assets/rooms/room-2.jpg" alt="" class="room-image"/>
+            <ul class="room-info">
+                <li><strong>Room Number:</strong>201</li>
+                <li><strong>Room Price:</strong>159$/Per night </li>
+                <li><strong>Room Capacity:</strong>Max persion 5</li>
+                <li><strong>Room Bed:</strong>King Beds</li>
+                <li><strong>Room Size:</strong>30 ft</li>
+                <li><strong>Room Services:</strong>Wifi, Television, Bathroom</li>
+                <li><strong>Room Rating:</strong> ⭐⭐⭐⭐</li>
+            </ul>
+        </div>
+        <p class="room-description"><strong>Room Description:</strong>Motorhome or Trailer that is the question for you. Here are some of the advantages and disadvantages of both, so you will be confident when purchasing an RV. When comparing Rvs, a motorhome or a travel trailer, should you buy a motorhome or fifth wheeler? The advantages and disadvantages of both are studied so that you can make your choice wisely when purchasing an RV. Possessing a motorhome or fifth wheel is an achievement of a lifetime. It can be similar to sojourning with your residence as you search the various sites of our great land, America.</p>
+        <div class="button-group">
+            <button class="btn-primary" (click)="goToEditRoom()">Edit Room</button>
+            <button class="btn-danger">Delete Room</button>
+        </div>
+    </div>
+    <!-- End of Room Details -->
+</section>
+<!-- End of Section -->

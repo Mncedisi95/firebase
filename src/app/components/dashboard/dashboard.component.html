@@ -1,24 +1,91 @@
 <nav class="navbar">
     <div class="container">
-        <a class="logo">SuiteSync</a>
+        <a href="#" class="logo">Admin Dashboard</a>
         <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Rooms</a>
-            </li>
-            
-            <div class="navbar-right">
-                <div class="user-menu">
-                    <img src="assets/users/Fikile.jpg" alt="User" class="user-avatar" (click)="toggleMenu()" />
-                    <ul class="dropdown-menu" [class.show]="menuOpen">
-                        <li>Profile</li>
-                        <li>Settings</li>
-                        <li (click)="logout()">Logout</li>
-                    </ul>
-                </div>
-            </div>
+            <li class="nav-item"><a class="nav-link">Rooms</a></li>
+            <li class="nav-item"><a class="nav-link">Bookings</a></li>
+            <li class="nav-item"><a class="nav-link">Reports</a></li>
+            <li class="nav-item"><a class="nav-link">Customers</a></li>
         </ul>
     </div>
 </nav>
+
+ <!-- Sidebar -->
+ <div class="sidebar">
+    <div class="sidebar-menu">
+        <a class="sidebar-link">Dashboard</a>
+        <a class="sidebar-link">Rooms</a>
+        <a class="sidebar-link">Bookings</a>
+        <a class="sidebar-link">Customers</a>
+        <a class="sidebar-link">Reports</a>
+        <a class="sidebar-link">Logout</a>
+    </div>
+</div>
+
+ <!-- Main Content -->
+ <div class="container" style="margin-top: 120px;">
+    <!-- Rooms Section -->
+    <section id="rooms" class="dashboard-section">
+        <h2>Manage Rooms</h2>
+        <button class="btn-add">Add Room</button>
+        <div class="data-list">
+            <div class="data-item">
+                <h3>Room 101</h3>
+                <p>Price: $100/night</p>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            </div>
+            <div class="data-item">
+                <h3>Room 102</h3>
+                <p>Price: $120/night</p>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bookings Section -->
+    <section id="bookings" class="dashboard-section">
+        <h2>Manage Bookings</h2>
+        <div class="data-list">
+            <div class="data-item">
+                <h3>Booking #1</h3>
+                <p>Room: 101 | Customer: John Doe</p>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            </div>
+            <div class="data-item">
+                <h3>Booking #2</h3>
+                <p>Room: 102 | Customer: Jane Smith</p>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customers Section -->
+    <section id="customers" class="dashboard-section">
+        <h2>Customer Details</h2>
+        <div class="data-list">
+            <div class="data-item">
+                <h3>John Doe</h3>
+                <p>Email: johnexample.com | Phone: 123-456-7890</p>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            </div>
+            <div class="data-item">
+                <h3>Jane Smith</h3>
+                <p>Email: janeexample.com | Phone: 987-654-3210</p>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reports Section -->
+    <section id="reports" class="dashboard-section">
+        <h2>Reports</h2>
+        <p>View booking statistics and revenue reports here.</p>
+        <button class="btn-generate">Generate Report</button>
+    </section>
+</div>

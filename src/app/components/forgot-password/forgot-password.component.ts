@@ -119,30 +119,30 @@ export class ForgotPasswordComponent {
     // Step 2: Extract email from the form
     const email = this.resetForm.get('email')?.value
 
-    // Step 3: Trigger password reset email
-    await this.authService.resetPassword(email)
-      .then(() => {
-        // Step 4: Provide feedback to the user
-        this.showSuccess('Password reset email sent. Please check your inbox')
-        this.resetForm.reset() // Clear the form after success
-        console.log('Password reset email sent successfully.')
+    try {
+      // Step 3: Trigger password reset email
+      await this.authService.resetPassword(email)
 
-        // Step 5: Navigate to the login page after a short delay
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 3500);
+       // Step 4: Provide feedback to the user
+       this.showSuccess('Password reset email sent. Please check your inbox')
+       this.resetForm.reset() // Clear the form after success
+       console.log('Password reset email sent successfully.')
 
-      })
-      .catch((error) => {
-       
+       // Step 5: Navigate to the login page after a short delay
+       setTimeout(() => {
+         this.router.navigate(['/login']);
+       }, 3500);
+        
+    } catch (error) {
+
         // Step 6: Map specific error codes to user-friendly messages
         const errorMessage = this.mapResetPasswordError(error)
         // Step 7: Display the error message to the user
         this.showError(errorMessage)
         this.resetForm.reset()
         console.log('Error', error)
-      })
-    }
+    }   
+  }
 
     /**
     * @method mapResetPasswordError

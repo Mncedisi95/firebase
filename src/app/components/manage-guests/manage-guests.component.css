@@ -1,0 +1,82 @@
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section {
+    padding: 100px;
+    background: #fff;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #BA55D3;
+    margin: 1.5rem 0;
+    font-size: 1.8rem;
+    font-family:"Baloo Paaji", cursive; 
+    animation: slideIn 0.8s ease-in-out;
+}
+
+.content-table{
+    border-collapse: collapse;
+    margin: 30px auto;
+    font-size: 0.9em;
+    min-width: 900px;
+    border-radius: 7px 7px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.8s ease-in-out;
+}
+
+.content-table thead tr{
+    background-color:  #BA55D3;
+    color: #fff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+}
+
+.content-table tbody tr{
+    border-bottom: 1px solid;
+}
+
+.content-table tbody td{
+    text-align: left;
+}
+
+.content-table tbody tr:nth-of-type(even){
+    background-color:  #F5F5F5;
+}
+
+
+.content-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+button{
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    background-color:  #BA55D3; 
+}
+
+button:hover{
+    background-color:  #DA70D6;
+}

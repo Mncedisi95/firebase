@@ -1,0 +1,143 @@
+.section {
+    padding: 100px;
+    background: #fff;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #BA55D3;
+    margin: 1.5rem 0;
+    font-size: 1.8rem;
+    font-family:"Baloo Paaji", cursive; 
+    animation: slideIn 0.8s ease-in-out;
+}
+
+
+.breadcrumb {
+    margin: 1rem 0 2rem;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.breadcrumb ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.breadcrumb li {
+    display: inline;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color:  #BA55D3;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color:  #DA70D6;
+    cursor: pointer;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: '>';
+    margin: 0 0.5rem;
+    color: #6c757d;
+}
+
+.guest-details {
+    margin-top: 2rem;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+  
+.guest-name {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.guest-content {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+  
+.guest-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+.guest-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+    color: #555;
+}
+  
+.guest-info li {
+    margin-bottom: 0.5rem;
+}
+  
+.guest-info strong {
+    font-weight: bold;
+    color: #333;
+}
+
+.guest-description {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.button-group {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+  
+.btn-primary {
+    padding: 0.5rem 1rem;
+    background-color: #BA55D3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+  
+.btn-primary:hover {
+    background-color: #DA70D6;
+}
+  
+.btn-danger {
+    padding: 0.5rem 1rem;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+  
+.btn-danger:hover {
+    background-color: #c82333;
+}
+  
+.status-select {
+    padding: 0.4rem;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

@@ -58,6 +58,8 @@ export class SignUpComponent {
 
     // Define the password complexity pattern
     const PASSWORD_PATTERN: string = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+    // Define the phone number pattern (Regex for 10-digit phone number)
+    //const PHONE_PATTERN  = new RegExp("^\\(\\+\\d{1,2}\\)?[0-9]{3}[0-9]{4}$")
 
     // Initialize the register form with validation rules
     this.registerForm = this.formBuilder.group({
@@ -65,8 +67,12 @@ export class SignUpComponent {
       fname: ['', [Validators.required]],
       // Email: Required and must be a valid email format
       email: ['', [Validators.required, Validators.email]],
+      // Phone Number: Required and must be 10 digits
+      phone: ['', [Validators.required]],
       // Profile Picture: Required
       profile: ['', [Validators.required]],
+      // Address: Required
+      address: ['',[Validators.required]],
       // Password: Must meet complexity requirements
       password: [
         '',

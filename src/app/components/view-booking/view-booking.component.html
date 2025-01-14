@@ -1,0 +1,72 @@
+<!-- Main Content -->
+<section class="section">
+
+    <!--Title -->
+    <h1 class="section-subtitle">My Bookings</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']">Home</a></li>
+            <li><a>Bookings</a></li>
+            <li>My Bookings</li>
+        </ul>
+    </nav>
+
+    <!-- Reservation Cards -->
+    <div class="reservation-cards">
+        
+        <div class="card">
+            <img src="assets/rooms/room-5.jpg" alt="Deluxe Room" class="card-image">
+            <div class="card-content">
+                <h2>Deluxe Room</h2>
+                <ul class="reservation-details">
+                    <li><strong>Check-In:</strong>2025-01-10</li>
+                    <li><strong>Check-Out:</strong>2025-01-15</li>
+                    <li><strong>Guests:</strong>2 Adults</li>
+                    <li><strong>Status:</strong><span class="status confirmed">Confirmed</span></li>
+                </ul>
+                <div class="card-actions">
+                    <button class="btn-primary" (click)="goToChangeBooking()">Change Booking</button>
+                    <button class="btn-cancel">Cancel Reservation</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+            <img src="assets/rooms/room-2.jpg" alt="Premium King Room" class="card-image">
+            <div class="card-content">
+                <h2>Premium King Room</h2>
+                <ul class="reservation-details">
+                    <li><strong>Check-In:</strong>2025-02-01</li>
+                    <li><strong>Check-Out:</strong>2025-02-05</li>
+                    <li><strong>Guests:</strong>4 Adults</li>
+                    <li><strong>Status:</strong><span class="status pending">Pending</span></li>
+                </ul>
+                <div class="card-actions">
+                    <button class="btn-primary">Change Booking</button>
+                    <button class="btn-cancel">Cancel Reservation</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="assets/rooms/room-4.jpg" alt="Premium King Room" class="card-image">
+            <div class="card-content">
+                <h2>Premium King Room</h2>
+                <ul class="reservation-details">
+                    <li><strong>Check-In:</strong>2025-02-01</li>
+                    <li><strong>Check-Out:</strong>2025-02-05</li>
+                    <li><strong>Guests:</strong>4 Adults</li>
+                    <li><strong>Status:</strong><span class="status pending">Pending</span></li>
+                </ul>
+                <div class="card-actions">
+                    <button class="btn-primary">Change Booking</button>
+                    <button class="btn-cancel">Cancel Reservation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

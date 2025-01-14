@@ -1,10 +1,11 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-edit-room',
-  imports: [ReactiveFormsModule,NgIf],
+  imports: [ReactiveFormsModule,NgIf,RouterLink],
   templateUrl: './edit-room.component.html',
   styleUrl: './edit-room.component.css'
 })
@@ -39,7 +40,8 @@ export class EditRoomComponent {
   
       // Initialize the book room form with validation rules
       this.editRoomForm = this.formBuilder.group({
-  
+        //Room Number: Required
+        roomNumber: ['',[Validators.required]],
         // Room Type: Required
         roomType: ['', [Validators.required]],
         // Room Image: Required 
@@ -63,7 +65,7 @@ export class EditRoomComponent {
     * @method showError 
     * @description Displays an error message for a specified duration.
     * @param {string} message - The error message to be displayed. 
-    * @param {number} [duration=2500] - Optional duration for the error message display in milliseconds.
+    * @param {number} [duration=3000] - Optional duration for the error message display in milliseconds.
     */
     showError(message: string, duration = 3000): void {
   

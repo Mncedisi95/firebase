@@ -1,0 +1,99 @@
+<!-- Section Start -->
+<section class="section">
+    <!-- Title -->
+    <h1 class="section-subtitle">Our Rooms</h1>
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']">Home</a></li>
+            <li><a>Rooms</a></li>
+            <li>View Rooms</li>
+        </ul>
+    </nav>
+
+    <!-- Search and Filter -->
+    <div class="search-filter">
+         <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search by Room Type, Price or Capacity...." />
+        </div>
+
+        <!-- Filter Dropdown -->
+        <div class=".filter-dropdown ">
+            <select class="filter-select">
+                <option value="" disabled selected>Filter By</option>
+                <option value="">Price: Low to High</option>
+                <option value="">Price: High to Low</option>
+                <option value="">Capacity</option>
+                <option value="">Type</option>
+            </select>
+        </div>
+    </div> 
+
+      <!-- Rooms Cards -->
+    <div class="rooms-cards">
+    
+        <div class="card">
+            <img src="assets/rooms/room-5.jpg" alt="Deluxe Room" class="card-image">
+            <div class="card-content">
+                <div class="card-header">
+                    <h2 class="room-title">Deluxe Room</h2>
+                    <h3 class="room-price">$159<span class="price-unit">/Pernight</span></h3>
+                </div>
+                <ul class="room-details">
+                    <li><strong>Size:</strong> 30ft<sup>2</sup></li>
+                    <li><strong>Capacity:</strong>Max person 5</li>
+                    <li><strong>Bed:</strong>King Beds</li>
+                    <li><strong>Services:</strong>Wifi, Television, Bathroom</li>
+                </ul>
+                <div class="card-actions">
+                    <button class="btn-primary" (click)="goToRoomDetails()">View More</button>
+                    <button class="btn-secondary" (click)="goToBookRoom()">Book Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="assets/rooms/room-2.jpg" alt="Premium King Room" class="card-image">
+            <div class="card-content">
+                <div class="card-header">
+                    <h2 class="room-title">Premium King Room</h2>
+                    <h3 class="room-price">$159<span class="price-unit">/Pernight</span></h3>
+                </div>
+                <div class="room-details">
+                    <li><strong>Size:</strong> 30ft<sup>2</sup></li>
+                    <li><strong>Capacity:</strong>Max person 3</li>
+                    <li><strong>Bed:</strong>King Beds</li>
+                    <li><strong>Services:</strong>Wifi, Television, Bathroom</li>
+                </div>
+                <div class="card-actions">
+                    <button class="btn-primary" (click)="goToRoomDetails()">View More</button>
+                    <button class="btn-secondary" (click)="goToBookRoom()">Book Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="assets/rooms/room-4.jpg" alt="Luxury Room" class="card-image">
+            <div class="card-content">
+                <div class="card-header">
+                    <h2 class="room-title">Luxury Room</h2>
+                    <h3 class="room-price">$159<span class="price-unit">/Pernight</span></h3>
+                </div>
+                <div class="room-details">
+                    <li><strong>Size:</strong> 30ft<sup>2</sup></li>
+                    <li><strong>Capacity:</strong>Max person 1</li>
+                    <li><strong>Bed:</strong>King Beds</li>
+                    <li><strong>Services:</strong>Wifi, Television, Bathroom</li>
+                </div>
+                <div class="card-actions">
+                    <button class="btn-primary" (click)="goToRoomDetails()">View More</button>
+                    <button class="btn-secondary" (click)="goToBookRoom()">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Rooms Card -->
+</section>
+<!-- End Of Section -->
