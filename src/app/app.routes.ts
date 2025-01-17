@@ -16,25 +16,81 @@ import { IndexComponent } from './components/index/index.component';
 import { ManageGuestsComponent } from './components/manage-guests/manage-guests.component';
 import { RoomsComponent } from './components/rooms/rooms.component';
 import { GuestDetailsComponent } from './components/guest-details/guest-details.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { authGuard } from './guards/auth.guard';
+import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
 
-    {path: 'index', component: IndexComponent},
-    {path:'login', component: SignInComponent},
-    {path:'register', component: SignUpComponent},
-    {path: 'rooms',component: RoomsComponent},
-    {path: 'book-room', component: BookRoomComponent},
-    {path: 'view-booking', component: ViewBookingComponent},
-    {path: 'edit-booking', component: EditBookingComponent},
-    {path: 'manage-bookings', component: ManageBookingsComponent},
-    {path: 'booking-details', component: BookingDetailsComponent},
-    {path: 'manage-guests', component: ManageGuestsComponent},
-    {path: 'guest-details', component: GuestDetailsComponent},
-    {path: 'add-room', component: AddRoomComponent},
-    {path: 'edit-room', component: EditRoomComponent},
-    {path: 'room-details', component: RoomDetailsComponent},
-    {path: 'dashboard', component: DashboardComponent},
-    {path: 'edit-profile', component: EditProfileComponent},
-    {path:'forgot-password', component: ForgotPasswordComponent},
-    {path: '', redirectTo:'/index', pathMatch: 'full'}
+  { path: 'index', component: IndexComponent },
+  { path: 'login', component: SignInComponent },
+  { path: 'register', component: SignUpComponent },
+  { path: 'rooms', component: RoomsComponent },
+  { path: 'book-room', component: BookRoomComponent, canActivate: [authGuard] },
+  { 
+    path: 'view-booking',
+    component: ViewBookingComponent, 
+    canActivate: [authGuard],
+    data: {roles: ['admin']}
+  },
+  {
+    path: 'edit-booking', 
+    component: EditBookingComponent, 
+    canActivate: [authGuard],
+    data: {roles: ['admin']}
+  },
+  {
+    path: 'manage-bookings',
+    component: ManageBookingsComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin', 'staff'] }, 
+  },
+  {
+    path: 'booking-details',
+    component: BookingDetailsComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin', 'staff'] },
+  },
+  {
+    path: 'manage-guests',
+    component: ManageGuestsComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'guest-details',
+    component: GuestDetailsComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'add-room',
+    component: AddRoomComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'edit-room/:id',
+    component: EditRoomComponent,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: 'room-details/:id',
+    component: RoomDetailsComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'edit-profile',
+    component: EditProfileComponent,
+    canActivate: [authGuard],
+  },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent },
+  { path: '', redirectTo: '/index', pathMatch: 'full' },
 ];

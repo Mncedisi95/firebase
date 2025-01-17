@@ -34,6 +34,18 @@
     animation: slideIn 0.8s ease-in-out;
 }
 
+input{
+    width: 400px;
+    height: 4px;
+    padding: 14px;
+    font-size: 12px;
+    border: 1.5px solid #ddd;
+    margin: 5px 0 10px;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+    animation: slideIn 1.5s ease-in-out forwards;
+}
+
 .room-details{
     background: #fff;
     border-radius: 10px;
@@ -182,4 +194,27 @@
     content: '>';
     margin: 0 0.5rem;
     color: #6c757d;
+}
+
+.alert-danger,
+.alert-success {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    max-width: 100%;
+    border-radius: 0.2857rem;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 400px;
+}
+
+.alert-success{
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.alert-danger{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }

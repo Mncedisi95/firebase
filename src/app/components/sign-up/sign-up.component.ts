@@ -146,6 +146,33 @@ export class SignUpComponent {
   }
 
   /**
+  * @method handleFileInput 
+  * @description Handles file input and updates the profile picture field in the form with
+  *  the base64 representation of the file.
+  * @param {event} event - The file input event.
+  */
+  handleFileInput(event: any): void {
+
+    const input = event.target.files[0]
+
+    // Ensure a file is selected
+    if(input?.files && input.files.length > 0){
+
+      const reader = new FileReader()
+
+      // Define the onload event handler for the FileReader
+      reader.onload=() => {
+
+         const base64String = reader.result as string 
+         // Update the form control value with the base64 string
+         this.registerForm.get('profile')?.setValue(base64String)
+      }
+      // Read the file as a data URL
+      reader.readAsDataURL(input)
+    }
+  }
+
+  /**
   * @method createAccount
   * @description Handles user account creation by validating form inputs, 
   * registering the user via AuthService, and providing user feedback (success or error)
@@ -159,33 +186,37 @@ export class SignUpComponent {
     }
 
     // Step 2: Extract user input from the form
-    const name = this.registerForm.get('name')?.value
+    const name = this.registerForm.get('fname')?.value
     const email = this.registerForm.get('email')?.value
+    const phone = this.registerForm.get('phone')?.value
+    const profile = this.registerForm.get('profile')?.value
+    const address = this.registerForm.get('address')?.value
     const password = this.registerForm.get('password')?.value
+   
+    try {
+      // Step 3: Attempt to register the user
+      await this.authService.register(name, email, phone, profile, address, password)
 
-    // Step 3: Attempt to register the user
-    await this.authService.register(name, email, password)
-      .then(() => {
-        // Step 4: Provide success feedback to the user
-        this.showSuccess('Account created successfully')
-        this.registerForm.reset()
-        console.log('account created successfully')
+       // Step 4: Provide success feedback to the user
+       this.showSuccess('Account created successfully')
+       this.registerForm.reset()
+       console.log('account created successfully')
 
-        // Step 5: Navigate to the login page after a short delay
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 3500);
-      })
-      .catch((error) => {
-        
+       // Step 5: Navigate to the login page after a short delay
+       setTimeout(() => {
+         this.router.navigate(['/login'])
+       }, 3500)
+
+    } catch (error) {
+
         // Step 6: Map specific error codes to user-friendly messages
         const errorMessage = this.mapRegistrationError(error)
 
         // Step 7: Reset the form and display an error message
         this.registerForm.reset()
         this.showError(errorMessage)
-        console.log(error)
-      })
+        console.log(error)      
+    }
   }
 
  /**
@@ -203,5 +234,4 @@ export class SignUpComponent {
 
     return errorMessages[error.code as string] || 'An unexpected error occurred. Please try again.'
   }
-
 }

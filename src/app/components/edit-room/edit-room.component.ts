@@ -1,7 +1,8 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { RoomService } from '../../services/room.service';
 
 @Component({
   selector: 'app-edit-room',
@@ -29,6 +30,29 @@ export class EditRoomComponent {
     * Default value: false.
     */
     isErrorVisible: boolean = false
+
+    /**
+    * @property {any} id
+    */
+    id: any
+
+    /**
+    * @property {any} roomDetails
+    */
+    roomDetails: any
+
+    bedTypes = [
+      'Single Bed',
+      'Double Bed',
+      'King Bed',
+      'Queen Bed',
+      'Suite Bed',
+      'Murphy Bed',
+      'Sofa Bed',
+      'Bunk Bed',
+      'Canopy Bed',
+      'Four-Poster Bed'
+    ]
   
     /**
     * @constructor
@@ -36,7 +60,7 @@ export class EditRoomComponent {
     * and setting up the reactive form for room booking or actions.
     * @param {FormBuilder} formBuilder - Angular service to create reactive forms.
     */
-    constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,private router:Router, private roomService: RoomService) {
   
       // Initialize the book room form with validation rules
       this.editRoomForm = this.formBuilder.group({
@@ -60,6 +84,38 @@ export class EditRoomComponent {
         description: ['', [Validators.required]]
       })
     }
+
+    ngOnInit(){
+
+      this.id = this.route.snapshot.paramMap.get('id') || ''
+
+      // Fetch room details using the ID
+      this.fetchRoomDetails() 
+    }
+
+     /**
+  * Fetches the details of a specific room by its ID.
+  * @async
+  * @method fetchRoomDetails
+  * @description Retrieves room details from the RoomService using the room's unique ID.
+  * If an error occurs, it logs the error and provides appropriate feedback.
+  * @returns {Promise<void>} A promise that resolves when the room details are successfully fetched.
+  */
+  async fetchRoomDetails(): Promise<void>{
+
+    try {
+      // Attempt to fetch room details from the RoomService
+      this.roomDetails = await this.roomService.getRoomById(this.id)
+
+      // Log success for debugging purposes
+      console.log('Room details fetched successfully:', this.roomDetails)
+
+    } catch (error) {
+
+      // Log the error in the console
+      console.log('Error fetching room details:', error);
+    }
+  }
   
     /**
     * @method showError 
@@ -82,7 +138,11 @@ export class EditRoomComponent {
       }, duration)
     }
 
-    editRoom(){
+    /**
+     * @method 
+     * @description 
+     */
+    onEditRoom(){
 
       // Step 1: Validate form inputs
       if(this.editRoomForm.invalid){

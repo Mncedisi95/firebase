@@ -1,18 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signOut } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
-
+import { Firestore, doc } from '@angular/fire/firestore';
+import { getDoc, setDoc } from 'firebase/firestore';
+import { BehaviorSubject } from 'rxjs';
+import { error } from 'console';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private currentUserSubject = new BehaviorSubject<any | null>(null)
+
+  currentUser$ = this.currentUserSubject.asObservable()
   /**
   * @constructor
   * @description Initializes the component with necessary dependencies.
   * @param {Auth} auth - Service for handling authentication-related operations. 
   */
-  constructor(private auth: Auth) { }
+  constructor(private auth: Auth, private  firestore: Firestore) { 
+
+    this.observeAuthState()
+  }
 
   /** 
   * @method login
@@ -28,19 +37,128 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password)
   }
 
-  /** 
+  /**
   * @method register
-  * @description Creates a new user account using email and password authentication.
-  * This method utilizes Firebase's createUserWithEmailAndPassword to register a new user.
-  * Optionally, the user's name can be stored for profile updates post-registration.
-  * 
-  * @param {string} name - The user's full name. This can be used for updating the user's profile information.
-  * @param {string} email - The user's email address. Must be in a valid email format.
-  * @param {string} password - The user's password. Must meet the application's password security requirements.
+  * @description Registers a new user account using Firebase authentication and Firestore for user data storage.
+  * Creates a user with email and password authentication and stores additional user information in Firestore.
+  * Assigns the user an initial role (default: 'admin').
+  *
+  * @param {string} name - The user's full name for profile identification.
+  * @param {string} email - The user's email address, in a valid email format.
+  * @param {string} phone - The user's phone number for contact purposes.
+  * @param {File} profile - The user's profile picture file, to be stored as a base64 string.
+  * @param {string} address - The user's physical address.
+  * @param {string} password - The user's password, meeting security requirements.
   * @returns {Promise<UserCredential>} A promise that resolves with the registered user's credentials or rejects with an error.
+  * @throws {FirebaseError} If an error occurs during user creation or Firestore operations.
   */
-  register(name: string, email: string, password: string): Promise<UserCredential> {
-    return createUserWithEmailAndPassword(this.auth, email, password)
+  async register(name: string, email: string, phone: string, profile: File, address: string, password: string): Promise<UserCredential> {
+
+    try {
+
+    // Create user with email and password authentication
+    const userCreditial = await createUserWithEmailAndPassword(this.auth, email, password)
+
+    // Reference to Firestore document for the new user
+    const userRef = doc(this.firestore, 'users/'+ userCreditial.user.uid)
+
+    // Store additional user data in Firestore
+    await setDoc(userRef, {
+      name,
+      email,
+      phone,
+      profile,
+      address,
+      uid: userCreditial.user.uid,
+      role: 'guest'
+    }) 
+
+    return userCreditial;
+      
+    } catch (error) {
+
+      console.error('Error during user registration:', error);
+      throw error
+    }
+  }
+
+  /**
+  * @private
+  * @method observeAuthState
+  * @description Observes changes to the user's authentication state in Firebase.
+  * This method subscribes to Firebase's authentication state changes and updates 
+  * the currentUserSubject observable with the authenticated user or null.
+  * It ensures real-time updates to the current user state across the application.
+  */
+  private observeAuthState() {
+
+    onAuthStateChanged(this.auth, (user) => {
+      // Emit the authenticated user or null if logged out
+      this.currentUserSubject.next(user)
+    },
+    (error) => {
+      // Log the error for debugging purposes
+      console.log('Error observing auth state:', error)
+    })
+  }
+
+  /**
+  * @method getCurrentUser
+  * @description Retrieves the current authenticated user from the `currentUserSubject`.
+  * This method provides a synchronous way to access the latest authentication state of the user.
+  * 
+  * @returns {User | null} The currently authenticated user object, or null if no user is logged in.
+  */
+  getCurrentUser():  any | null {
+    return this.currentUserSubject.value !== null
+  }
+
+  /**
+  * @method hasRole
+  * @description Retrieves the role of the currently authenticated user by querying 
+  * the Firestore database. Returns the user's role if available.
+  * 
+  * @returns {Promise<string>} A promise that resolves with the user's role (e.g., 'admin', 'staff', 'guest').
+  * Resolves with an empty string if the user is not authenticated or the role cannot be determined.
+  */
+  async hasRole(): Promise<string> {
+
+    const currentUser = this.auth.currentUser
+
+    if(!currentUser){
+      return ''
+    }
+
+    try {
+
+      const userDocRef = doc(this.firestore, 'users', currentUser.uid)
+      const userDoc = await getDoc(userDocRef)
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data() as { role?: string }
+        // Return the role if it exists, otherwise return an empty string
+        return userData.role  || ''
+      } else {
+        console.log('User document not found');
+        return '';
+      }
+      
+    } catch (error) {
+      console.log('Error fetching user role:', error);
+      return '';
+    }
+  }
+
+  /**
+  * @method isLoggedIn
+ '' * @description Checks if a user is currently authenticated.
+  * This method simplifies authentication checks by returning a boolean value.
+  * 
+  * @returns {boolean} true if a user is logged in, otherwise `false`.
+  */
+  isLoggedIn(): boolean {
+
+    return !!this.getCurrentUser()
   }
 
   /**

@@ -87,22 +87,27 @@ export class SignInComponent {
     const email = this.loginForm.get('email')?.value
     const password = this.loginForm.get('password')?.value
 
-    //Step 3: Call the authentication service to log in the user
-    await this.authService.login(email,password)
-    .then(() => {
-      // Step 4 : Navigate to the dashboard upon successful login
-      this.router.navigate(['/dashboard'])
-    })
-    .catch((error) => {
+    try {
 
-       // Step 5: Map specific error codes to user-friendly messages
+      //Step 3: Call the authentication service to log in the user
+      await this.authService.login(email,password)
+
+      // Step 4 : Navigate to the dashboard upon successful login
+      this.checkUserRole()
+
+      console.log("Do I Reach Part")
+      
+      
+    } catch (error) {
+
+      // Step 5: Map specific error codes to user-friendly messages
       const errorMessage = this.mapLoginErrors(error)
 
       // Step 6: Reset the form and display an error message
       this.loginForm.reset()
       this.showError(errorMessage)
       console.log(error)
-    })
+    }
   }
 
   /**
@@ -122,6 +127,36 @@ export class SignInComponent {
     // Get the error message or a default one
     return errorMessages[error.code as string] || 'An unexpected error occurred. Please try again.'
 
+  }
+
+  /**
+   * @method checkUserRole
+   * @description 
+   */
+  async checkUserRole(){
+
+    // Fetch user role
+    const role = await this.authService.hasRole()
+
+    // Navigate based on role
+    switch(role){
+
+      case 'admin':
+        this.router.navigate(['/dashboard'])
+      break
+
+      case 'staff':
+        this.router.navigate(['/manage-booking'])
+      break
+
+      case 'guest':
+        this.router.navigate(['/rooms'])
+      break 
+
+      default:
+        this.router.navigate(['/unauthorized'])
+      break
+    }
   }
 
 }

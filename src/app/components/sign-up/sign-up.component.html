@@ -1,11 +1,11 @@
 <div class="container">
     <form [formGroup]="registerForm" (ngSubmit)="createAccount()">
-        <h1>Register</h1>
+        <h1>Sign Up</h1>
 
         <!-- Name -->
         <div>
-            <label for="name">Full Name:</label>
-            <input id="name" formControlName="fname" type="text" placeholder="Enter Full Name" aria-label="Name"/>
+            <label for="fname">Full Name:</label>
+            <input id="fname" formControlName="fname" type="text" placeholder="Enter Full Name" aria-label="Name"/>
             <div *ngIf="registerForm.get('fname')?.touched">
                 <small *ngIf="registerForm.get('fname')?.errors?.['required']">*Name is required!</small>
             </div>
@@ -34,7 +34,7 @@
         <!-- Profile -->
         <div>
             <label for="profile">Profile:</label>
-            <input id="profile" formControlName="profile" type="file" aria-label="Profile Picture"/>
+            <input id="profile" formControlName="profile" type="file" accept="image/*" (change)="handleFileInput($event)" aria-label="Profile Picture"/>
             <div *ngIf="registerForm.get('profile')?.touched">
                 <small *ngIf="registerForm.get('profile')?.errors?.['required']">*Profile Picture is required!</small>
             </div>

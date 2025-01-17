@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -27,13 +27,25 @@ export class NavbarComponent {
   menuOpen: boolean = false
 
   /**
-  * @constructor
-  * @description
-  * @param {Router} router 
-  */
-  constructor(private router: Router,private authService: AuthService){}
+   * @property {boolean} isLoggedIn 
+   */
+   isLoggedIn : boolean = false
 
+   /**
+   * @constructor
+   * @description
+   * @param {Router} router 
+   */
+   constructor(private router: Router,private authService: AuthService){}
+
+   /**
+   * @description
+   */
   ngOnInit(){
+
+    this.authService.currentUser$.subscribe((user) => {
+      this.isLoggedIn = !!user
+    })
 
     this.router.events.subscribe(() => {
       const authRoutes = ['/login','/register','/forgot-password']
@@ -48,9 +60,24 @@ export class NavbarComponent {
       this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  /**
+   * @method toggleMenu
+   * @description 
+   */
   toggleMenu = (): void => {
 
     this.menuOpen = !this.menuOpen
+  }
+
+  /**
+   * 
+   * @param event 
+   */
+  @HostListener('document:click', ['$event'])
+  closeMenu(event: Event): void {
+    if (!(event.target as HTMLElement).closest('.user-menu')) {
+      this.menuOpen = false;
+    }
   }
 
   /**
@@ -71,8 +98,8 @@ export class NavbarComponent {
     .then(() => {
 
       this.menuOpen = false;
-      console.log('User logged out');
-      this.router.navigate(['/login']);
+      console.log('User logged out')
+      this.router.navigate(['/index'])
     })
     .catch((error) => {
       console.log(error);

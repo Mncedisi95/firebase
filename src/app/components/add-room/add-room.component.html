@@ -15,12 +15,12 @@
 
     <!-- Main Container -->
     <div class="container">
-        <form [formGroup]="addRoomForm" (ngSubmit)="addRoom()" class="form-grid">
+        <form [formGroup]="addRoomForm" (ngSubmit)="onAddRoom()" class="form-grid">
 
             <!-- Room Number -->
             <div class="form-group">
                 <label for="roomNumber">Room Number:</label>
-                <input id="roomNumber" formControlName="roomNumber" type="text" placeholder="Enter Room Number" aria-label="Room Number"/>
+                <input id="roomNumber" formControlName="roomNumber" type="number" placeholder="Enter Room Number" aria-label="Room Number"/>
                 <small *ngIf="addRoomForm.get('roomNumber')?.touched && addRoomForm.get('roomNumber')?.errors?.['required']">
                     *Room Number is required!
                 </small>
@@ -52,7 +52,7 @@
             <!-- Room Image -->
             <div class="form-group">
                 <label for="roomImage">Room Image:</label>
-                <input id="roomImage" formControlName="roomImage" type="file" aria-label="Room Image" />
+                <input id="roomImage" formControlName="roomImage" type="file" accept="image/*" (change)="handleFileInput($event)" aria-label="Room Image" />
                 <small
                     *ngIf="addRoomForm.get('roomImage')?.touched && addRoomForm.get('roomImage')?.errors?.['required']">
                     *Room Image is required!
@@ -62,7 +62,7 @@
             <!-- Room Price -->
             <div class="form-group">
                 <label for="roomPrice">Room Price:</label>
-                <input id="price" formControlName="price" type="text" placeholder="Enter Room Price"
+                <input id="price" formControlName="price" type="number" placeholder="Enter Room Price"
                     aria-label="Room Price" />
                 <small *ngIf="addRoomForm.get('price')?.touched && addRoomForm.get('price')?.errors?.['required']">
                     *Room Price is required!
@@ -72,7 +72,7 @@
             <!-- Room Capacity -->
             <div class="form-group">
                 <label for="roomCapacity">Room Capacity:</label>
-                <input id="capacity" formControlName="capacity" type="text" placeholder="Enter Room Capacity"
+                <input id="capacity" formControlName="capacity" type="number" placeholder="Enter Room Capacity"
                     aria-label="Room Capacity" />
                 <small *ngIf="addRoomForm.get('capacity')?.touched && addRoomForm.get('capacity')?.errors?.['required']">
                     *Room Capacity is required!
@@ -82,7 +82,7 @@
             <!-- Room Size -->
             <div class="form-group">
                 <label for="roomSize">Room Size:</label>
-                <input id="size" formControlName="size" type="text" placeholder="Enter Room Size"
+                <input id="size" formControlName="size" type="number" placeholder="Enter Room Size"
                     aria-label="Room Size" />
                 <small *ngIf="addRoomForm.get('size')?.touched && addRoomForm.get('size')?.errors?.['required']">
                     *Room Size is required!
@@ -135,6 +135,9 @@
             <!-- Submit Button -->
             <div class="form-buttons">
                 <button type="submit" class="btn-primary">Add Room</button>
+                <div>
+                    <input *ngIf="isSuccessVisible" class="alert-success" placeholder={{successMessage}} />
+                </div>
                 <div>
                     <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
                 </div>

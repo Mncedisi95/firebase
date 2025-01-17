@@ -192,6 +192,10 @@ button:hover{
     font-weight: bold;
 }
 
+.user-menu {
+    position: relative;
+}
+
 .navbar-right {
     position: relative;
     margin-left: 30px;
@@ -204,3 +208,35 @@ button:hover{
     cursor: pointer;
     border: 2px solid white;
 }
+
+.user-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    width: 150px;
+    right: 0;
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+    z-index: 1000;
+}
+  
+.user-dropdown-menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #BA55D3;
+}
+  
+.user-dropdown-menu li:hover {
+    color: #DA70D6;
+    font-weight: bold;
+}
+  
+.user-dropdown-menu.show {
+    display: block;
+}
+  

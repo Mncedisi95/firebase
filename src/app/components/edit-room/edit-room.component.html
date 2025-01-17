@@ -15,13 +15,13 @@
     </nav>
 
     <!-- Main Container Start -->
-    <div class="container">
-        <form [formGroup]="editRoomForm" (ngSubmit)="editRoom()" class="form-grid">
+    <div class="container" *ngIf="roomDetails">
+        <form [formGroup]="editRoomForm" (ngSubmit)="onEditRoom()" class="form-grid">
 
             <!-- Room Number -->
             <div class="form-group">
                 <label for="roomNumber">Room Number:</label>
-                <input id="roomNumber" formControlName="roomNumber" type="text" placeholder="Enter Room Number"
+                <input id="roomNumber" formControlName="roomNumber" type="text" placeholder={{roomDetails.roomNumber}}
                     aria-label="Room Number" />
                 <small
                     *ngIf="editRoomForm.get('roomNumber')?.touched && editRoomForm.get('roomNumber')?.errors?.['required']">
@@ -55,7 +55,7 @@
             <!-- Room Image -->
             <div class="form-group">
                 <label for="roomImage">Room Image:</label>
-                <input id="roomImage" formControlName="roomImage" type="file" aria-label="Room Image" />
+                <input id="roomImage" formControlName="roomImage" type="file" aria-label="Room Image" placeholder={{roomDetails.roomImage}} />
                 <small
                     *ngIf="editRoomForm.get('roomImage')?.touched && editRoomForm.get('roomImage')?.errors?.['required']">
                     *Room Image is required!
@@ -65,7 +65,7 @@
             <!-- Room Price -->
             <div class="form-group">
                 <label for="roomPrice">Room Price:</label>
-                <input id="price" formControlName="price" type="text" placeholder="Enter Room Price"
+                <input id="price" formControlName="price" type="text" placeholder={{roomDetails.price}}
                     aria-label="Room Price" />
                 <small *ngIf="editRoomForm.get('price')?.touched && editRoomForm.get('price')?.errors?.['required']">
                     *Room Price is required!
@@ -75,7 +75,7 @@
             <!-- Room Capacity -->
             <div class="form-group">
                 <label for="roomCapacity">Room Capacity:</label>
-                <input id="capacity" formControlName="capacity" type="text" placeholder="Enter Room Capacity"
+                <input id="capacity" formControlName="capacity" type="text" placeholder={{roomDetails.capacity}}
                     aria-label="Room Capacity" />
                 <small
                     *ngIf="editRoomForm.get('capacity')?.touched && editRoomForm.get('capacity')?.errors?.['required']">
@@ -86,7 +86,7 @@
             <!-- Room Size -->
             <div class="form-group">
                 <label for="roomSize">Room Size:</label>
-                <input id="size" formControlName="size" type="text" placeholder="Enter Room Size"
+                <input id="size" formControlName="size" type="text" placeholder={{roomDetails.size}}
                     aria-label="Room Size" />
                 <small *ngIf="editRoomForm.get('size')?.touched && editRoomForm.get('size')?.errors?.['required']">
                     *Room Size is required!
@@ -118,7 +118,7 @@
             <!-- Room Services -->
             <div class="form-group">
                 <label for="roomServices">Room Services:</label>
-                <input id="services" formControlName="services" type="text" placeholder="Enter Room Services"
+                <input id="services" formControlName="services" type="text" placeholder={{roomDetails.services}}
                     aria-label="Room Services" />
                 <small
                     *ngIf="editRoomForm.get('services')?.touched && editRoomForm.get('services')?.errors?.['required']">
@@ -130,7 +130,7 @@
             <div class="form-group description-group">
                 <label for="roomDescription">Room Description:</label>
                 <textarea id="description" formControlName="description"
-                    placeholder="Enter Room Description"></textarea>
+                    placeholder={{roomDetails.description}}></textarea>
                 <small
                     *ngIf="editRoomForm.get('description')?.touched && editRoomForm.get('description')?.errors?.['required']">
                     *Room Description is required!
