@@ -98,7 +98,7 @@ export class RoomsComponent {
 
     try {
       // Call the room service to fetch room data
-      this.originalRooms = await this.roomService.getRooms()
+      this.originalRooms = await this.roomService.getAvailableRooms()
       this.rooms = this.originalRooms
 
       // Update total room count
@@ -109,7 +109,7 @@ export class RoomsComponent {
 
     } catch (error) {
       // Handle and log errors during the fetch process
-      console.error('Error fetching rooms:', error)
+      console.log('Error fetching rooms:', error)
     }
 
   }
@@ -141,12 +141,16 @@ export class RoomsComponent {
       // Filter rooms based on the search term
       this.rooms = this.originalRooms.filter(room =>{
 
-      const matchesSearch = 
+      const matchesStringFields = 
       room.roomType.toLowerCase().includes(term) ||
       room.description.includes(term) ||
       room.services.includes(term)
-     
-      return matchesSearch
+
+      const matchesNumberFields =
+      room.price?.toString().includes(term) ||
+      room.capacity?.toString().includes(term) 
+      
+      return matchesStringFields || matchesNumberFields
     })
 
     } catch (error) {
@@ -155,25 +159,58 @@ export class RoomsComponent {
   }
 
   /**
-   * @method goToBookRoom
-   * @description 
-   */
-  goToBookRoom(){
+  * Navigates to the "Room Details" page for the specified room ID.
+  * @method goToRoomDetails
+  * @description Redirects the user to the details page for a specific room. Validates the room ID and handles potential navigation errors.
+  * @param {number | string} id - The unique identifier of the room.
+  * @throws {Error} Throws an error if the navigation fails or the `id` is invalid.
+  */
+  goToRoomDetails(id: number | string) {
 
-    this.router.navigate(['/book-room'])
+    if (!id) {
+      console.log("Invalid room ID provided.")
+      throw new Error("Room ID is required to navigate to the room details page.")
+    }
+
+    try {
+
+      this.router.navigate(['/room-details', id])
+      console.log('Navigating to room details for room ID:' + id)
+
+    } catch (error) {
+
+      console.log("Navigation to the room details page failed:", error);
+      throw new Error("Failed to navigate to the room details page. Please try again.");
+    }
   }
 
   /**
-   * @method goToRoomDetails
-   * @description - Navigates to the room details page.
-   * @param {any} roomID - The ID of the room to view details for.
-   */
-  goToRoomDetails(id: any){
+  * Navigates to the "Book Room" page with the provided room ID.
+  * @method goToBookRoom
+  * @description Redirects the user to the booking page for the specified room. Ensures the `id` is valid and handles navigation errors.
+  * @param { string: number } id - The unique identifier of the room to be booked.
+  * @throws {Error} Throws an error if the navigation fails or the `id` is invalid.
+  */
+  goToBookRoom(id: string | number): void {
 
-    this.router.navigate(['/room-details', id])    
+    if (!id) {
+      console.log("Invalid room ID provided.");
+      throw new Error("Room ID is required to navigate to the booking page.");
+    }
+
+    try {
+
+      this.router.navigate(['/book-room', id])
+      console.log('Navigating to booking page for room ID:' + id)
+
+    } catch (error) {
+
+      console.log("Navigation to the booking page failed:", error);
+      throw new Error("Failed to navigate to the booking page. Please try again.");
+    }
   }
 
-   /**
+  /**
   * @method handlePagenator
   * @description Helper function to handle pagination events and update the visible data range based on the current page and page size.
   * 

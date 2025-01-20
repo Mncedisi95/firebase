@@ -61,6 +61,11 @@ input{
     animation: slideIn 1.5s ease-in-out forwards;
 }
 
+textarea{
+    width: 325px;
+    height: 80px;
+}
+
 small{
     color: #d9534f;
     margin-top: 5px;

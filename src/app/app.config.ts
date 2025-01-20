@@ -6,6 +6,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import {provideStorage, getStorage} from '@angular/fire/storage';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCu2ffgdrqfm0zn8L5dMPW689ikj3z-8oQ",
@@ -20,6 +21,6 @@ const firebaseConfig = {
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay()),
     provideFirebaseApp(() => initializeApp(firebaseConfig)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()),
+    provideStorage(() => getStorage()), provideAnimationsAsync(),
   ]
 };

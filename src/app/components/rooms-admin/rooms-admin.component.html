@@ -1,0 +1,44 @@
+<!-- Rooms Section -->
+<section id="rooms" class="dashboard-section">
+    <h2>Manage Rooms</h2>
+    
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li>Room Management</li>
+        </ul>
+    </nav>
+    
+    <!-- Top Controls -->
+    <div class="top-controls">
+        <button class="btn-add" (click)="goToAddRoom()" >Add Room</button>
+        <input type="text" [(ngModel)]="search" (input)="onSearch()" [ngModelOptions]="{standalone: true}" placeholder="Search rooms..." class="search-bar" />
+    </div>
+    
+    <!-- Data List Selection -->
+    <div class="data-list">
+        <div class="data-item" *ngFor="let room of rooms">
+            <h1 class="room-type">{{room.roomType}}</h1>
+            <img [src]="room.roomImage" alt="Room 101" class="room-image" />
+            <h3>Room {{room.roomNumber}}</h3>
+            <p>Price: ${{room.price}}/Pernight</p>
+            <ul class="room-features">
+                <li><i class="fas fa-wifi"></i>{{room.services}}</li>
+            </ul>
+            <button class="btn-primary" (click)="goToRoomDetails(room.id)">View More</button>
+            <!-- Conditional Button -->
+            <button class="btn-secondary" [ngClass]="{'btn-booked': room.status === 'Booked'}" (click)="goToBookRoom(room.id)"
+                [disabled]="room.status === 'Booked'">
+                {{ room.status === 'Booked' ? 'Booked' : 'Book Now' }}
+            </button>
+           
+        </div>
+        <!-- Additional Data Items -->
+    </div>
+    <!-- End of Data Selection -->
+    
+    <!-- Pagination -->
+   
+</section>
+<!-- End Of Rooms Section -->

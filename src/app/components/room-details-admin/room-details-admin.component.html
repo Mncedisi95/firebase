@@ -1,0 +1,49 @@
+<section class="admin-room-details">
+    <div class="room-header">
+        <h1>Room Details</h1>
+        <nav class="breadcrumb">
+            <ul>
+                <li><a routerLink="/dashboard">Dashboard</a></li>
+                <li><a routerLink="/rooms-admin">Room Management</a></li>
+                <li>Room Details</li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="room-details-card" *ngIf="roomDetails">
+        <!-- Room Image -->
+        <div class="room-image">
+            <img [src]="roomDetails.roomImage" alt="Room Image">
+            <p class="room-description">{{roomDetails.description}}</p>
+        </div>
+
+        <!-- Room Information -->
+        <div class="room-info">
+            <h2>Room {{roomDetails.roomNumber}}</h2>
+            <p><strong>Type:</strong>{{roomDetails.roomType}}</p>
+            <p><strong>Price:</strong> ${{roomDetails.price}} per night</p>
+            <p><strong>Capacity:</strong>Max Person {{roomDetails.capacity}}</p>
+            <p><strong>Status:</strong>{{roomDetails.status}}</p>
+            <p><strong>Size:</strong> {{roomDetails.size}} sq ft</p>
+            <p><strong>Beds:</strong> {{roomDetails.bedType}}</p>
+            
+            <!-- Services -->
+            <h3>Services</h3>
+            <ul class="room-services">
+                <li>{{roomDetails.services}}</li>
+            </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="room-actions">
+            <button class="btn-primary" (click)="goToEditRoom()">Edit Room</button>
+            <button class="btn-danger" (click)="onDeteteRoom()">Delete Room</button>
+        </div>
+        <div>
+            <input *ngIf="isSuccessVisible" class="alert-success" placeholder={{successMessage}} />
+        </div>
+        <div>
+            <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
+        </div>
+    </div>
+</section>

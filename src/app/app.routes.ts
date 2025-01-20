@@ -19,6 +19,9 @@ import { GuestDetailsComponent } from './components/guest-details/guest-details.
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { authGuard } from './guards/auth.guard';
 import { roleGuard } from './guards/role.guard';
+import { RoomsAdminComponent } from './components/rooms-admin/rooms-admin.component';
+import { RoomDetailsAdminComponent } from './components/room-details-admin/room-details-admin.component';
+import { RoomAvailabilityComponent } from './components/room-availability/room-availability.component';
 
 export const routes: Routes = [
 
@@ -26,10 +29,22 @@ export const routes: Routes = [
   { path: 'login', component: SignInComponent },
   { path: 'register', component: SignUpComponent },
   { path: 'rooms', component: RoomsComponent },
-  { path: 'book-room', component: BookRoomComponent, canActivate: [authGuard] },
+  { path: 'book-room/:id', component: BookRoomComponent, canActivate: [authGuard] },
   { 
     path: 'view-booking',
     component: ViewBookingComponent, 
+    canActivate: [authGuard, roleGuard],
+    data: {roles: ['guest']}
+  },
+  {
+    path: 'rooms-admin',
+    component: RoomsAdminComponent,
+    canActivate: [authGuard, roleGuard],
+    data: {roles: ['admin']}
+  },
+  {
+    path: 'room-details-admin/:id',
+    component: RoomDetailsAdminComponent,
     canActivate: [authGuard],
     data: {roles: ['admin']}
   },
@@ -43,7 +58,7 @@ export const routes: Routes = [
     path: 'manage-bookings',
     component: ManageBookingsComponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['admin', 'staff'] }, 
+    data: { roles: ['admin'] }, 
   },
   {
     path: 'booking-details',
@@ -74,6 +89,12 @@ export const routes: Routes = [
     component: EditRoomComponent,
     canActivate: [authGuard, roleGuard],
     data: { roles: ['admin'] },
+  },
+  {
+    path: 'room-availability',
+    component: RoomAvailabilityComponent,
+    canActivate: [authGuard, roleGuard],
+    data: {roles: ['admin']}
   },
   {
     path: 'room-details/:id',

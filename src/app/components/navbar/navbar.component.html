@@ -1,5 +1,5 @@
-<!-- Navbar Start-->
-<nav class="navbar" *ngIf="!isAuthPage">
+<!-- Normal Navbar Start-->
+<nav class="navbar" *ngIf="!isAuthPage && !isAdmin" >
     <!-- Main Container -->
     <div class="container">
         <!-- Logo -->
@@ -28,6 +28,10 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link">Services</a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link">Contact</a>
             </li>
 
@@ -51,4 +55,30 @@
         <!-- End of Navigation Menu  -->
     </div>
 </nav>
-<!-- End of Navbar -->
+<!-- End of Normal Navbar -->
+
+<!-- Admin Navbar -->
+<!-- Admin Navbar -->
+<section *ngIf="!isAuthPage && isAdmin">
+    <nav class="admin-navbar">
+        <div>
+            <a href="#" class="admin-logo">SuiteSync. Dashboard</a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-menu">
+            <a class="sidebar-link" routerLink="/dashboard">Dashboard</a>
+            <a class="sidebar-link" routerLink="/rooms-admin">Room Management</a>
+            <a class="sidebar-link" routerLink="/room-availability">Room Availability</a>
+            <a class="sidebar-link" routerLink="/manage-bookings">Booking Management</a>
+            <a class="sidebar-link" routerLink="/manage-guests">Guest Management</a>
+            <a class="sidebar-link">Financial Insights</a>
+            <a class="sidebar-link">Analytics & Reports</a>
+            <a class="sidebar-link">Notifications & Alerts</a>
+            <a class="sidebar-link" (click)="logout()">Logout</a>
+        </div>
+    </div>
+</section>
+<!-- End of Admin Navbar -->

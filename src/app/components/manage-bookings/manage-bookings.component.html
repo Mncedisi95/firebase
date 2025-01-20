@@ -25,13 +25,13 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngFor="let booking of bookings | sortByDate: 'checkIn'">
                 <tr>
-                    <td>201</td>
-                    <td>John Doe</td>
-                    <td>2025-01-15</td>
-                    <td>2025-01-20</td>
-                    <td>Confirmed</td>
+                    <td>{{booking.room.roomNumber}}</td>
+                    <td>{{booking.guest.name}}</td>
+                    <td>{{booking.checkIn}}</td>
+                    <td>{{booking.checkOut}}</td>
+                    <td>{{booking.status}}</td>
                     <td>
                         <button (click)="goToViewBooking()">View More</button>
                     </td>

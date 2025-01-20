@@ -1,27 +1,20 @@
 import { Injectable } from '@angular/core';
 import { deleteDoc, Firestore } from '@angular/fire/firestore';
-import { addDoc, collection, doc, DocumentReference, getDoc, getDocs, query, updateDoc } from 'firebase/firestore';
-import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { addDoc, collection, doc, DocumentReference, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
 
-  /**
-  * @property {any} collectionRef
-  */
-  private collectionRef: any
+  
 
   /**
   * @constructor
   * @description
   * @param {Firestore} firestore 
   */
-  constructor(private firestore: Firestore) {
-
-    this.collectionRef = collection(this.firestore, 'rooms')
-  }
+  constructor(private firestore: Firestore) {}
 
   /**
    * @async
@@ -59,6 +52,7 @@ export class RoomService {
         services,
         description,
         createdAt: new Date().toISOString(),
+        status: 'Available'
       }
 
       const documentReference = await addDoc(roomCollection, roomData)
@@ -68,6 +62,39 @@ export class RoomService {
 
     } catch (error) {
 
+      console.error('Error during user registration:', error);
+      throw error
+    }
+  }
+
+  
+  async bookRoom(userId: any, roomId: any, checkIn: any, checkOut: any,numberOfGuest: any,specialRequests:any):  Promise<DocumentReference>{
+
+    try {
+      
+      // Firestore collection reference
+      const bookingCollection = collection(this.firestore, 'bookings')
+
+      const bookingData = {
+
+        userId,
+        roomId,
+        checkIn,
+        checkOut,
+        numberOfGuest,
+        creationDate:  new Date().toISOString(),
+        status: 'Pending',
+        paymentStatus: 'unpaid',
+        specialRequests
+      }
+
+      const docRef = await addDoc(bookingCollection, bookingData)
+      console.log('booking added successfully:', docRef.id)
+
+      return docRef
+
+    } catch (error) {
+      
       console.error('Error during user registration:', error);
       throw error
     }
@@ -145,6 +172,73 @@ export class RoomService {
   }
 
   /**
+  * @method getAvailableRooms
+  * @description Fetches a list of available rooms from the Firestore database where the status is "Available."
+  * @returns {Promise<Array<{id: string, [key: string]: any}>>} A promise that resolves to an array of available room objects.
+  * Each room object contains an `id` and all other room properties from the Firestore document.
+  * @throws {Error} Throws an error if the Firestore query fails.
+  */
+  async getAvailableRooms(): Promise<Array<{ id: string; [key: string]: any }>>{
+
+    try {
+
+      // Construct Firestore query to fetch rooms with status 'Available'
+      const roomsQuery = query(
+        collection(this.firestore,'rooms'),
+        where('status', '==', 'Available'))
+
+      // Execute the query and fetch documents
+      const roomSnap = await getDocs(roomsQuery)
+
+      // Map the documents into an array of room objects
+      return roomSnap.docs.map((doc) => ({
+
+        id:doc.id,  // Include the document ID
+        ...doc.data() // Include all other document fields
+      }))
+      
+    } catch (error) {
+
+      console.log('Error fetching available rooms:', error)
+      throw new Error('Unable to fetch available rooms. Please try again later.')
+    }
+  }
+
+  /**
+  * @method getBookedRooms
+  * @description Fetches all rooms with a "Booked" status from the Firestore database.
+  * @returns {Promise<Array<{ id: string; [key: string]: any }>>} A promise resolving to an array of room objects.
+  * Each object contains the room's Firestore document ID and its associated data.
+  * @throws Will throw an error if fetching the booked rooms fails.
+  */
+  async getBookedRooms(): Promise<Array<{ id: string; [key: string]: any }>> {
+
+    try {
+
+      // Construct Firestore query to fetch rooms with status 'Available'
+      const roomQuery = query(
+      collection(this.firestore, 'rooms'),
+      where('status', '==', 'Booked'))
+
+      // Execute the query and fetch documents
+      const roomSnap = await getDocs(roomQuery)
+
+      // Map the fetched documents into an array of room objects
+      return roomSnap.docs.map((doc) => ({
+
+        id: doc.id, // Include the document ID
+        ...doc.data() // Include all other document fields
+      }))
+      
+    } catch (error) {
+
+      // Log the error and rethrow a user-friendly message
+      console.log('Error fetching booked rooms:', error)
+      throw new Error('Unable to fetch Booked rooms. Please try again later.')
+    }
+  }
+
+  /**
   * @async
   * @method updateRoom
   * @description Updates the details of a specific room in the Firestore database. 
@@ -169,6 +263,32 @@ export class RoomService {
       
       console.error('Error updating room with ID ' + roomID + ':', error);
       throw new Error('Failed to update room:' + error );
+    }
+  }
+
+  /**
+  * @method updateRoomStatus
+  * @description Updates the status of a room in the database.
+  * @param {string} roomId - The ID of the room to update.
+  * @param {string} status - The new status to set for the room (e.g., 'Available', 'Booked', 'Maintenance').
+  * @returns {Promise<void>}
+  */
+  async updateRoomStatus(roomId: string, status: string): Promise<void> {
+
+    try {
+
+      // Reference to the specific room document
+      const roomRef = doc(this.firestore, 'rooms', roomId);
+
+      // Update the room's status field
+      await updateDoc(roomRef, { status })
+
+      console.log('Room status updated successfully: Room ID:' + roomId + ', Status:' + status)
+      
+    } catch (error) {
+      
+      console.log('Error updating room status:', error);
+      throw new Error('Unable to update room status. Please try again later.')
     }
   }
 
@@ -206,4 +326,67 @@ export class RoomService {
     throw new Error('Failed to delete the room. Please try again later.')
     }
   }
+
+  /**
+  * @method getBookings
+  * @description Fetches all bookings from the Firestore 'bookings' collection.
+  * This method retrieves a list of all bookings, each containing its unique ID and associated data.
+  * @returns {Promise<Array<{ id: string; [key: string]: any }>>} - A promise that resolves to an array of booking objects.
+  * @throws {Error} Throws an error if fetching bookings fails.
+  */
+  async getBookings(): Promise<Array<{ id: string; [key: string]: any }>> {
+
+    try {
+      // Reference the Firestore 'bookings' collection
+      const bookingsRef = collection(this.firestore, 'bookings')
+      // Fetch all documents from the collection
+      const querySnapshot = await getDocs(query(bookingsRef))
+
+      // Map the documents into a structured array with IDs and data
+      return querySnapshot.docs.map((doc) => ({
+        id: doc.id, // Document ID
+        ...doc.data() //Document Data
+      }))
+      
+    } catch (error) {
+      
+      console.log('Error fetching bookings:', error);
+      throw new Error('Failed to fetch bookings. Please try again later.')
+    }
+  }
+
+  /**
+ * @method getBookingsByGuestId
+ * @description Fetches all bookings for a specific guest using their ID.
+ * @param {string} guestId - The ID of the guest to filter bookings by.
+ * @returns {Promise<Array<{ id: string; [key: string]: any }>>} A promise that resolves to an array of booking objects.
+ */
+async getBookingsByGuestId(guestId: string): Promise<Array<{ id: string; [key: string]: any }>> {
+  try {
+    // Validate input
+    if (!guestId) {
+      throw new Error('Guest ID is required to fetch bookings.');
+    }
+
+    // Reference the Firestore 'bookings' collection and filter by guestId
+    const bookingsQuery = query(
+      collection(this.firestore, 'bookings'),
+      where('userId', '==', guestId)
+    );
+
+    // Execute the query and fetch the matching documents
+    const querySnapshot = await getDocs(bookingsQuery);
+
+    // Map the results to an array of booking objects
+    return querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.log('Error fetching bookings for guest:', error);
+    throw new Error('Unable to fetch guest bookings. Please try again later.');
+  }
+}
+
+
 }

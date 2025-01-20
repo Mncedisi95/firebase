@@ -228,9 +228,9 @@ export class AddRoomComponent {
       this.showSuccess('New Room added successfully')
       console.log('New Room added successfully.')
 
-       // Step 6: Navigate to the rooms page after a short delay
+      // Step 6: Navigate to the rooms page after a short delay
        setTimeout(() => {
-        this.router.navigate(['/rooms'])
+        this.router.navigate(['/rooms-admin'])
       }, 3500)
       
     } catch (error) {

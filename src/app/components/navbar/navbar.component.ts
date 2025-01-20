@@ -32,6 +32,11 @@ export class NavbarComponent {
    isLoggedIn : boolean = false
 
    /**
+    * @property {boolean} isAdmin
+    */
+   isAdmin: boolean = false
+
+   /**
    * @constructor
    * @description
    * @param {Router} router 
@@ -44,7 +49,21 @@ export class NavbarComponent {
   ngOnInit(){
 
     this.authService.currentUser$.subscribe((user) => {
-      this.isLoggedIn = !!user
+
+      if(user){
+
+        this.isLoggedIn = !!user
+
+        // Check if user has admin role
+        this.authService.hasRole().then(role =>{
+
+          this.isAdmin = role === 'admin'
+        })
+      }
+      else {
+        this.isLoggedIn = false;
+        this.isAdmin = false;
+      }
     })
 
     this.router.events.subscribe(() => {
@@ -98,6 +117,8 @@ export class NavbarComponent {
     .then(() => {
 
       this.menuOpen = false;
+      this.isLoggedIn = false;
+      this.isAdmin = false;
       console.log('User logged out')
       this.router.navigate(['/index'])
     })

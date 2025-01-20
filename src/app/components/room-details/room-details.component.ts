@@ -20,33 +20,7 @@ export class RoomDetailsComponent {
   * @property {any} roomDetails
   */
   roomDetails: any
-
-  /**
-  *  Represents the current error message to display.
-  * @property {string} errorMessage 
-  */
-  errorMessage: string = ''
-
-  /**
-  * @property {boolean} isErrorVisible
-  * Represents whether to display an error message on the book page. Set to true to show the 
-  * error message and false to hide it.
-  * Default value: false.
-  */
-  isErrorVisible: boolean = false
-
-  /**
-  * Represents the current success message to display.
-  * @property {string} successMessage
-  */
-  successMessage: string = ''
-
-  /**
-  * Controls visibility of success messages.
-  * @property {boolean} isSuccessVisible
-  */
-  isSuccessVisible: boolean = false
-
+  
   /**
   * @constructor
   * @description
@@ -66,48 +40,6 @@ export class RoomDetailsComponent {
 
     // Fetch room details using the ID
     this.fetchRoomDetails()    
-  }
-
-   /**
-  * @method showError 
-  * @description Displays an error message for a specified duration.
-  * @param {string} message - The error message to be displayed. 
-  * @param {number} [duration= 3000] - Optional duration for the error message display in milliseconds.
-  */
-   showError(message: string, duration = 3000): void {
-
-    // Prevent multiple overlapping error messages
-    if (this.isErrorVisible) return;
-
-    // Set the error message and display state
-    this.errorMessage = message
-    this.isErrorVisible = true
-
-    setTimeout(() => {
-      this.isErrorVisible = false
-      this.errorMessage = ''
-    }, duration)
-  }
-
-   /**
-  * @method showSuccess
-  * @description Displays a success message for a specified duration. 
-  * @param {string} message - The success message to be displayed.
-  * @param {number} [duration= 3000] - Optional duration for the error message display in milliseconds.
-  */
-   showSuccess(message: string, duration = 3000): void {
-
-    // Prevent multiple overlapping error messages
-    if (this.isSuccessVisible) return
-
-    // Set the error message and display state
-    this.successMessage = message
-    this.isSuccessVisible = true
-
-    setTimeout(() => {
-      this.isSuccessVisible = false
-      this.successMessage = ''
-    }, duration);
   }
 
   /**
@@ -132,58 +64,6 @@ export class RoomDetailsComponent {
       // Log the error in the console
       console.log('Error fetching room details:', error);
     }
-  }
-
-  /**
-  * Handles the room deletion process by invoking the `deleteRoom` method 
-  * from the room service. Displays success or error messages based on the outcome.
-  * 
-  * @async
-  * @method onDeleteRoom
-  * @returns {Promise<void>} Resolves when the room is successfully deleted or logs an error if deletion fails.
-  * 
-  * @description
-  * This method interacts with the `roomService` to delete a room by its ID (`this.id`).
-  * Upon successful deletion, it displays a success message and logs the event.
-  * In case of an error, it shows an error message and logs the error for debugging.
-  */
-  async onDeteteRoom(): Promise<void> {
-
-    if (!this.id) {
-      console.error('Room ID is undefined or null. Deletion cannot proceed.');
-      this.showError('Invalid room ID. Deletion aborted.');
-      return;
-    }
-
-    try {
-
-      // Attempt to delete the room using the room service
-      await this.roomService.deleteRoom(this.id)
-
-       // Show success message and log the event
-      this.showSuccess('Room deletion successful!')
-      console.log('Room deletion successful!')
-
-      // Navigate to the rooms page after a short delay
-      setTimeout(() => {
-       this.router.navigate(['/rooms'])
-     }, 3500)
-
-    } catch (error) {
-
-      // Show error message and log the error for debugging
-      this.showError('Error occurred while deleting room')
-      console.log('Error occurred while deleting room:', error)
-    }
-  }
-
-  /**
-  * @method goToEditRoom
-  * @description 
-  */
-  goToEditRoom(id: any): void{
-    // navigate to edit room component
-    this.router.navigate(['/edit-room', id])
   }
 
 }
