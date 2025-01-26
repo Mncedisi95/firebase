@@ -5,6 +5,7 @@ import { NgFor, NgIf, SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator'
 import { AuthService } from '../../services/auth.service';
+import { threadId } from 'worker_threads';
 
 
 @Component({
@@ -54,12 +55,27 @@ export class RoomsComponent {
    * Represents the index of the last product displayed on the current page.
    * @property {number} highIndex - Ending index for pagination.
    */
-   highIndex: number = 8
+   highIndex: number = 6
 
    /**
     * @property {boolean} isLoggedIn
     */
     isLoggedIn: boolean = false
+
+    /**
+    * @property {any[]} any
+    */
+    filteredRooms: any[] = [] 
+
+    /**
+    * @property {string} selectedSortOption
+    */
+    selectedSortOption: string = ''  
+
+    /**
+     * @property {string} selectedRoomType
+     */
+    selectedRoomType : string = ''
 
    /**
    * @constructor
@@ -113,6 +129,55 @@ export class RoomsComponent {
     }
 
   }
+
+ /**
+  * Fetches sorted room data from the room service and updates the `rooms` list.
+  * @async
+  * @method onSortChange
+  * @description Handles the filter dropdown change event and sorts the rooms based on the selected sort option.
+  * @returns {Promise<void>} - Resolves when the room list is updated.
+  */
+  async onSortChange(): Promise<void> {
+
+    try {
+      // Check if a valid sorting option is selected
+      if (this.selectedSortOption === 'priceLowToHigh' || this.selectedSortOption === 'priceHighToLow') {
+        // Fetch sorted rooms from the room service
+        this.rooms = await this.roomService.sortRoomsByPrice(this.selectedSortOption);
+      } else {
+        console.warn('Invalid sort option selected:', this.selectedSortOption);
+      }
+
+    } catch (error) {
+      console.log('Error occurred while sorting rooms:', error);
+    }
+  }
+
+  /**
+  * Filters rooms by the selected room type.
+  * 
+  * @async
+  * @method onFilterRoomType
+  * @description Fetches rooms filtered by the selected room type from the RoomService and updates the `rooms` list.
+  * @returns {Promise<void>} Resolves when the room data is fetched and assigned.
+  */
+  async onFilterRoomType(): Promise<void> {
+    try {
+      // Ensure a valid room type is selected
+      if (!this.selectedRoomType || this.selectedRoomType.trim() === '') {
+        console.warn('No room type selected for filtering.')
+        return
+      }
+
+      // Fetch rooms filtered by the selected room type
+      this.rooms = await this.roomService.filterRoomsByType(this.selectedRoomType);
+
+      console.log('Filtered rooms:', this.rooms);
+    } catch (error) {
+      console.log('Error occurred while filtering rooms by type:', error);
+    }
+  }
+
 
   /**
   * Filters the list of rooms based on the user's search input.

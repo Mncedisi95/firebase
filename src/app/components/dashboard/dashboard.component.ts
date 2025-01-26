@@ -24,15 +24,24 @@ export class DashboardComponent {
   availableRooms : any[] = []
 
   /**
+  * @property {any[]} todayCheckIns 
+  */
+  todayCheckIns: any[] = []
+
+  /**
   * @property {number} items
   */
   items : number = 0
 
   /**
-   * @property {number} availableItems
-   */
+  * @property {number} availableItems
+  */
   availableItems: number = 0
 
+  /**
+   * @property {number} todayCheckInsItems
+   */
+  todayCheckInsItems: number = 0
 
   /**
   * @constructor
@@ -51,6 +60,8 @@ export class DashboardComponent {
     this.fetchRooms()
 
     this.fetchAvailableRooms()
+
+    this.fetchTodayCheckIns()
   }
 
   /**
@@ -85,6 +96,7 @@ export class DashboardComponent {
   }
 
   /**
+  * @async
   * @method fetchAvailableRooms
   * @description Fetches the list of available rooms by calling the room service and updates the component's state.
   * This function also logs the room data for debugging and handles any errors during the fetch process.
@@ -105,8 +117,38 @@ export class DashboardComponent {
 
       
     } catch (error) {
-       // Handle errors gracefully and log them
-       console.log('Error fetching available rooms:', error)
+      // Handle errors gracefully and log them
+      console.log('Error fetching available rooms:', error)
+    }
+  }
+
+  /**
+  * Fetches and processes the list of rooms scheduled for check-in today.
+  *
+  * @async
+  * @method fetchTodayCheckIns
+  * @description
+  * This method retrieves all the check-ins scheduled for the current day using the `roomService`. 
+  * It updates the list of check-ins and their count while handling potential errors gracefully.
+  * 
+  * @returns {Promise<void>} Resolves when the check-in data is successfully fetched and processed.
+  */
+  async fetchTodayCheckIns(): Promise<void>{
+
+    try {
+
+      // Fetch check-ins for today from the room service
+      this.todayCheckIns = await this.roomService.fetchTodayCheckIns()
+
+      // Update the count of today's check-in rooms
+      this.todayCheckInsItems = this.todayCheckIns.length
+
+      // Debugging: Log the fetched room data
+      console.log('Fetched today check-ins:', this.todayCheckIns)
+      
+    } catch (error) {
+        // Handle errors gracefully and log them for debugging
+        console.error('Error fetching today check-ins:', error)
     }
   }
 

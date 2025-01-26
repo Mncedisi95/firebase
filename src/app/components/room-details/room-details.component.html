@@ -17,23 +17,51 @@
     <div class="room-details" *ngIf="roomDetails">
         <h4 class="room-title">{{roomDetails.roomType}}</h4>
         <div class="room-content">
-            <img [src]="roomDetails.roomImage" alt="" class="room-image"/>
+            <img [src]="roomDetails.roomImage" alt="" class="room-image" />
             <ul class="room-info">
                 <li><strong>Room Number:</strong>{{roomDetails.roomNumber}}</li>
                 <li><strong>Room Price:</strong>${{roomDetails.price}}/Per night </li>
                 <li><strong>Room Capacity:</strong>Max persion {{roomDetails.capacity}}</li>
                 <li><strong>Room Bed:</strong>{{roomDetails.bedType}}</li>
-                <li><strong>Room Size:</strong>{{roomDetails.size}} ft</li>
+                <li><strong>Room Size:</strong>{{roomDetails.size}}m<sup>2</sup></li>
                 <li><strong>Room Status:</strong>{{roomDetails.status}}</li>
                 <li><strong>Room Services:</strong>{{roomDetails.services}}</li>
-                <li><strong>Room Rating:</strong> ⭐⭐⭐⭐</li>
             </ul>
         </div>
         <p class="room-description"><strong>Room Description:</strong>{{roomDetails.description}}</p>
         <div class="button-group">
-            <button class="btn-primary">Book Now</button>
+            <button class="btn-primary" *ngIf="isLoggedIn" (click)="goToBookRoom()">Book Now</button>
         </div>
     </div>
     <!-- End of Room Details -->
+
+
+    <!-- Review Section -->
+    <section class="reviews-section">
+        <h2 class="section-subtitle">Guest Reviews</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-header">
+                    <img src="assets/users/Fikile.jpg" alt="Guest Profile" class="guest-profile-image" />
+                    <div class="review-meta">
+                        <h4 class="guest-name">Andile Ngema</h4>
+                        <p class="review-date">20-01-2025</p>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <p class="rating">Rating: 3/ 5</p>
+                    <p class="comment">Neque porro qui squam est, qui dolorem ipsum quia dolor sit amet, consectetur, 
+                        adipisci velit, sed quia non numquam eius modi tempora. incidunt ut labore et dolore magnam.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- No Reviews Message -->
+    <div class="no-reviews">
+        <p>No reviews yet. Be the first to review this room!</p>
+    </div>
+    <!-- End of Reviews Section -->
 </section>
 <!-- End of Section -->

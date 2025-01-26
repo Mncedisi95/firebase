@@ -186,7 +186,7 @@ button{
 }
 
 .search-input{
-    width: 30%;
+    width: 50%;
     padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -203,7 +203,7 @@ button{
 
 .filter-dropdown {
     flex: 1;
-    max-width: 250px;
+    max-width: 200px;
 }
 
 .filter-select {

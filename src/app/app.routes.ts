@@ -22,6 +22,9 @@ import { roleGuard } from './guards/role.guard';
 import { RoomsAdminComponent } from './components/rooms-admin/rooms-admin.component';
 import { RoomDetailsAdminComponent } from './components/room-details-admin/room-details-admin.component';
 import { RoomAvailabilityComponent } from './components/room-availability/room-availability.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { ViewProfileComponent } from './components/view-profile/view-profile.component';
+import { LeaveReviewComponent } from './components/leave-review/leave-review.component';
 
 export const routes: Routes = [
 
@@ -61,7 +64,7 @@ export const routes: Routes = [
     data: { roles: ['admin'] }, 
   },
   {
-    path: 'booking-details',
+    path: 'booking-details/:id',
     component: BookingDetailsComponent,
     canActivate: [authGuard, roleGuard],
     data: { roles: ['admin', 'staff'] },
@@ -99,17 +102,34 @@ export const routes: Routes = [
   {
     path: 'room-details/:id',
     component: RoomDetailsComponent,
-    canActivate: [authGuard],
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, roleGuard],
+    data: {roles: ['admin']}
   },
   {
-    path: 'edit-profile',
+    path: 'edit-profile/:id',
     component: EditProfileComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard, roleGuard],
+    data: {roles: ['guest']}
+  },
+  {
+    path: 'view-profile',
+    component: ViewProfileComponent,
+    canActivate : [authGuard, roleGuard],
+    data: {roles : ['guest']}
+  },
+  {
+    path: 'payment/:bookingId',
+    component: PaymentComponent,
+    canActivate : [authGuard,roleGuard],
+    data: {roles : ['guest']}
+  },
+  {
+    path: 'leave-review/:roomId',
+    component: LeaveReviewComponent,
   },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },

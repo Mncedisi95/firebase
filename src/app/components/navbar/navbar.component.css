@@ -39,6 +39,7 @@ ul{
     background-color: transparent;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     background-color:  #BA55D3;
+    z-index: 1000;
 }
 
 .navbar:hover{

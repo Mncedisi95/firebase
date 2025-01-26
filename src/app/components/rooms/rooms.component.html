@@ -19,13 +19,28 @@
         </div>
 
         <!-- Filter Dropdown -->
-        <div class=".filter-dropdown ">
-            <select class="filter-select">
-                <option value="" disabled selected>Filter By</option>
-                <option value="">Price: Low to High</option>
-                <option value="">Price: High to Low</option>
-                <option value="">Capacity</option>
-                <option value="">Type</option>
+        <div class="filter-dropdown">
+            <select class="filter-select" [(ngModel)]="selectedSortOption" (change)="onSortChange()">
+                <option value="" disabled selected>Filter By Price</option>
+                <option value="priceLowToHigh">Low to High</option>
+                <option value="priceHighToLow">High to Low</option>
+            </select>
+        </div>
+        
+        <div class="filter-dropdown">
+            <select class="filter-select" [(ngModel)]="selectedRoomType" (change)="onFilterRoomType()">
+                <option value="" disabled selected>Filter by Room Type</option>
+                <option value="Premium King Room">Premium King Room</option>
+                <option value="Deluxe Room">Deluxe Room</option>
+                <option value="Double Room">Double Room</option>
+                <option value="Standard Room">Standard Room</option>
+                <option value="Suite Room">Suite Room</option>
+                <option value="Executive Room">Executive Room</option>
+                <option value="Family Room">Family Room</option>
+                <option value="Accessible Room">Accessible Room</option>
+                <option value="Honeymoon Suite">Honeymoon Suite</option>
+                <option value="Presidential Suite">Presidential Suite</option>
+                <option value="Penthouse Suite">Penthouse Suite</option>
             </select>
         </div>
     </div> 
@@ -41,7 +56,7 @@
                     <h3 class="room-price">${{room.price}}<span class="price-unit">/Pernight</span></h3>
                 </div>
                 <div class="room-details">
-                    <li><strong>Size:</strong>{{room.size}}ft<sup>2</sup></li>
+                    <li><strong>Size:</strong>{{room.size}}m<sup>2</sup></li>
                     <li><strong>Capacity:</strong>Max person {{room.capacity}}</li>
                     <li><strong>Bed:</strong>{{room.bedType}}</li>
                     <li><strong>Services:</strong>{{room.services}}</li>

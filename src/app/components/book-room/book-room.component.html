@@ -1,16 +1,20 @@
-<!-- Section -->
 <section class="section">
-
-    <!-- Title -->
     <h1 class="section-subtitle">Booking</h1>
 
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']">Home</a></li>
+            <li><a [routerLink]="['/rooms']">Rooms</a></li>
+            <li>Book A Room</li>
+        </ul>
+    </nav>
     <!-- Main Container -->
-    <div class="container">
-
+    <div class="main-container">
         <!-- Form Section -->
-        <form [formGroup]="bookRoomForm">
-
-            <!--Check In Date -->
+        <form class="form-section" [formGroup]="bookRoomForm">
+           
+            <!-- Check-In Date -->
             <div>
                 <label for="checkin">Check In:</label>
                 <input id="checkin" formControlName="checkIn" type="date" aria-label="CheckIn" />
@@ -19,15 +23,13 @@
                 </div>
             </div>
 
-            <!-- Check Out Date -->
+            <!-- Check-Out Date -->
             <div>
                 <label for="checkout">Check Out:</label>
                 <input id="checkout" formControlName="checkOut" type="date" aria-label="CheckOut" />
                 <div *ngIf="bookRoomForm.get('checkOut')?.touched">
-                    <small *ngIf="bookRoomForm.get('checkOut')?.errors?.['required']">*Check Out date is
-                        required!</small>
-                    <small *ngIf="bookRoomForm.errors?.['dateInvalid']">*Check Out date must be after Check In
-                        date!</small>
+                    <small *ngIf="bookRoomForm.get('checkOut')?.errors?.['required']">*Check Out date is required!</small>
+                    <small *ngIf="bookRoomForm.errors?.['dateInvalid']">*Check Out date must be after Check In date!</small>
                 </div>
             </div>
 
@@ -56,7 +58,6 @@
                     placeholder="Enter any special requests (e.g., late check-in, extra bed, etc.)"
                     aria-label="SpecialRequest"></textarea>
                 <div *ngIf="bookRoomForm.get('specialRequest')?.touched">
-                    <small *ngIf="bookRoomForm.get('specialRequest')?.errors?.['required']"></small>
                     <small *ngIf="bookRoomForm.get('specialRequest')?.errors?.['maxlength']">
                         *Special requests must not exceed 250 characters.
                     </small>
@@ -66,21 +67,34 @@
             <!-- Book Room Button -->
             <button type="submit" class="btn-primary" (click)="bookRoom()">Book Room</button>
 
-            <!-- Check Availability Button -->
-            <button type="submit" class="btn-secondary">Check Availability</button>
-
+             <!-- Success/Error Message -->
             <div>
-                <input *ngIf="isSuccessVisible" class="alert-success" placeholder={{successMessage}} />
+                <input *ngIf="isSuccessVisible" class="alert-success" placeholder={{successMessage}} readonly />
             </div>
-
-            <!--Error Message -->
             <div>
                 <input *ngIf="isErrorVisible" class="alert-danger" placeholder={{errorMessage}} readonly />
             </div>
 
         </form>
-        <!-- End of Form -->
+
+        <!-- Payment Section -->
+        <div class="payment-section" *ngIf="isRoomBooked">
+            <h3>Booking Confirmed!</h3>
+            <p>Congratulations! Your room has been successfully reserved.</p>
+
+            <h4>📅 Booking Details:</h4>
+            <ul>
+                <li>Check-in Date: {{ bookRoomForm.get('checkIn')?.value }}</li>
+                <li>Check-out Date: {{ bookRoomForm.get('checkOut')?.value }}</li>
+                <li>Guests: {{ bookRoomForm.get('guest')?.value }}</li>
+            </ul>
+
+            <h4>💳 Next Step:</h4>
+            <p>
+                To finalize your reservation, please complete the payment below. Your booking will
+                be held for the next <strong>{{ bookingHoldTime }} minutes</strong>.
+            </p>
+            <button class="btn-secondary" (click)="processPayment()">Proceed to Payment</button>
+        </div>
     </div>
-    <!-- End of Main Container -->
 </section>
-<!-- End of Section -->

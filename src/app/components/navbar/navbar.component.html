@@ -44,9 +44,9 @@
 
             <div class="navbar-right">
                 <div *ngIf="isLoggedIn" class="user-menu">
-                    <img src="assets/users/Fikile.jpg" alt="User" class="user-avatar" (click)="toggleMenu()"/>
+                    <img [src]="guestDetails.profile" alt="User" class="user-avatar" (click)="toggleMenu()"/>
                     <ul class="user-dropdown-menu" [class.show]="menuOpen">
-                        <li>Profile</li>
+                        <li routerLink="/view-profile">Profile</li>
                         <li (click)="logout()">Logout</li>
                     </ul>
                 </div>

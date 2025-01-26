@@ -25,6 +25,11 @@ export class RoomAvailabilityComponent {
   */
  bookedRooms : any[] = []
 
+ /**
+ * @property {any[]} any
+ */
+ MaintenanceRooms : any
+
   /**
   * @property {number} items
   */
@@ -34,6 +39,11 @@ export class RoomAvailabilityComponent {
   * @property {number} availableItems
   */
   availableItems: number = 0
+
+  /**
+   * @property {number} MaintenanceItems
+   */
+  MaintenanceItems: number = 0 
 
   /**
   * @property {numbe} bookedItems
@@ -53,6 +63,8 @@ export class RoomAvailabilityComponent {
     this.fetchAvailableRooms()
 
     this.fetchBookedRooms()
+
+    this.fetchMaintenanceRooms()
   }
 
     /**
@@ -130,6 +142,31 @@ export class RoomAvailabilityComponent {
 
       // Debugging: Log the fetched room data
       console.info('Fetched Booked Rooms:', this.bookedRooms)
+      
+    } catch (error) {
+        // Handle errors gracefully and log them
+        console.log('Error fetching booked rooms:', error)
+    }
+  }
+
+  /**
+  * @method fetchMaintenanceRooms
+  * @description Fetches the list of rooms with a "Maintenace" status and updates the local state.
+  * Calls the room service to retrieve data, logs the results, and handles errors gracefully.
+  * @returns {Promise<void>} Resolves when the operation is complete.
+  */
+  async fetchMaintenanceRooms(): Promise<void>{
+
+    try {
+
+      // Fetch rooms under maintenance from the room service
+      this.MaintenanceRooms = await this.roomService.getMaintenanceRooms()
+
+      // Update the count of booked rooms
+      this.MaintenanceItems = this.MaintenanceRooms.length
+
+      // Debugging: Log the fetched room data
+      console.info('Fetched Under Maintenance Rooms:', this.MaintenanceRooms)
       
     } catch (error) {
         // Handle errors gracefully and log them

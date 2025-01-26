@@ -18,7 +18,7 @@
     
     <!-- Data List Selection -->
     <div class="data-list">
-        <div class="data-item" *ngFor="let room of rooms">
+        <div class="data-item" *ngFor="let room of (rooms | slice : lowIndex : highIndex)">
             <h1 class="room-type">{{room.roomType}}</h1>
             <img [src]="room.roomImage" alt="Room 101" class="room-image" />
             <h3>Room {{room.roomNumber}}</h3>
@@ -27,10 +27,12 @@
                 <li><i class="fas fa-wifi"></i>{{room.services}}</li>
             </ul>
             <button class="btn-primary" (click)="goToRoomDetails(room.id)">View More</button>
+            
             <!-- Conditional Button -->
-            <button class="btn-secondary" [ngClass]="{'btn-booked': room.status === 'Booked'}" (click)="goToBookRoom(room.id)"
-                [disabled]="room.status === 'Booked'">
-                {{ room.status === 'Booked' ? 'Booked' : 'Book Now' }}
+            <button class="btn-secondary"
+                [ngClass]="{'btn-booked': room.status === 'Booked','btn-pending': room.status === 'Maintenance'}"
+                (click)="goToBookRoom(room.id)" [disabled]="room.status === 'Booked' || room.status === 'Maintenance'">
+                {{ room.status === 'Booked' ? 'Booked' : room.status === 'Maintenance' ? 'Maintenance' : 'Book Now' }}
             </button>
            
         </div>
@@ -39,6 +41,9 @@
     <!-- End of Data Selection -->
     
     <!-- Pagination -->
+    <mat-paginator [length]= items [pageSize]="6" [showFirstLastButtons]="true" [pageIndex]="currentpage" [pageSizeOptions]="[6, 9, 12, 15, 18, 21]" (page)="handlePagenator($event)" aria-label="Select page">
+    </mat-paginator>
+    <!-- End of Pagination -->
    
 </section>
 <!-- End Of Rooms Section -->

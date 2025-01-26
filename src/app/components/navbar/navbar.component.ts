@@ -2,6 +2,7 @@ import { NgIf } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -36,12 +37,22 @@ export class NavbarComponent {
     */
    isAdmin: boolean = false
 
+    /**
+    * @property {any} guestDetails 
+    */
+    guestDetails : any
+
+    /**
+    * @property {any} id 
+    */
+    id : any
+
    /**
    * @constructor
    * @description
    * @param {Router} router 
    */
-   constructor(private router: Router,private authService: AuthService){}
+   constructor(private router: Router,private authService: AuthService,private userService : UserService){}
 
    /**
    * @description
@@ -53,11 +64,14 @@ export class NavbarComponent {
       if(user){
 
         this.isLoggedIn = !!user
+        this.id = user.uid
+
+        this.fetchGuestDetails()
 
         // Check if user has admin role
         this.authService.hasRole().then(role =>{
 
-          this.isAdmin = role === 'admin'
+        this.isAdmin = role === 'admin'
         })
       }
       else {
@@ -71,6 +85,34 @@ export class NavbarComponent {
       this.isAuthPage = authRoutes.includes(this.router.url)
     })
   }
+
+   /**
+  * @async
+  * @method fetchGuestDetails
+  * @description Fetches guest details from the database based on the provided guest ID. 
+  *              Logs an error if the ID is missing or the request fails.
+  * @returns {Promise<void>} Resolves when guest details are fetched and assigned successfully.
+  */
+   async fetchGuestDetails(): Promise<void> {
+
+    if (!this.id) {
+      console.error('Guest ID is undefined. Cannot fetch guest details.');
+      return
+    }
+
+    try {
+    
+      // Fetch guest details from the service
+      this.guestDetails = await this.userService.getGuestById(this.id)
+
+      // Log the fetched details for debugging
+      console.log('Guest Details:', this.guestDetails);
+    } catch (error) {
+      // Handle potential errors gracefully
+      console.log('Error fetching guest details:', error);
+    }
+  }
+
   
   /**
   * @method toggleDropdown 

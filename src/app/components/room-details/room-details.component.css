@@ -171,3 +171,77 @@
     margin: 0 0.5rem;
     color: #6c757d;
 }
+
+.reviews-section {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 1.5rem; 
+}
+
+.review-card {
+    padding: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.review-card:hover {
+    transform: scale(1.05); 
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.guest-profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
+.review-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.guest-name {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.review-date {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.review-content {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.rating {
+    font-weight: bold;
+    color: #BA55D3;
+}
+
+.no-reviews {
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+    margin-top: 2rem;
+}

@@ -15,18 +15,19 @@
      <!-- Booking Details Section -->
      <div class="booking-details">
           <!-- Booking Info -->
-          <div class="booking-info">
+          <div class="booking-info" *ngIf="bookingDetails && paymentDetails && guestDetails">
                <h3>Booking Information</h3>
                <ul class="details-list">
-                    <li><strong>Room Number:</strong> #201</li>
-                    <li><strong>Guest Name:</strong> John Doe</li>
-                    <li><strong>Email:</strong> john.doeexample.com</li>
-                    <li><strong>Contact:</strong> +123-456-7890</li>
-                    <li><strong>Check-In:</strong> 2025-01-15</li>
-                    <li><strong>Check-Out:</strong> 2025-01-20</li>
-                    <li><strong>Room Type:</strong> Deluxe Room</li>
-                    <li><strong>Guests:</strong> 2 Adults</li>
-                    <li><strong>Total Price:</strong> $795</li>
+                    <li><strong>Room Number:</strong>{{roomDetails?.roomNumber}}</li>
+                    <li><strong>Guest Name:</strong>{{guestDetails.name}}</li>
+                    <li><strong>Email:</strong>{{guestDetails.email}}</li>
+                    <li><strong>Contact:</strong>{{guestDetails.phone}}</li>
+                    <li><strong>Check-In:</strong>{{bookingDetails.checkIn}}</li>
+                    <li><strong>Check-Out:</strong>{{bookingDetails.checkOut}}</li>
+                    <li><strong>Room Type:</strong>{{roomDetails.roomType}}</li>
+                    <li><strong>Guests:</strong> {{bookingDetails.numberOfGuest}}</li>
+                    <li><strong>Status:</strong>{{bookingDetails.status}}</li>
+                    <li><strong>Total Price:</strong> ${{paymentDetails.amount}}</li>
                     <li><strong>Status:</strong>
                          <select (change)="updateStatus($event)" class="status-dropdown">
                               <option value="confirmed">Confirmed</option>
@@ -41,9 +42,9 @@
           <div class="payment-info">
                <h3>Payment Information</h3>
                <ul class="details-list">
-                    <li><strong>Payment Method:</strong> Credit Card</li>
-                    <li><strong>Payment Status:</strong> Paid</li>
-                    <li><strong>Transaction ID:</strong> TXN12345678</li>
+                    <li><strong>Payment Method:</strong>{{paymentDetails.paymentMethod}}</li>
+                    <li><strong>Payment Status:</strong>{{bookingDetails.paymentStatus}}</li>
+                    <li><strong>Transaction ID:</strong>{{paymentDetails.transactionId}}</li>
                </ul>
           </div>
 

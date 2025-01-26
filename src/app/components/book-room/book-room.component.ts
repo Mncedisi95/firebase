@@ -1,13 +1,13 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RoomService } from '../../services/room.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-book-room',
-  imports: [ReactiveFormsModule,NgIf],
+  imports: [ReactiveFormsModule,NgIf,RouterLink],
   templateUrl: './book-room.component.html',
   styleUrl: './book-room.component.css'
 })
@@ -58,9 +58,29 @@ export class BookRoomComponent {
   userId: any 
 
   /**
+  * @property {boolean} isRoomBooked
+  */
+  isRoomBooked : boolean = false
+
+  /**
+  * @property {any} bookingId
+  */
+  bookingId: any
+
+  /**
+  * @property {any} roomToBook
+  */
+  roomToBook: any
+
+  /**
+   * @property {number} 
+   */
+  bookingHoldTime  : number = 15
+
+  /**
   * @constructor
   * @description Initializes the component by injecting necessary services 
-  * and setting up the reactive form for room booking or actions.
+  * and setting up the reactivse form for room booking or actions.
   * @param {FormBuilder} formBuilder - Angular service to create reactive forms.
   * @param {Router} router - Angular router service for navigation between routes.
   * @param {RoomService} roomService 
@@ -90,7 +110,7 @@ export class BookRoomComponent {
     })
   
     // Get the room ID from the route parameters
-    this.id = this.route.snapshot.paramMap.get('id')
+    this.id = this.route.snapshot.paramMap.get('id') || ''
 
   }
  
@@ -174,9 +194,13 @@ export class BookRoomComponent {
     const guest = parseInt(this.bookRoomForm.get('guest')?.value, 10)
     const specialRequest = this.bookRoomForm.get('specialRequest')?.value
 
+    // Step 3: Validate check-in and check-out dates
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set time to midnight to simplify date comparisons
+
     try {
 
-      // Step 3: Validate room capacity
+      // Step 4: Validate room capacity
       const room = await this.roomService.getRoomById(this.id)
 
       if(guest > room.capacity){
@@ -184,29 +208,37 @@ export class BookRoomComponent {
         return
       }
       
-      // Step 4: Attempt to book the room using the service
-     await this.roomService.bookRoom(this.userId,this.id,checkIn,checkOut,guest,specialRequest)
+      // Step 5: Attempt to book the room using the service
+      this.roomToBook = await this.roomService.bookRoom(this.userId,this.id,checkIn,checkOut,guest,specialRequest)
 
-     // Step 5: Update room status to 'Booked'
+     // Step 6: Update room status to 'Booked'
      await this.roomService.updateRoomStatus(this.id, 'Booked');
      console.log('Room status updated to Booked')
 
-     // Step 6: Provide success feedback to the user
+     // Step 7: Provide success feedback to the user
      this.showSuccess('New booking added successfully.')
      console.log('New booking added successfully.')
 
-     // Step 7: Navigate to the view booking page after a short delay
-     setTimeout(() => {
-      this.router.navigate(['/view-booking'])
-    }, 3500)
-
+     // Assuming bookingResponse contains bookingId
+     this.bookingId = this.roomToBook.id
+     
+     // Enable the Pay Now button
+     this.isRoomBooked = true
+    
     } catch (error) {
 
       // Step 8: Handle errors and provide feedback to the user
       console.log('Error adding booking:',error)
       this.showError('Error booking room. Please try again')
     }
+  }
 
+  /**
+  * @method goToPayment
+  */
+  processPayment() {
+    
+   this.router.navigate(['/payment', this.bookingId])
   }
 
 }

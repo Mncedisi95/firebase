@@ -73,13 +73,8 @@ export class ManageBookingsComponent {
 
     } catch (error) {
       
-      console.error('Error retrieving bookings or related details:', error)
+      console.log('Error retrieving bookings or related details:', error)
     }
-  }
-
-   // Dummy methods for actions
-   editBooking(id: string): void {
-    console.log('Edit booking with ID:', id);
   }
 
   deleteBooking(id: string): void {
@@ -90,9 +85,9 @@ export class ManageBookingsComponent {
   * @method
   * @description
   */
-  goToViewBooking(){
+  goToViewBooking(id: any){
 
-    this.router.navigate(['/booking-details'])
+    this.router.navigate(['/booking-details', id])
   }
 
 }

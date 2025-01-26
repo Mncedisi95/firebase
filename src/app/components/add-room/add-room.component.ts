@@ -56,7 +56,6 @@ export class AddRoomComponent {
 
     // Initialize the book room form with validation rules
     this.addRoomForm = this.formBuilder.group({
-
       //Room Number: Required
       roomNumber:['',[Validators.required]],
       // Room Type: Required

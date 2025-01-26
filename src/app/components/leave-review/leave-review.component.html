@@ -1,0 +1,43 @@
+<section class="review-page">
+    <h1 class="section-title">Leave a Review</h1>
+    <p class="section-subtitle">Share your experience with this room</p>
+
+    <form [formGroup]="reviewForm" (ngSubmit)="onSubmitReview()" class="review-form">
+        <!-- Rating -->
+        <div class="form-group">
+            <label for="rating">Rating (1-5):</label>
+            <select id="rating" formControlName="rating" class="form-control" aria-label="Rating">
+                <option value="" disabled selected>Select a rating</option>
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+            </select>
+            <small *ngIf="reviewForm.get('rating')?.touched && reviewForm.get('rating')?.invalid">
+                Rating is required!
+            </small>
+        </div>
+
+        <!-- Comment -->
+        <div class="form-group">
+            <label for="comment">Comment:</label>
+            <textarea id="comment" formControlName="comment" rows="5" class="form-control"
+                placeholder="Write your review here..." aria-label="Comment"></textarea>
+            <div *ngIf="reviewForm.get('comment')?.touched && reviewForm.get('comment')?.invalid">
+                <small *ngIf="reviewForm.get('comment')?.errors?.['required']">Room comment is required!</small>
+                <small *ngIf="reviewForm.get('comment')?.errors?.['minLength']">
+                    Comment must be at least 10 characters long!
+                </small>
+            </div>
+        </div>
+        <!-- Submit Button -->
+        <div class="form-group">
+            <button type="submit" class="btn-primary">Submit Review</button>
+
+            <input *ngIf="isSuccessVisible" class="alert-success" placeholder={{successMessage}} />
+
+            <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
+        </div>
+    </form>
+</section>

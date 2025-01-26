@@ -104,8 +104,16 @@ button{
     background-color: #f44336;
 }
 
+.btn-cancel:disabled{
+    cursor: not-allowed;
+}
+
 .btn-primary{
     background-color:  #BA55D3; 
+}
+
+.btn-primary:disabled{
+    cursor: not-allowed;
 }
 
 .btn-cancel:hover {
@@ -150,4 +158,37 @@ button{
     content: '>';
     margin: 0 0.5rem;
     color: #6c757d;
+}
+
+input{
+    width: 360px;
+    height: 4px;
+    padding: 14px;
+    font-size: 12px;
+    border: 1.5px solid #ddd;
+    margin: 5px 0 10px;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+}
+
+.alert-danger,
+.alert-success {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    max-width: 100%;
+    border-radius: 0.2857rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.alert-success{
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.alert-danger{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }
