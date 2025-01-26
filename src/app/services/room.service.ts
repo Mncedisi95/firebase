@@ -125,18 +125,18 @@ export class RoomService {
   async addReview(reviewData: any): Promise<DocumentReference> {
 
     try {
-      
+
       // Reference to the Firestore 'reviews' collection
       const reviewCollection = collection(this.firestore, 'reviews')
 
       // Add the review to Firestore
-      const reviewDocRef = await addDoc(reviewCollection,reviewData)
+      const reviewDocRef = await addDoc(reviewCollection, reviewData)
       console.log('booking added successfully:', reviewDocRef.id)
 
       return reviewDocRef
 
     } catch (error) {
-      
+
       console.error('Error during user registration:', error);
       throw error
     }
@@ -275,7 +275,6 @@ export class RoomService {
       }))
 
     } catch (error) {
-
       console.log('Error fetching available rooms:', error)
       throw new Error('Unable to fetch available rooms. Please try again later.')
     }
@@ -498,7 +497,45 @@ export class RoomService {
       throw new Error('Unable to fetch guest bookings. Please try again later.');
     }
   }
-  
+
+  /**
+  * Fetches reviews for a specific room by its ID.
+  *
+  * @param {string} roomId - The unique identifier of the room.
+  * @returns {Promise<Array<{ id: string; [key: string]: any }>>} A promise that resolves to an array of review objects.
+  * Each review object contains the review ID (`id`) and the rest of its Firestore data.
+  * @throws {Error} Throws an error if the `roomId` is invalid or if fetching reviews fails.
+  */
+  async getRoomReviewByRoomId(roomId: any): Promise<Array<{ id: string;[key: string]: any }>> {
+
+    // Validate input
+    if (!roomId) {
+      throw new Error('Room ID is required to fetch reviews.')
+    }
+
+    try {
+
+      // Create a Firestore query for reviews matching the given roomId
+      const reviewsQuery = query(
+        collection(this.firestore, 'reviews'),
+        where('roomId', '==', roomId)
+      )
+
+      // Fetch the reviews from Firestore
+      const querySnapshot = await getDocs(reviewsQuery)
+
+      // Transform the query results into a structured array of review objects
+      return querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+
+    } catch (error) {
+      console.log('Error fetching room reviews:', error);
+      throw new Error('Unable to fetch room reviews. Please try again later.')
+    }
+  }
+
   /** 
   * @async
   * @method fetchRooms
@@ -722,7 +759,7 @@ export class RoomService {
   * @returns {Promise<void>} - A promise that resolves when the update operation is complete.
   * @throws {Error} - Throws an error if the update operation fails.
   */
-  async checkIn(bookingId: any, updatedData: Partial<any>){
+  async checkIn(bookingId: any, updatedData: Partial<any>) {
 
     try {
 
@@ -737,27 +774,24 @@ export class RoomService {
       // Perform the update operation on the Firestore document
       await updateDoc(bookingDocRef, updatedData);
 
-      // Log success message
-      console.log(`Booking with ID: ${bookingId} updated successfully.`)
-
     } catch (error) {
       console.error('Error updating booking:', error)
       // Re-throw the error for further handling
       throw error
     }
   }
-  
- /**
- * @async
- * @method checkOut
- * @description Updates a booking document in Firestore with the provided updated data, and marks the associated room as available after guest check-out.
- * This method is typically used for finalizing the check-out process and ensuring room availability.
- * 
- * @param {string} bookingId - The ID of the booking to update.
- * @param {Partial<any>} updatedData - The data to update in the booking document.
- * @returns {Promise<void>} - A promise that resolves when the update operation is complete.
- * @throws {Error} - Throws an error if the update operation fails.
- */
+
+  /**
+  * @async
+  * @method checkOut
+  * @description Updates a booking document in Firestore with the provided updated data, and marks the associated room as available after guest check-out.
+  * This method is typically used for finalizing the check-out process and ensuring room availability.
+  * 
+  * @param {string} bookingId - The ID of the booking to update.
+  * @param {Partial<any>} updatedData - The data to update in the booking document.
+  * @returns {Promise<void>} - A promise that resolves when the update operation is complete.
+  * @throws {Error} - Throws an error if the update operation fails.
+  */
   async checkOut(bookingId: string, updatedData: Partial<any>): Promise<void> {
     try {
       // Ensure the bookingId is provided
@@ -789,17 +823,59 @@ export class RoomService {
       const roomDocRef = doc(this.firestore, 'rooms', roomId);
 
       // Update the room status to 'Available'
-      await updateDoc(roomDocRef, { status: 'Available' });
+      await updateDoc(roomDocRef, { status: 'Available' })
 
-      // Log success message
-      console.log(`Booking with ID: ${bookingId} updated successfully.`);
-      console.log(`Room with ID: ${roomId} is now marked as 'Available'.`);
     } catch (error) {
       console.error('Error during check-out process:', error);
       // Re-throw the error for further handling
       throw error;
     }
   }
+
+  /**
+  * Updates the status of a single booking identified by its booking ID.
+  * If the booking status is updated to 'Cancelled', it also updates the associated room status to 'Available'.
+  * 
+  * @async
+  * @method updateBookingStatus
+  * @param {string} bookingId - The unique ID of the booking to be updated.
+  * @param {string} status - The new status to set for the booking (e.g., 'Pending', 'Confirmed').
+  * @returns {Promise<void>} Resolves when the status of the booking has been successfully updated.
+  * @throws {Error} Throws an error if updating the booking status fails.
+  */
+  async updateBookingStatus(bookingId: any, status: string): Promise<void> {
+
+    try {
+
+      // Reference to the Firestore document for the specified booking
+      const bookingDocRef = doc(this.firestore, 'bookings', bookingId)
+
+      // Fetch the booking document to get the associated room ID
+      const bookingSnapshot = await getDoc(bookingDocRef)
+
+      if (!bookingSnapshot.exists()) {
+        throw new Error(`Booking with ID ${bookingId} does not exist.`)
+      }
+
+      const bookingData = bookingSnapshot.data()
+      const roomId = bookingData?.['roomId']
+
+      // Update the booking status
+      await updateDoc(bookingDocRef, { status })
+
+      // If the new status is 'Cancelled', update the room status to 'Available'
+      if (status === 'Cancelled' && roomId) {
+
+        const roomDocRef = doc(this.firestore, 'rooms', roomId);
+        await updateDoc(roomDocRef, { status: 'Available' })
+      }
+
+    } catch (error) {
+      console.error('Error updating booking status:', error);
+      throw new Error('Failed to update booking status. Please try again.');
+    }
+  }
+
 
 
 }

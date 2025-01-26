@@ -13,32 +13,17 @@
   
     <!-- Guest Details -->
     <div class="guest-details">
-      <h4 class="guest-name">John Doe</h4>
+      <h4 class="guest-name">{{guestDetails?.name}}</h4>
   
       <div class="guest-content">
-        <img src="assets/users/Fikile.jpg" alt="Guest Photo" class="guest-image" />
+        <img [src]="guestDetails?.profile" alt="Guest Photo" class="guest-image" />
   
         <ul class="guest-info">
-          <li><strong>Guest ID:</strong> 001</li>
-          <li><strong>Email:</strong> johndoeexample.com</li>
-          <li><strong>Phone:</strong> +1-234-567-890</li>
-          <li><strong>Check-In Date:</strong> 2025-01-10</li>
-          <li><strong>Check-Out Date:</strong> 2025-01-15</li>
-          <li><strong>Room Assigned:</strong> Deluxe Room</li>
-          <li><strong>Status:</strong>
-            <select class="status-select">
-              <option value="checked-in" selected>Checked In</option>
-              <option value="checked-out">Checked Out</option>
-              <option value="upcoming">Upcoming</option>
-            </select>
-          </li>
+          <li><strong>Email:</strong>{{guestDetails?.email}}</li>
+          <li><strong>Phone:</strong>{{guestDetails?.phone}}</li>
+          <li><strong>Address</strong>{{guestDetails?.address}}</li>
         </ul>
       </div>
-  
-      <p class="guest-description">
-        <strong>Notes:</strong> John has requested a quiet room near the garden and prefers non-smoking areas. 
-        Additional requests include an extra pillow and bottled water.
-      </p>
   
       <!-- Action Buttons -->
       <div class="button-group">

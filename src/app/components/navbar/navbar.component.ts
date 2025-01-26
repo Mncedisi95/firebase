@@ -105,8 +105,6 @@ export class NavbarComponent {
       // Fetch guest details from the service
       this.guestDetails = await this.userService.getGuestById(this.id)
 
-      // Log the fetched details for debugging
-      console.log('Guest Details:', this.guestDetails);
     } catch (error) {
       // Handle potential errors gracefully
       console.log('Error fetching guest details:', error);

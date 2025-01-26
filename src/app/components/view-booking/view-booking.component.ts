@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-view-booking',
-  imports: [RouterLink,NgFor,SortByDatePipe,NgIf],
+  imports: [RouterLink, NgFor, SortByDatePipe, NgIf],
   templateUrl: './view-booking.component.html',
   styleUrl: './view-booking.component.css'
 })
@@ -21,12 +21,12 @@ export class ViewBookingComponent {
   /**
   * @property {any} roomId 
   */
-  roomId : any
+  roomId: any
 
   /**
   * @property {any[]} bookings
   */
- bookings : any[] = []
+  bookings: any[] = []
 
   /**
   * @property {string} today
@@ -62,20 +62,24 @@ export class ViewBookingComponent {
   /**
   * @property {any} currentBookingId
   */
-  currentBookingId : string | null = null
+  currentBookingId: string | null = null
 
   /**
   * @constructor
   * @description 
   * @param router 
   */
-  constructor(private router:Router,private roomService: RoomService,private authService:AuthService){}
+  constructor(
+    private router: Router, 
+    private roomService: RoomService, 
+    private authService: AuthService
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
 
-     // Initialize today's date in YYYY-MM-DD format
-     const now = new Date();
-     this.today = now.toISOString().split('T')[0]
+    // Initialize today's date in YYYY-MM-DD format
+    const now = new Date();
+    this.today = now.toISOString().split('T')[0]
 
     this.authService.currentUser$.subscribe((user) => {
       this.guestId = user.uid
@@ -93,21 +97,20 @@ export class ViewBookingComponent {
   *              its associated room details, and logs the results for debugging purposes.
   * @returns {Promise<void>} A promise that resolves when all bookings have been fetched and enriched.
   */
-  async fetchGuestBookings() : Promise<void> {
+  async fetchGuestBookings(): Promise<void> {
 
     try {
 
       // Step 1: Fetch bookings by guest ID
       this.bookings = await this.roomService.getBookingsByGuestId(this.guestId)
-      console.log('Bookings for guest:', this.bookings)
-
+     
       // Step 2: Enrich each booking with room details
-      this.bookings = await Promise.all(this.bookings.map(async(booking) => {
+      this.bookings = await Promise.all(this.bookings.map(async (booking) => {
 
         this.roomId = booking.roomId
 
-         // Validate that roomId exists before attempting to fetch room details
-         if (!this.roomId) {
+        // Validate that roomId exists before attempting to fetch room details
+        if (!this.roomId) {
           console.log(`Booking ${booking.id} does not have a valid roomId.`);
           return { ...booking, room: null };
         }
@@ -119,9 +122,6 @@ export class ViewBookingComponent {
         return { ...booking, room: roomDetails }
       }))
 
-      // Step 3: Log the enriched bookings
-      console.log('Enriched Bookings:', this.bookings)
-    
     } catch (error) {
 
       // Handle and log errors during booking fetch
@@ -156,7 +156,7 @@ export class ViewBookingComponent {
   * @param {string} message - The success message to be displayed.
   * @param {number} [duration= 3000] - Optional duration for the error message display in milliseconds.
   */
-   showSuccess(message: string, duration = 3000): void {
+  showSuccess(message: string, duration = 3000): void {
 
     // Prevent multiple overlapping error messages
     if (this.isSuccessVisible) return
@@ -198,16 +198,14 @@ export class ViewBookingComponent {
       await this.roomService.checkIn(id, updatedData)
 
       // Log success message for debugging or user feedback
-      console.log(`Room or booking with ID: ${id} successfully checked in.`)
       this.showSuccess('Check-In Successful! Welcome to SuiteSync!')
 
     } catch (error) {
       // Log the error and provide feedback for debugging
-      console.error('Error during check-in process:', error)
       this.showError('Error during check-in process')
       // Optionally, you can throw or handle the error further depending on your needs
       throw new Error('Failed to complete check-in process. Please try again later.')
-    }
+    }  
   }
 
   /**
@@ -221,7 +219,7 @@ export class ViewBookingComponent {
 
     // Track the active booking
     this.currentBookingId = bookingId
-    
+
     try {
       // Prepare the updated data for check-out
       const updatedData = {
@@ -234,30 +232,48 @@ export class ViewBookingComponent {
       await this.roomService.checkOut(bookingId, updatedData)
 
       // Provide feedback to the user upon successful check-out
-      console.log('Guest checked out successfully: booking ID.' + bookingId)
       this.showSuccess('Thank you for staying at SuiteSync. Your check-out is complete!')
 
-     // Navigate to the rooms page after a short delay
+      // Navigate to the rooms page after a short delay
       setTimeout(() => {
 
         this.router.navigate(['/leave-review', this.roomId])
-        console.log('Room ID sent is:' , this.roomId)
-        
-     }, 3500)
+      }, 3500)
 
     } catch (error) {
       // Log the error and provide feedback to the user in case of failure
-      console.error('Error during check-out:', error)
       this.showError('Error during check Out')
       throw error
-    }
+    } 
   }
 
   /**
-  * @method goToChangeBooking 
+  * Handles the cancellation of a booking by updating its status and displaying appropriate feedback.
+  *
+  * @async
+  * @method onCancelBooking
+  * @param {string} bookingId - The ID of the booking to be canceled.
+  * @returns {Promise<void>} Resolves when the booking cancellation is successfully processed.
+  * @throws {Error} Displays an error message if the cancellation process fails.
   */
-  cancelBooking():void {
+  async onCancelBooking(bookingId: any): Promise<void> {
 
+    // Set the current booking ID to track the booking being canceled
+    this.currentBookingId = bookingId
+
+    try {
+
+      // Update the booking status to 'Cancelled'
+      await this.roomService.updateBookingStatus(bookingId,'Cancelled')
+      console.log('Booking and room status updated successfully!')
+
+      // Display success feedback to the user
+      this.showSuccess('Booking cancelled successfully!')
+
+    } catch (error) {
+      // Display error feedback to the user
+      this.showError('Booking cancellation failed. Please try again.')
+    }
   }
 
 }

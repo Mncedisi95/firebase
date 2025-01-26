@@ -17,9 +17,9 @@
     <div class="reservation-cards">
         
         <div class="card" *ngFor="let booking of bookings| sortByDate: 'checkIn'">
-            <img [src]="booking.room.roomImage" alt="Deluxe Room" class="card-image">
+            <img [src]="booking.room?.roomImage" alt="Deluxe Room" class="card-image">
             <div class="card-content">
-                <h2>{{booking.room.roomType}}</h2>
+                <h2>{{booking.room?.roomType}}</h2>
                 <ul class="reservation-details">
                     <li><strong>Check-In:</strong>{{booking.checkIn}}</li>
                     <li><strong>Check-Out:</strong>{{booking.checkOut}}</li>
@@ -33,7 +33,7 @@
                         {{ booking.hasCheckedIn ? 'Check Out' : 'Check In' }}
                     </button>
 
-                    <button *ngIf="!booking.hasCheckedOut" [disabled]="booking.status === 'Cancelled' || today >= booking.checkIn" class="btn-cancel">Cancel
+                    <button *ngIf="!booking.hasCheckedOut"  (click)="onCancelBooking(booking.id)" [disabled]="booking.status === 'Cancelled' || today >= booking.checkIn" class="btn-cancel">Cancel
                         Reservation</button>
                 </div>
                 <div>
@@ -45,4 +45,10 @@
             </div>
         </div>
     </div>
+
+    <!-- No Booking Message -->
+    <div *ngIf="!bookings?.length" class="no-bookings">
+        <p>No bookings found. Start planning your stay with us today!</p>
+    </div>
+    <!-- End of No Booking Section -->
 </section>

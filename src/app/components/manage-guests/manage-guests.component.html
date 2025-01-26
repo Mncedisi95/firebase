@@ -15,14 +15,14 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngFor="let guest of guests">
                 <tr>
-                    <td>John Doe</td>
-                    <td>johndoegmail.com</td>
-                    <td>+ (123) 456-789</td>
-                    <td>12345 Fake ST NoWhere AB Country</td>
+                    <td>{{guest.name}}</td>
+                    <td>{{guest.email}}</td>
+                    <td>{{guest.phone}}</td>
+                    <td>{{guest.address}}</td>
                     <td>
-                        <button (click)="goToGuestDetails()">View More</button>
+                        <button (click)="goToGuestDetails(guest.uid)">View More</button>
                     </td>
                 </tr>
             </tbody>

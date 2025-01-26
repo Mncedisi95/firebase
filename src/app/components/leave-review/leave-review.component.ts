@@ -157,6 +157,11 @@ export class LeaveReviewComponent {
       this.showSuccess('Thank you for your review!')
       this.reviewForm.reset()
 
+      // Navigate to the home page after a short delay
+      setTimeout(() => {
+        this.router.navigate(['/index'])
+      }, 3500)
+
     } catch (error) {
 
       console.log('Error submitting review:', error)

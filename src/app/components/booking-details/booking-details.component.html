@@ -19,20 +19,23 @@
                <h3>Booking Information</h3>
                <ul class="details-list">
                     <li><strong>Room Number:</strong>{{roomDetails?.roomNumber}}</li>
-                    <li><strong>Guest Name:</strong>{{guestDetails.name}}</li>
-                    <li><strong>Email:</strong>{{guestDetails.email}}</li>
-                    <li><strong>Contact:</strong>{{guestDetails.phone}}</li>
-                    <li><strong>Check-In:</strong>{{bookingDetails.checkIn}}</li>
-                    <li><strong>Check-Out:</strong>{{bookingDetails.checkOut}}</li>
-                    <li><strong>Room Type:</strong>{{roomDetails.roomType}}</li>
-                    <li><strong>Guests:</strong> {{bookingDetails.numberOfGuest}}</li>
-                    <li><strong>Status:</strong>{{bookingDetails.status}}</li>
-                    <li><strong>Total Price:</strong> ${{paymentDetails.amount}}</li>
+                    <li><strong>Guest Name:</strong>{{guestDetails?.name}}</li>
+                    <li><strong>Email:</strong>{{guestDetails?.email}}</li>
+                    <li><strong>Contact:</strong>{{guestDetails?.phone}}</li>
+                    <li><strong>Check-In:</strong>{{bookingDetails?.checkIn}}</li>
+                    <li><strong>Check-Out:</strong>{{bookingDetails?.checkOut}}</li>
+                    <li><strong>Room Type:</strong>{{roomDetails?.roomType}}</li>
+                    <li><strong>Guests:</strong> {{bookingDetails?.numberOfGuest}}</li>
+                    <li><strong>Status:</strong>{{bookingDetails?.status}}</li>
+                    <li><strong>Total Price:</strong> ${{paymentDetails?.amount}}</li>
                     <li><strong>Status:</strong>
-                         <select (change)="updateStatus($event)" class="status-dropdown">
-                              <option value="confirmed">Confirmed</option>
-                              <option value="pending">Pending</option>
-                              <option value="cancelled">Cancelled</option>
+                         <select [(ngModel)]="status" class="status-dropdown">
+                              <option value="" selected disabled>All</option>
+                              <option value="Pending">Pending</option>
+                              <option value="Confirmed">Confirmed</option>
+                              <option value="CheckIn">Check-In</option>
+                              <option value="CheckOut">Check-Out</option>
+                              <option value="Cancelled">Cancelled</option>
                          </select>
                     </li>
                </ul>
@@ -42,9 +45,9 @@
           <div class="payment-info">
                <h3>Payment Information</h3>
                <ul class="details-list">
-                    <li><strong>Payment Method:</strong>{{paymentDetails.paymentMethod}}</li>
-                    <li><strong>Payment Status:</strong>{{bookingDetails.paymentStatus}}</li>
-                    <li><strong>Transaction ID:</strong>{{paymentDetails.transactionId}}</li>
+                    <li><strong>Payment Method:</strong>{{paymentDetails?.paymentMethod}}</li>
+                    <li><strong>Payment Status:</strong>{{bookingDetails?.paymentStatus}}</li>
+                    <li><strong>Transaction ID:</strong>{{paymentDetails?.transactionId}}</li>
                </ul>
           </div>
 
@@ -52,9 +55,15 @@
           <div class="actions">
                <h3>Admin Actions</h3>
                <div class="button-group">
-                    <button class="btn-primary" (click)="editBooking()">Edit Booking</button>
-                    <button class="btn-danger" (click)="cancelBooking()">Cancel Booking</button>
+                    <button *ngIf="bookingDetails?.status !== 'Checked-Out' && bookingDetails?.status !== 'Cancelled'" 
+                    class="btn-primary" (click)="onUpdateBooking(bookingDetails.id)">Update Booking</button>
                </div>
+               <div>
+                    <input *ngIf="isSuccessVisible" class="alert-success" placeholder= {{successMessage}} />
+                </div>
+                <div>
+                    <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
+                </div>
           </div>
      </div>
 </section>

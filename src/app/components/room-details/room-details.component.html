@@ -21,7 +21,7 @@
             <ul class="room-info">
                 <li><strong>Room Number:</strong>{{roomDetails.roomNumber}}</li>
                 <li><strong>Room Price:</strong>${{roomDetails.price}}/Per night </li>
-                <li><strong>Room Capacity:</strong>Max persion {{roomDetails.capacity}}</li>
+                <li><strong>Room Capacity:</strong>Max person {{roomDetails.capacity}}</li>
                 <li><strong>Room Bed:</strong>{{roomDetails.bedType}}</li>
                 <li><strong>Room Size:</strong>{{roomDetails.size}}m<sup>2</sup></li>
                 <li><strong>Room Status:</strong>{{roomDetails.status}}</li>
@@ -37,29 +37,27 @@
 
 
     <!-- Review Section -->
-    <section class="reviews-section">
+    <section class="reviews-section" *ngIf="roomReviews?.length  != 0" >
         <h2 class="section-subtitle">Guest Reviews</h2>
         <div class="reviews-grid">
-            <div class="review-card">
+            <div class="review-card" *ngFor="let review of roomReviews">
                 <div class="review-header">
-                    <img src="assets/users/Fikile.jpg" alt="Guest Profile" class="guest-profile-image" />
+                    <img [src]="review.guest?.profile" alt="Guest Profile" class="guest-profile-image" />
                     <div class="review-meta">
-                        <h4 class="guest-name">Andile Ngema</h4>
-                        <p class="review-date">20-01-2025</p>
+                        <h4 class="guest-name">{{review.guest?.name}}</h4>
+                        <p class="review-date">{{review.creationDate | date }}</p>
                     </div>
                 </div>
                 <div class="review-content">
-                    <p class="rating">Rating: 3/ 5</p>
-                    <p class="comment">Neque porro qui squam est, qui dolorem ipsum quia dolor sit amet, consectetur, 
-                        adipisci velit, sed quia non numquam eius modi tempora. incidunt ut labore et dolore magnam.
-                    </p>
+                    <p class="rating">Rating: {{review.rating}}/ 5</p>
+                    <p class="comment">{{review.comment}}</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- No Reviews Message -->
-    <div class="no-reviews">
+    <div *ngIf="!roomReviews?.length" class="no-reviews">
         <p>No reviews yet. Be the first to review this room!</p>
     </div>
     <!-- End of Reviews Section -->

@@ -94,10 +94,7 @@ export class SignInComponent {
 
       // Step 4 : Navigate to the dashboard upon successful login
       this.checkUserRole()
-
-      console.log("Do I Reach Part")
-      
-      
+       
     } catch (error) {
 
       // Step 5: Map specific error codes to user-friendly messages

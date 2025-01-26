@@ -76,7 +76,7 @@ export const routes: Routes = [
     data: { roles: ['admin'] },
   },
   {
-    path: 'guest-details',
+    path: 'guest-details/:id',
     component: GuestDetailsComponent,
     canActivate: [authGuard, roleGuard],
     data: { roles: ['admin'] },

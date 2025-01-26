@@ -15,23 +15,31 @@ import { SortByDatePipe } from '../../sort-by-date.pipe';
 export class ManageBookingsComponent {
 
   /**
-  * @property {any[]} bookings
+  * @property {any[]} bookings - Array of booking objects retrieved from the backend.
+  * Each booking object includes user and room details after being enriched
   */
   bookings : any[] = []
   
   /**
   * @constructor
-  * @param {Router} router 
+  * @description Initializes the component, injects required services, and prepares for booking management.
+  * @param {Router} router - Angular Router for navigating to different views.
+  * @param {RoomService} roomService - Service to interact with room-related APIs.
+  * @param {UserService} userService - Service to fetch user details based on IDs.
   */
-  constructor(private router: Router,private roomService: RoomService,private userService: UserService){}
-
+  constructor(
+    private router: Router,
+    private roomService: RoomService,
+    private userService: UserService
+  ) {}
 
   /**
-  * @description 
+  * @method ngOnInit
+  * @description Lifecycle method called when the component is initialized. Fetches and processes all bookings.
+  * @returns {void}
   */
   ngOnInit(){
-
-    // Load Bookings
+    // Load all Bookings
     this.fetchAllBookings()
   }
 
@@ -47,8 +55,7 @@ export class ManageBookingsComponent {
   
       // Step 1: Fetch all bookings from the room service
       this.bookings = await this.roomService.getBookings()
-      console.log('Bookings fetched successfully:', this.bookings)
-
+     
       // Step 2: Enrich booking data with guest and room details
       this.bookings = await Promise.all(this.bookings.map(async (booking) => {
 
@@ -68,25 +75,20 @@ export class ManageBookingsComponent {
         }
       })) 
 
-      // Step 3: Log the enriched bookings
-      console.log('Enriched Bookings:', this.bookings)
-
     } catch (error) {
       
       console.log('Error retrieving bookings or related details:', error)
     }
   }
 
-  deleteBooking(id: string): void {
-    console.log('Delete booking with ID:', id);
-  }
-
   /**
-  * @method
-  * @description
+  * @method goToViewBooking
+  * @description Navigates to the booking details page for a specific booking.
+  * @param {string} id - The ID of the booking to view.
+  * @returns {void}
   */
   goToViewBooking(id: any){
-
+    
     this.router.navigate(['/booking-details', id])
   }
 
