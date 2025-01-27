@@ -1,59 +1,82 @@
-# Firebase
+# Table of Content
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.1.
+- [introduction](#introduction)
+- [Features](#features)
+- [Technoligies and Software Tools](#technologies-and-software-tools)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Screenshot](#screenshot)
+- [Live Demo](#live-demo)
+- [Author](#author)
 
-## Development server
+## Introduction
 
-To start a local development server, run:
+Welcome to the Hotel Management System. This is a comprehensive application built to manage hotel bookings, room statuses, and guest information efficiently. The application is designed using Angular 18 and TypeScript, providing an intuitive interface and robust functionality for administrators.
 
-```bash
-ng serve
-```
+## Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1. User authentication and role-based access (e.g., admin, guest).
+2. Add, edit, and delete room details.
+3. Manage bookings, including updating statuses (e.g., pending, confirmed, checked-in, cancelled).
+4. View and manage guest details.
+5. Filter and search functionality for rooms and bookings.
+6. Dashboard analytics for room and booking statuses.
 
-## Code scaffolding
+## Technologies and Software Tools
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1. Front-End: Angular, HTML5, CSS3.
+2. Back-End: TypeScript, Firebase Firestore.
+3. Database: Firebase Firestore.
+4. Software Tools: Visual Studio Code, GitHub.
 
-```bash
-ng generate component component-name
-```
+## Getting Started
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1. Clone the repository: git clone [https://github.com/Mncedisi95/firebase]
+2. Install dependencies: npm install.
+3. Start the development server: npm start.
+4. Build and Deploy: npm run build and npm run deploy.
+5. Switch to a specific branch: git checkout master
+6. Pull changes from remote repository: git pull master
+7. Run tests for the project: npm run test.
+8. Run linter checks for code quality: npm run link.
+9. Generate documentation for the project: npm run docs.
 
-```bash
-ng generate --help
-```
+## Usage
 
-## Building
+1. Sign Up or Sign in with the admin credentials or a guest account (e.g., admin: username: [mncedisimasondo4@gmail.com], password: @Flower#95).
+2. View all rooms, bookings, and guest details.
+3. Add new rooms or update existing room details.
+4. Manage bookings, including updating statuses (e.g., confirming, cancelling).
+5. View and filter guests based on role or specific criteria
 
-To build the project run:
+## Screenshot
 
-```bash
-ng build
-```
+![Sign-in Screen](src/assests/screenshots/login.png)
+![Sign-up Screen](src/assests/screenshots/register.png)
+![Forgot Password Screen](src/assests/screenshots/forgot-password.png)
+![Home Screen](src/assests/screenshots/index.png)
+![Dasboard Screen](src/assests/screenshots/dashboard.png)
+![Add Room Screen](src/assests/screenshots/add-room.png)
+![Book Room Screen](src/assests/screenshots/Book-Room.png)
+![Edit Room Screen](src/assests/screenshots/edit-room.png)
+![Guests Details Screen](src/assests/screenshots/guests-details.png)
+![Manage Bookings Screen](src/assests/screenshots/manage-bookings.png)
+![Manage Guests Screen](src/assests/screenshots/manage-guests.png)
+![Bookings Screen](src/assests/screenshots/my-bookings.png)
+![Payment Screen](src/assests/screenshots/payment.png)
+![Room Availability Screen](src/assests/screenshots/Room-Availabilty.png)
+![Room Booking Details Screen](src/assests/screenshots/Room-Booking-details.png)
+![Room details admin Screen](src/assests/screenshots/room-details-admin.png)
+![Room Details With Reviews Screen](src/assests/screenshots/room-details-reviews.png)
+![Room Management Screen](src/assests/screenshots/Room-Management.png)
+![Rooms Screen](src/assests/screenshots/rooms.png)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
+## Live Demo
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+This Todo website is live at: []
 
-```bash
-ng test
-```
+## Author
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. Name: Mncedisi Masondo
+2. Email: [mncedisimasondo4@gmail.com]

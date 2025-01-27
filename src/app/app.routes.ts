@@ -32,7 +32,12 @@ export const routes: Routes = [
   { path: 'login', component: SignInComponent },
   { path: 'register', component: SignUpComponent },
   { path: 'rooms', component: RoomsComponent },
-  { path: 'book-room/:id', component: BookRoomComponent, canActivate: [authGuard] },
+  {
+     path: 'book-room/:id', 
+     component: BookRoomComponent, 
+     canActivate: [authGuard],
+     data : {renderMode: 'prerender'},
+    },
   { 
     path: 'view-booking',
     component: ViewBookingComponent, 
@@ -49,13 +54,13 @@ export const routes: Routes = [
     path: 'room-details-admin/:id',
     component: RoomDetailsAdminComponent,
     canActivate: [authGuard],
-    data: {roles: ['admin']}
+    data: {roles: ['admin'], renderMode: 'hybrid'}
   },
   {
     path: 'edit-booking', 
     component: EditBookingComponent, 
     canActivate: [authGuard],
-    data: {roles: ['admin']}
+    data: {roles: ['admin'], renderMode: 'client'}
   },
   {
     path: 'manage-bookings',
@@ -67,7 +72,7 @@ export const routes: Routes = [
     path: 'booking-details/:id',
     component: BookingDetailsComponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['admin', 'staff'] },
+    data: { roles: ['admin', 'staff'], renderMode: 'client' },
   },
   {
     path: 'manage-guests',
@@ -79,7 +84,7 @@ export const routes: Routes = [
     path: 'guest-details/:id',
     component: GuestDetailsComponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['admin'] },
+    data: { roles: ['admin'], renderMode: 'client' },
   },
   {
     path: 'add-room',
@@ -91,17 +96,18 @@ export const routes: Routes = [
     path: 'edit-room/:id',
     component: EditRoomComponent,
     canActivate: [authGuard, roleGuard],
-    data: { roles: ['admin'] },
+    data: { roles: ['admin'], renderMode: 'client' },
   },
   {
     path: 'room-availability',
     component: RoomAvailabilityComponent,
     canActivate: [authGuard, roleGuard],
-    data: {roles: ['admin']}
+    data: {roles: ['admin'], renderMode: 'client'}
   },
   {
     path: 'room-details/:id',
     component: RoomDetailsComponent,
+    data: {renderMode: 'client'}
   },
   {
     path: 'dashboard',
@@ -113,7 +119,7 @@ export const routes: Routes = [
     path: 'edit-profile/:id',
     component: EditProfileComponent,
     canActivate: [authGuard, roleGuard],
-    data: {roles: ['guest']}
+    data: {roles: ['guest'],renderMode: 'client'}
   },
   {
     path: 'view-profile',
@@ -125,7 +131,7 @@ export const routes: Routes = [
     path: 'payment/:bookingId',
     component: PaymentComponent,
     canActivate : [authGuard,roleGuard],
-    data: {roles : ['guest']}
+    data: {roles : ['guest'],renderMode: 'client'}
   },
   {
     path: 'leave-review/:roomId',

@@ -44,6 +44,11 @@ export class DashboardComponent {
   todayCheckInsItems: number = 0
 
   /**
+  * @property {number} occupancyRate 
+  */
+  occupancyRate  : number = 0
+
+  /**
   * @constructor
   * @description 
   * @param {AuthService} authService 
@@ -150,6 +155,14 @@ export class DashboardComponent {
         // Handle errors gracefully and log them for debugging
         console.error('Error fetching today check-ins:', error)
     }
+  }
+
+  /** 
+  * @method calculateOccupancyRate
+  */
+  calculateOccupancyRate(): void {
+
+    this.occupancyRate = (this.todayCheckInsItems / this.availableItems) * 100
   }
 
   /**

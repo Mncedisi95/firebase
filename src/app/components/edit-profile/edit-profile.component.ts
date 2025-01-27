@@ -219,7 +219,7 @@ export class EditProfileComponent {
   */
   async onEditProfile() : Promise<void> { 
 
-     // Prepare data for update
+    // Prepare data for update
     const rawData = {
       name: this.editProfileForm.get('fname')?.value.trim(),
       email: this.editProfileForm.get('email')?.value,
@@ -239,8 +239,7 @@ export class EditProfileComponent {
 
       // Display success message to the user
       this.showSuccess('Profile updated successfully!')
-      console.log('Profile updated successfully!')
-
+  
       this.editProfileForm.reset()
       setTimeout(() => {
 

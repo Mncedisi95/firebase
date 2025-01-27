@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label for="roomType">Room Type:</label>
                 <select id="roomType" formControlName="roomType" class="select-box" aria-label="RoomType">
-                    <option value="" disabled selected>Select Room Type</option>
+                    <option value="" disabled selected>{{roomDetails.roomType}}</option>
                     <option value="Premium King Room">Premium King Room</option>
                     <option value="Deluxe Room">Deluxe Room</option>
                     <option value="Double Room">Double Room</option>
@@ -52,13 +52,18 @@
                 </small>
             </div>
 
-            <!-- Room Image -->
-            <div class="form-group">
-                <label for="roomImage">Room Image:</label>
-                <input id="roomImage" formControlName="roomImage" type="file" aria-label="Room Image" placeholder={{roomDetails.roomImage}} />
+               <!-- Room Status -->
+               <div class="form-group">
+                <label for="bedType">Room Status:</label>
+                <select id="status" formControlName="status" class="select-box" aria-label="Room Status">
+                    <option value="" selected disabled>{{roomDetails.status}}</option>
+                    <option value="Available">Available</option>
+                    <option value="Booked">Booked</option>
+                    <option value="Maintenance">Maintenance</option>
+                </select>
                 <small
-                    *ngIf="editRoomForm.get('roomImage')?.touched && editRoomForm.get('roomImage')?.errors?.['required']">
-                    *Room Image is required!
+                    *ngIf="editRoomForm.get('status')?.touched && editRoomForm.get('status')?.errors?.['required']">
+                    *Room status required!
                 </small>
             </div>
 
@@ -97,7 +102,7 @@
             <div class="form-group">
                 <label for="bedType">Room Bed:</label>
                 <select id="bedType" formControlName="bedType" class="select-box" aria-label="Room Bed">
-                    <option value="" selected disabled>Select Room Bed</option>
+                    <option value="" selected disabled>{{roomDetails.bedType}}</option>
                     <option value="Single Bed">Single Bed</option>
                     <option value="Double Bed">Double Bed</option>
                     <option value="King Bed">King Bed</option>
@@ -126,6 +131,19 @@
                 </small>
             </div>
 
+            <!-- Room Image -->
+            <div class="form-group">
+                <label for="roomImage">Room Image:</label>
+                <div class="image-preview">
+                    <img [src]="roomDetails.roomImage" alt="Room Picture" class="room-image" />
+                </div>
+                <input id="roomImage" formControlName="roomImage" type="file" accept="image/*" (change)="handleFileInput($event)" aria-label="Room Image"
+                    placeholder={{roomDetails.roomImage}} />
+                <small *ngIf="editRoomForm.get('roomImage')?.touched && editRoomForm.get('roomImage')?.errors?.['required']">
+                    *Room Image is required!
+                </small>
+            </div>
+
             <!-- Room Description -->
             <div class="form-group description-group">
                 <label for="roomDescription">Room Description:</label>
@@ -140,6 +158,9 @@
             <!-- Submit Button -->
             <div class="form-buttons">
                 <button type="submit" class="btn-primary">Edit Room</button>
+                <div>
+                    <input *ngIf="isSuccessVisible" class="alert-success" placeholder={{successMessage}} />
+                </div>
                 <div>
                     <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
                 </div>

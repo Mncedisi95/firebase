@@ -200,3 +200,17 @@ small{
     color: #6c757d;
 }
 
+.image-preview {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.room-image {
+    width: 330px;
+    height: 110px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
