@@ -1,35 +1,37 @@
-# Table of Content
+# 📖 Table of Content
 
-- [introduction](#introduction)
-- [Features](#features)
-- [Technoligies and Software Tools](#technologies-and-software-tools)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [Screenshot](#screenshot)
-- [Live Demo](#live-demo)
-- [Author](#author)
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Tech Stack](#️tech-stack)
+4. [Installation](#installation)
+5. [Usage](#usage)
+6. [Screenshot](#screenshot)
+7. [Live Demo](#live-demo)
+8. [Contributors](#contributors)
 
-## Introduction
+## 📌Overview
 
-Welcome to the Hotel Management System. This is a comprehensive application built to manage hotel bookings, room statuses, and guest information efficiently. The application is designed using Angular 18 and TypeScript, providing an intuitive interface and robust functionality for administrators.
+Welcome to the **Hotel Management System**. This is a comprehensive application built to manage hotel bookings, room statuses, and guest information efficiently. The application is designed using Angular 18 and TypeScript, providing an intuitive interface and robust functionality for administrators.
 
-## Features
+## 🚀Features
 
-1. User authentication and role-based access (e.g., admin, guest).
-2. Add, edit, and delete room details.
-3. Manage bookings, including updating statuses (e.g., pending, confirmed, checked-in, cancelled).
-4. View and manage guest details.
-5. Filter and search functionality for rooms and bookings.
-6. Dashboard analytics for room and booking statuses.
+- 🔐 **User Authentication** – Role-based access (e.g., admin, guest).
+- 🏨 **Room Booking System** – Add, edit, and delete room details.
+- 📅 **Booking Management** – Update booking statuses (e.g., pending, confirmed, checked-in, cancelled).
+- 🛎️ **Guest Management** – Maintain guest records and preferences.
+- 📅 **Reservation Tracking** – View and manage all upcoming bookings.
+- 🔍 **Search & Filter** – Easily find rooms and bookings.
+- 📊 **Reports & Analytics** – View room, booking status reports, track revenue, occupancy rates, and trends.
 
-## Technologies and Software Tools
+## 🛠️Tech Stack
 
-1. Front-End: Angular, HTML5, CSS3.
-2. Back-End: TypeScript, Firebase Firestore.
-3. Database: Firebase Firestore.
-4. Software Tools: Visual Studio Code, GitHub.
+- **Front-End**: Angular
+- **Back-End**: TypeScript, Firebase Firestore.
+- **Styling**: CSS, Angular Material UI
+- **Database**: Firebase Firestore.
+- **Software Tools**: Visual Studio Code, GitHub.
 
-## Getting Started
+## 📦Installation
 
 1. Clone the repository: git clone [https://github.com/Mncedisi95/firebase]
 2. Install dependencies: npm install.
@@ -41,15 +43,18 @@ Welcome to the Hotel Management System. This is a comprehensive application buil
 8. Run linter checks for code quality: npm run link.
 9. Generate documentation for the project: npm run docs.
 
-## Usage
+## 📜Usage
 
-1. Sign Up or Sign in with the admin credentials or a guest account (e.g., admin: username: [mncedisimasondo4@gmail.com], password: @Flower#95).
-2. View all rooms, bookings, and guest details.
-3. Add new rooms or update existing room details.
-4. Manage bookings, including updating statuses (e.g., confirming, cancelling).
-5. View and filter guests based on role or specific criteria
+- 🔑 **User Authentication**: Sign up or log in using admin credentials or a guest account.
+  - Example admin credentials:
+    - Username: [mncedisimasondo4@gmail.com]
+    - Password: @Flower#95
+- 🏨 **Room Management**: View all available rooms, add new rooms, and update existing room details.
+- 📅 **Booking Management**: Manage all bookings, including confirming, canceling, and checking booking statuses.
+- 👥 **Guest Management**: View and filter guest details based on roles or specific criteria.
+- 🔍 **Search & Filter**: Easily find rooms and bookings using advanced filtering options
 
-## Screenshot
+## 📸Screenshot
 
 ![Sign-in Screen](src/assets/screenshots/login.png)
 ![Sign-up Screen](src/assets/screenshots/register.png)
@@ -71,12 +76,10 @@ Welcome to the Hotel Management System. This is a comprehensive application buil
 ![Room Management Screen](src/assets/screenshots/Room-Management.png)
 ![Rooms Screen](src/assets/screenshots/rooms.png)
 
-
-## Live Demo
+## 🌍Live Demo
 
 This Todo website is live at: []
 
-## Author
+## 🏆Contributors
 
-1. Name: Mncedisi Masondo
-2. Email: [mncedisimasondo4@gmail.com]
+- Mncedisi Masondo

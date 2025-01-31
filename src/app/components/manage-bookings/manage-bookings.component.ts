@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { RoomService } from '../../services/room.service';
-import { DatePipe, NgFor } from '@angular/common';
+import {  NgFor } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { SortByDatePipe } from '../../sort-by-date.pipe';
 
