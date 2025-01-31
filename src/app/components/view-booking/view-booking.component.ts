@@ -237,7 +237,11 @@ export class ViewBookingComponent {
       // Navigate to the rooms page after a short delay
       setTimeout(() => {
 
-        this.router.navigate(['/leave-review', this.roomId])
+        const id = this.roomId
+
+        sessionStorage.setItem('id', id)
+
+        this.router.navigate(['/leave-review'], {state: {id}})
       }, 3500)
 
     } catch (error) {

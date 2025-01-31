@@ -77,12 +77,26 @@ export class RoomDetailsComponent {
         this.isLoggedIn = !!user // Set `isLoggedIn` to true if user exists
       })
 
-      // Get the room ID from route parameters
-      this.id = this.route.snapshot.paramMap.get('id') || ''
+      // Get the current navigation object from the router
+      const navigation = this.router.getCurrentNavigation()
+      // Extract the state object from navigation extras, expecting an 'id' property
+      const state = navigation?.extras?.state as { id?: any }
 
+      // Check if 'id' is available in the navigation state
+      if (state?.id) {
+        // Assign the retrieved ID to the component property
+        this.id = state.id
+        // Store the ID in sessionStorage to persist across refreshes
+        sessionStorage.setItem('id', this.id)
+      } else {
+        // Retrieve the ID from sessionStorage if the page was refreshed
+        this.id = sessionStorage.getItem('id')
+      }
+
+      // If 'id' is still not available, redirect to the home page
       if (!this.id) {
-        console.error('Room ID is missing in route parameters.')
-        return
+        // Redirect user to the home page to prevent access without a valid ID
+        this.router.navigate(['/'])
       }
 
       // Fetch room details and reviews

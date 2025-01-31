@@ -13,19 +13,19 @@
 
     <!-- Guest Details -->
     <div class="guest-details">
-        <h4 class="guest-name">{{guestDetails.name}}</h4>
+        <h4 class="guest-name">{{guestDetails?.name}}</h4>
 
         <div class="guest-content">
             <!-- Guest Image -->
             <div class="guest-image-container">
-                <img [src]="guestDetails.profile" alt="Guest Photo" class="guest-image" />
+                <img [src]="guestDetails?.profile" alt="Guest Photo" class="guest-image" />
             </div>
 
             <!-- Guest Information -->
             <ul class="guest-info">
-                <li><strong>Email:</strong>{{guestDetails.email}}</li>
-                <li><strong>Phone:</strong>{{guestDetails.phone}}</li>
-                <li><strong>Address:</strong>{{guestDetails.address}}</li>
+                <li><strong>Email:</strong>{{guestDetails?.email}}</li>
+                <li><strong>Phone:</strong>{{guestDetails?.phone}}</li>
+                <li><strong>Address:</strong>{{guestDetails?.address}}</li>
             </ul>
         </div>
 

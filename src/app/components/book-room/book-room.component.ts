@@ -87,7 +87,13 @@ export class BookRoomComponent {
   * @param {ActivatedRoute} route
   * @param {AuthService} authService
   */
-  constructor(private formBuilder: FormBuilder, private router: Router,private roomService: RoomService,private route: ActivatedRoute,private authService: AuthService ){
+  constructor(
+    private formBuilder: FormBuilder, 
+    private router: Router,
+    private roomService: RoomService,
+    private route: ActivatedRoute,
+    private authService: AuthService 
+  ){
 
     // Initialize the book room form with validation rules
     this.bookRoomForm = this.formBuilder.group({
@@ -109,9 +115,28 @@ export class BookRoomComponent {
       this.userId = user.uid
     })
   
-    // Get the room ID from the route parameters
-    this.id = this.route.snapshot.paramMap.get('id') || ''
+    // Get the current navigation object from the router
+    const navigation = this.router.getCurrentNavigation()
+    // Extract the state object from navigation extras, expecting an 'id' property
+    const state = navigation?.extras?.state as { id?:any}
 
+    // Check if 'id' is available in the navigation state
+    if (state?.id) {
+      // Assign the retrieved ID to the component property
+      this.id = state.id
+     // Store the ID in sessionStorage to persist across refreshes
+      sessionStorage.setItem('id', this.id)
+    } else {
+      // Retrieve the ID from sessionStorage if the page was refreshed
+      this.id = sessionStorage.getItem('id')
+    }
+  
+    // If 'id' is still not available, redirect to the home page
+    if (!this.id) {
+      // Redirect user to the home page to prevent access without a valid ID
+      this.router.navigate(['/'])
+    }
+   
   }
  
   /**
@@ -217,8 +242,7 @@ export class BookRoomComponent {
 
      // Step 7: Provide success feedback to the user
      this.showSuccess('New booking added successfully.')
-     console.log('New booking added successfully.')
-
+    
      // Assuming bookingResponse contains bookingId
      this.bookingId = this.roomToBook.id
      
@@ -237,8 +261,12 @@ export class BookRoomComponent {
   * @method goToPayment
   */
   processPayment() {
+   
+   const id = this.bookingId
+
+   sessionStorage.setItem('id', id)
     
-   this.router.navigate(['/payment', this.bookingId])
+   this.router.navigate(['/payment'], {state: {id}})
   }
 
 }

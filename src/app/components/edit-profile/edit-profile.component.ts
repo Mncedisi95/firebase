@@ -59,7 +59,7 @@ export class EditProfileComponent {
   * and setting up the reactive form for room booking or actions.
   * @param {FormBuilder} formBuilder - Angular service to create reactive forms.
   */
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private userService: UserService,private router: Router) {
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private userService: UserService, private router: Router) {
 
     // Initialize the book room form with validation rules
     this.editProfileForm = this.formBuilder.group({
@@ -79,14 +79,31 @@ export class EditProfileComponent {
 
   ngOnInit() {
 
-    this.id = this.route.snapshot.paramMap.get('id')
+    // Get the current navigation object from the router
+    const navigation = this.router.getCurrentNavigation()
+    // Extract the state object from navigation extras, expecting an 'id' property
+    const state = navigation?.extras?.state as { id?: any }
 
-    if(this.id){
-      this.fetchGuestDetails()
+    // Check if 'id' is available in the navigation state
+    if (state?.id) {
+      // Assign the retrieved ID to the component property
+      this.id = state.id
+      // Store the ID in sessionStorage to persist across refreshes
+      sessionStorage.setItem('id', this.id)
+    } else {
+      // Retrieve the ID from sessionStorage if the page was refreshed
+      this.id = sessionStorage.getItem('id')
     }
 
-    console.log(this.id)
+    // If 'id' is still not available, redirect to the home page
+    if (!this.id) {
+      // Redirect user to the home page to prevent access without a valid ID
+      this.router.navigate(['/'])
+    }
 
+    if (this.id) {
+      this.fetchGuestDetails()
+    }
   }
 
   /**
@@ -146,12 +163,10 @@ export class EditProfileComponent {
     }
 
     try {
-    
+
       // Fetch guest details from the service
       this.guestDetails = await this.userService.getGuestById(this.id)
 
-      // Log the fetched details for debugging
-      console.log('Guest Details:', this.guestDetails);
     } catch (error) {
       // Handle potential errors gracefully
       console.log('Error fetching guest details:', error);
@@ -167,16 +182,16 @@ export class EditProfileComponent {
   * @returns {Promise<string | ArrayBuffer | null>} A promise that resolves with the file content 
   * as a Base64 string or an ArrayBuffer, or `null` if no data is read. Rejects with an error in case of failure.
   */
-  private readFile(file:File):Promise<string | ArrayBuffer | null>{
+  private readFile(file: File): Promise<string | ArrayBuffer | null> {
 
-    return new Promise((resolve,reject) =>{
-        const reader = new FileReader()
-        // Resolve the promise with the file content when the read operation is complete
-        reader.onload = () => resolve(reader.result)
-        // Reject the promise in case of an error during the read operation
-        reader.onerror = (error) => reject(error)
-        // Initiate reading the file as a Base64-encoded string
-        reader.readAsDataURL(file)
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      // Resolve the promise with the file content when the read operation is complete
+      reader.onload = () => resolve(reader.result)
+      // Reject the promise in case of an error during the read operation
+      reader.onerror = (error) => reject(error)
+      // Initiate reading the file as a Base64-encoded string
+      reader.readAsDataURL(file)
     })
   }
 
@@ -186,7 +201,7 @@ export class EditProfileComponent {
   *  the base64 representation of the file.
   * @param {event} event - The file input event.
   */
-   async handleFileInput(event: any): Promise<void> {
+  async handleFileInput(event: any): Promise<void> {
 
     // Validate that a file has been selected
     const file: File = event.target.files?.[0]
@@ -217,7 +232,7 @@ export class EditProfileComponent {
   * @description Handles the editing of a user profile by collecting form data and updating the Firestore document.
   * @returns {Promise<void>} Resolves when the profile is successfully updated or rejects if an error occurs.
   */
-  async onEditProfile() : Promise<void> { 
+  async onEditProfile(): Promise<void> {
 
     // Prepare data for update
     const rawData = {
@@ -239,13 +254,13 @@ export class EditProfileComponent {
 
       // Display success message to the user
       this.showSuccess('Profile updated successfully!')
-  
+
       this.editProfileForm.reset()
       setTimeout(() => {
 
         this.router.navigate(['/view-profile'])
       }, 3500)
-      
+
     } catch (error) {
 
       // Log the error and show an error message to the user

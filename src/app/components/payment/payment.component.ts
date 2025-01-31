@@ -1,7 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { RoomService } from '../../services/room.service';
 
 @Component({
@@ -52,7 +52,7 @@ export class PaymentComponent {
   /**
   * @property {any} bookingId
   */
-  bookingId: any
+  id: any
 
   /**
   * @property {number} totalPrice
@@ -71,7 +71,11 @@ export class PaymentComponent {
   * @param {ActivatedRoute} route
   * @param {RoomService} roomService 
   */
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private roomService: RoomService,private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private roomService: RoomService, 
+    private router: Router
+  ) {
 
     // Initialize the book room form with validation rules
     this.paymentForm = this.formBuilder.group({
@@ -89,7 +93,27 @@ export class PaymentComponent {
   async ngOnInit(): Promise<void> {
 
     try {
-      this.bookingId = this.route.snapshot.paramMap.get('bookingId') || '';
+      // Get the current navigation object from the router
+      const navigation = this.router.getCurrentNavigation()
+      // Extract the state object from navigation extras, expecting an 'id' property
+      const state = navigation?.extras?.state as { id?: any }
+
+      // Check if 'id' is available in the navigation state
+      if (state?.id) {
+        // Assign the retrieved ID to the component property
+        this.id = state.id
+        // Store the ID in sessionStorage to persist across refreshes
+        sessionStorage.setItem('id', this.id)
+      } else {
+        // Retrieve the ID from sessionStorage if the page was refreshed
+        this.id = sessionStorage.getItem('id')
+      }
+
+      // If 'id' is still not available, redirect to the home page
+      if (!this.id) {
+        // Redirect user to the home page to prevent access without a valid ID
+        this.router.navigate(['/'])
+      }
 
       // Fetch booking details
       await this.fetchBookingDetails();
@@ -163,13 +187,13 @@ export class PaymentComponent {
     try {
 
       // Ensure the booking ID is valid
-      if (!this.bookingId) {
+      if (!this.id) {
         console.log('Booking ID is not defined or invalid.')
         return
       }
 
       // Fetch booking details using the service
-      this.bookingDetails = await this.roomService.getBookingById(this.bookingId)
+      this.bookingDetails = await this.roomService.getBookingById(this.id)
 
       // Handle the fetched booking details
       console.log('Booking Details:', this.bookingDetails)
@@ -201,9 +225,6 @@ export class PaymentComponent {
 
       // Fetch room details using the service
       this.roomDetails = await this.roomService.getRoomById(roomId)
-
-      // Handle the fetched booking details
-      console.log('Room Details:', this.roomDetails)
 
     } catch (error) {
       // Handle any errors during the fetch operation
@@ -311,7 +332,7 @@ export class PaymentComponent {
       console.log('Payment Details:', { cardHolder, cardNumber, expiryDate, cvv })
 
       // step 3: Process the payment via the room service
-      await this.roomService.processBookingPayment(this.bookingId, this.totalPrice, this.nights)
+      await this.roomService.processBookingPayment(this.id, this.totalPrice, this.nights)
 
       // Step 4: Provide success feedback to the user
       this.paymentForm.reset()

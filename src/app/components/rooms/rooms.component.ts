@@ -120,9 +120,6 @@ export class RoomsComponent {
       // Update total room count
       this.items = this.rooms.length
 
-      // Log the fetched rooms for debugging purposes
-      console.log('Rooms:', this.rooms)
-
     } catch (error) {
       // Handle and log errors during the fetch process
       console.log('Error fetching rooms:', error)
@@ -230,21 +227,21 @@ export class RoomsComponent {
   * @param {number | string} id - The unique identifier of the room.
   * @throws {Error} Throws an error if the navigation fails or the `id` is invalid.
   */
-  goToRoomDetails(id: number | string) {
+  goToRoomDetails(id: any) {
 
     if (!id) {
-      console.log("Invalid room ID provided.")
       throw new Error("Room ID is required to navigate to the room details page.")
     }
 
     try {
 
-      this.router.navigate(['/room-details', id])
-      console.log('Navigating to room details for room ID:' + id)
+      // Store ID in sessionStorage before navigating
+      sessionStorage.setItem('id', id)
+
+      this.router.navigate(['/room-details'], {state: {id}})
 
     } catch (error) {
 
-      console.log("Navigation to the room details page failed:", error);
       throw new Error("Failed to navigate to the room details page. Please try again.");
     }
   }
@@ -256,21 +253,21 @@ export class RoomsComponent {
   * @param { string: number } id - The unique identifier of the room to be booked.
   * @throws {Error} Throws an error if the navigation fails or the `id` is invalid.
   */
-  goToBookRoom(id: string | number): void {
+  goToBookRoom(id: any): void {
 
     if (!id) {
-      console.log("Invalid room ID provided.");
       throw new Error("Room ID is required to navigate to the booking page.");
     }
 
     try {
 
-      this.router.navigate(['/book-room', id])
-      console.log('Navigating to booking page for room ID:' + id)
+      // Store ID in sessionStorage before navigating
+      sessionStorage.setItem('id', id)
+
+      this.router.navigate(['/book-room'], {state : {id} })
 
     } catch (error) {
 
-      console.log("Navigation to the booking page failed:", error);
       throw new Error("Failed to navigate to the booking page. Please try again.");
     }
   }

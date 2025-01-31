@@ -27,7 +27,7 @@ export class ViewProfileComponent {
     * Stores the unique ID of the current guest.
     * @property {string | undefined}
     */
-    id: string | undefined
+    id: any
 
     /**
     * @property {boolean} isLoggedIn
@@ -78,7 +78,6 @@ export class ViewProfileComponent {
 
         this.guestDetails = await this.userService.getGuestById(this.id)
 
-        console.log('Guest Details:', this.guestDetails);
       } catch (error) {
         console.error('Error fetching guest details:', error);
       }
@@ -90,7 +89,11 @@ export class ViewProfileComponent {
     */
     editProfile(): void {
 
-      this.router.navigate(['/edit-profile',this.id])
+      const id = this.id
+
+      sessionStorage.setItem('id', id)
+
+      this.router.navigate(['/edit-profile'], {state: {id}})
     }
 }
   

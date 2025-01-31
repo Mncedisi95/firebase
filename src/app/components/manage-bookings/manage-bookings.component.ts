@@ -89,7 +89,9 @@ export class ManageBookingsComponent {
   */
   goToViewBooking(id: any){
     
-    this.router.navigate(['/booking-details', id])
+    sessionStorage.setItem('id',id)
+
+    this.router.navigate(['/booking-details'],{state: {id}})
   }
 
 }

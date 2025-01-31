@@ -1,10 +1,9 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { RoomService } from '../../services/room.service';
-import { urlToHttpOptions } from 'node:url';
-import { timeStamp } from 'node:console';
+
 
 @Component({
   selector: 'app-edit-room',
@@ -65,9 +64,8 @@ export class EditRoomComponent {
   * @param {RoomService} roomService
   */
   constructor(
-    private formBuilder: FormBuilder, 
-    private route: ActivatedRoute, 
-    private router: Router, 
+    private formBuilder: FormBuilder,
+    private router: Router,
     private roomService: RoomService) {
 
     // Initialize the book room form with validation rules
@@ -97,7 +95,27 @@ export class EditRoomComponent {
 
   ngOnInit() {
 
-    this.id = this.route.snapshot.paramMap.get('id') || ''
+    // Get the current navigation object from the router
+    const navigation = this.router.getCurrentNavigation()
+    // Extract the state object from navigation extras, expecting an 'id' property
+    const state = navigation?.extras?.state as { id?: any }
+
+    // Check if 'id' is available in the navigation state
+    if (state?.id) {
+      // Assign the retrieved ID to the component property
+      this.id = state.id
+      // Store the ID in sessionStorage to persist across refreshes
+      sessionStorage.setItem('id', this.id)
+    } else {
+      // Retrieve the ID from sessionStorage if the page was refreshed
+      this.id = sessionStorage.getItem('id')
+    }
+
+    // If 'id' is still not available, redirect to the home page
+    if (!this.id) {
+      // Redirect user to the home page to prevent access without a valid ID
+      this.router.navigate(['/'])
+    }
 
     // Fetch room details using the ID
     this.fetchRoomDetails()
@@ -116,9 +134,6 @@ export class EditRoomComponent {
     try {
       // Attempt to fetch room details from the RoomService
       this.roomDetails = await this.roomService.getRoomById(this.id)
-
-      // Log success for debugging purposes
-      console.log('Room details fetched successfully:', this.roomDetails)
 
     } catch (error) {
 
@@ -222,7 +237,7 @@ export class EditRoomComponent {
     })
   }
 
- 
+
   /**
   * Handles the logic for editing a room's details.
   *
@@ -233,20 +248,20 @@ export class EditRoomComponent {
   * Displays success or error messages based on the operation result.
   * @returns {Promise<void>} Resolves when the operation completes successfully.
   */
-  async onEditRoom() : Promise<void> {
+  async onEditRoom(): Promise<void> {
 
     // Step 1: Prepare data for update
     const rawData = {
-      roomNumber : this.editRoomForm.get('roomNumber')?.value.trim(),
-      bedType : this.editRoomForm.get('bedType')?.value.trim(),
-      capacity : this.editRoomForm.get('capacity')?.value,
-      description : this.editRoomForm.get('description')?.value,
+      roomNumber: this.editRoomForm.get('roomNumber')?.value.trim(),
+      bedType: this.editRoomForm.get('bedType')?.value.trim(),
+      capacity: this.editRoomForm.get('capacity')?.value,
+      description: this.editRoomForm.get('description')?.value,
       price: this.editRoomForm.get('price')?.value,
-      roomImage : this.editRoomForm.get('roomImage')?.value,
-      roomType : this.editRoomForm.get('roomType')?.value.trim(),
-      services : this.editRoomForm.get('services')?.value.trim(),
-      size : this.editRoomForm.get('size')?.value,
-      status : this.editRoomForm.get('status')?.value
+      roomImage: this.editRoomForm.get('roomImage')?.value,
+      roomType: this.editRoomForm.get('roomType')?.value.trim(),
+      services: this.editRoomForm.get('services')?.value.trim(),
+      size: this.editRoomForm.get('size')?.value,
+      status: this.editRoomForm.get('status')?.value
     }
 
     // Step 2: Filter empty or undefined data
@@ -255,9 +270,9 @@ export class EditRoomComponent {
     )
 
     try {
-      
+
       // Step 3: Update the room via the room service
-      await this.roomService.updateRoom(this.id,updateData) 
+      await this.roomService.updateRoom(this.id, updateData)
 
       // Step 4: Display success message and reset the form
       this.showSuccess('Room updated successfully!')
@@ -271,7 +286,7 @@ export class EditRoomComponent {
 
 
     } catch (error) {
-      
+
       // Log the error and show an error message to the user
       console.log('Failed to update room information:', error)
       this.showError('Failed to room information. Please try again.')

@@ -62,6 +62,8 @@ export class ManageGuestsComponent {
   */
   goToGuestDetails(id:any){
     
-    this.router.navigate(['/guest-details', id])
+    sessionStorage.setItem('id', id)
+
+    this.router.navigate(['/guest-details'],{state: {id}})
   }
 }

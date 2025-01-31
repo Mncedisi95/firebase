@@ -5,7 +5,7 @@ import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-room-details-admin',
-  imports: [NgIf,RouterLink],
+  imports: [NgIf, RouterLink],
   templateUrl: './room-details-admin.component.html',
   styleUrl: './room-details-admin.component.css'
 })
@@ -14,7 +14,7 @@ export class RoomDetailsAdminComponent {
   /**
   * @property {any} id
   */
-  id: any 
+  id: any
 
   /**
   * @property {any} roomDetails
@@ -54,24 +54,43 @@ export class RoomDetailsAdminComponent {
    * @param {ActivatedRoute} route 
    * @param {RoomService} roomService 
    */
-  constructor(private router:Router, private route: ActivatedRoute,private roomService: RoomService){}
+  constructor(private router: Router, private roomService: RoomService) { }
 
-  ngOnInit(){
+  ngOnInit() {
 
-    // Get the room ID from the route parameters
-    this.id = this.route.snapshot.paramMap.get('id') || ''
+    // Get the current navigation object from the router
+    const navigation = this.router.getCurrentNavigation()
+    // Extract the state object from navigation extras, expecting an 'id' property
+    const state = navigation?.extras?.state as { id?: any }
+
+    // Check if 'id' is available in the navigation state
+    if (state?.id) {
+      // Assign the retrieved ID to the component property
+      this.id = state.id
+      // Store the ID in sessionStorage to persist across refreshes
+      sessionStorage.setItem('id', this.id)
+    } else {
+      // Retrieve the ID from sessionStorage if the page was refreshed
+      this.id = sessionStorage.getItem('id')
+    }
+
+    // If 'id' is still not available, redirect to the home page
+    if (!this.id) {
+      // Redirect user to the home page to prevent access without a valid ID
+      this.router.navigate(['/'])
+    }
 
     // Fetch room details using the ID
     this.fetchRoomDetails()
   }
 
-   /**
-  * @method showError 
-  * @description Displays an error message for a specified duration.
-  * @param {string} message - The error message to be displayed. 
-  * @param {number} [duration= 3000] - Optional duration for the error message display in milliseconds.
-  */
-   showError(message: string, duration = 3000): void {
+  /**
+ * @method showError 
+ * @description Displays an error message for a specified duration.
+ * @param {string} message - The error message to be displayed. 
+ * @param {number} [duration= 3000] - Optional duration for the error message display in milliseconds.
+ */
+  showError(message: string, duration = 3000): void {
 
     // Prevent multiple overlapping error messages
     if (this.isErrorVisible) return;
@@ -86,13 +105,13 @@ export class RoomDetailsAdminComponent {
     }, duration)
   }
 
-   /**
-  * @method showSuccess
-  * @description Displays a success message for a specified duration. 
-  * @param {string} message - The success message to be displayed.
-  * @param {number} [duration= 3000] - Optional duration for the error message display in milliseconds.
-  */
-   showSuccess(message: string, duration = 3000): void {
+  /**
+ * @method showSuccess
+ * @description Displays a success message for a specified duration. 
+ * @param {string} message - The success message to be displayed.
+ * @param {number} [duration= 3000] - Optional duration for the error message display in milliseconds.
+ */
+  showSuccess(message: string, duration = 3000): void {
 
     // Prevent multiple overlapping error messages
     if (this.isSuccessVisible) return
@@ -115,7 +134,7 @@ export class RoomDetailsAdminComponent {
   * If an error occurs, it logs the error and provides appropriate feedback.
   * @returns {Promise<void>} A promise that resolves when the room details are successfully fetched.
   */
-  async fetchRoomDetails(): Promise<void>{
+  async fetchRoomDetails(): Promise<void> {
 
     try {
       // Attempt to fetch room details from the RoomService
@@ -163,8 +182,7 @@ export class RoomDetailsAdminComponent {
 
         // Show success message and log the event
         this.showSuccess('Room deletion successful!')
-        console.log('Room deletion successful!')
-
+    
         // Navigate to the rooms page after a short delay
         setTimeout(() => {
           this.router.navigate(['/rooms-admin'])
@@ -179,30 +197,33 @@ export class RoomDetailsAdminComponent {
     }
   }
 
-  
+
   /**
   * @method goToEditRoom
   * @description 
   */
-  goToEditRoom(): void{
+  goToEditRoom(): void {
 
-    if(!this.id) {
+    if (!this.id) {
 
-      console.log('Room ID is undefined or null. Editing cannot proceed.');
-      this.showError('Invalid room ID. Navigation to edit aborted.');
-      return;
+      this.showError('Invalid room ID. Navigation to edit aborted.')
+      return
     }
 
     try {
 
-     // navigate to edit room component
-     this.router.navigate(['/edit-room', this.id])
-      
+      sessionStorage.setItem('id', this.id)
+
+      const id = this.id
+
+      // navigate to edit room component
+      this.router.navigate(['/edit-room'], {state: {id}})
+
     } catch (error) {
 
       console.log('Error occurred while navigating to edit room page:', error)
     }
-  
+
   }
 
 

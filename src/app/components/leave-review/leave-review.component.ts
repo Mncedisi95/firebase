@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-leave-review',
-  imports: [ReactiveFormsModule,NgIf],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './leave-review.component.html',
   styleUrl: './leave-review.component.css'
 })
@@ -47,34 +47,54 @@ export class LeaveReviewComponent {
   /**
   * @property {any} roomId
   */
-   roomId : any
+  id: any
 
   /**
   * @property {any} userId  
-  */ 
-  userId : any
+  */
+  userId: any
 
   /**
   * @constructor 
   * @param {FormBuilder} fb
   * @param {RoomService} roomService
   */
-  constructor(private fb: FormBuilder,private roomService: RoomService,private route: ActivatedRoute, private router: Router,private authService: AuthService) {
+  constructor(private fb: FormBuilder, private roomService: RoomService, private route: ActivatedRoute, private router: Router, private authService: AuthService) {
 
     this.reviewForm = this.fb.group({
       // Required : Rating
-      rating: ['', [Validators.required]], 
+      rating: ['', [Validators.required]],
       // Required : comment and must be at least 10 chars
-      comment: ['', [Validators.required, Validators.minLength(10)]], 
+      comment: ['', [Validators.required, Validators.minLength(10)]],
     })
   }
 
-   ngOnInit(){
+  ngOnInit() {
 
-    this.roomId = this.route.snapshot.paramMap.get('roomId') || ''
+    // Get the current navigation object from the router
+    const navigation = this.router.getCurrentNavigation()
+    // Extract the state object from navigation extras, expecting an 'id' property
+    const state = navigation?.extras?.state as { id?: any }
+
+    // Check if 'id' is available in the navigation state
+    if (state?.id) {
+      // Assign the retrieved ID to the component property
+      this.id = state.id
+      // Store the ID in sessionStorage to persist across refreshes
+      sessionStorage.setItem('id', this.id)
+    } else {
+      // Retrieve the ID from sessionStorage if the page was refreshed
+      this.id = sessionStorage.getItem('id')
+    }
+
+    // If 'id' is still not available, redirect to the home page
+    if (!this.id) {
+      // Redirect user to the home page to prevent access without a valid ID
+      this.router.navigate(['/'])
+    }
 
     this.authService.currentUser$.subscribe((user) => {
-      
+
       this.userId = user.uid
     })
   }
@@ -106,7 +126,7 @@ export class LeaveReviewComponent {
   * @param {string} message - The success message to be displayed.
   * @param {number} [duration= 3000] - Optional duration for the error message display in milliseconds.
   */
-   showSuccess(message: string, duration = 3000): void {
+  showSuccess(message: string, duration = 3000): void {
 
     // Prevent multiple overlapping error messages
     if (this.isSuccessVisible) return
@@ -130,7 +150,7 @@ export class LeaveReviewComponent {
   * @returns {Promise<void>} A promise that resolves when the review submission is completed.
   * @throws {Error} Throws an error if the submission process fails.
   */
-  async onSubmitReview() : Promise<void>{
+  async onSubmitReview(): Promise<void> {
 
     try {
 
@@ -143,16 +163,16 @@ export class LeaveReviewComponent {
       // Prepare review data
       const reviewData = {
 
-        roomId : this.roomId,
-        userId : this.userId,
+        roomId: this.id,
+        userId: this.userId,
         comment: this.reviewForm.get('comment')?.value,
-        rating : this.reviewForm.get('rating')?.value,
+        rating: this.reviewForm.get('rating')?.value,
         creationDate: new Date().toISOString(),
       }
 
       // Call service to add the review
       await this.roomService.addReview(reviewData)
-      
+
       // Show success message and reset form
       this.showSuccess('Thank you for your review!')
       this.reviewForm.reset()

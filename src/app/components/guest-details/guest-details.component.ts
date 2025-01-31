@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class GuestDetailsComponent {
   /**
   * @property {any} guestDetails
   */
-  guestDetails : any
+  guestDetails: any
 
   /**
   * @constructor
@@ -26,14 +26,34 @@ export class GuestDetailsComponent {
   * @param {ActivatedRoute} route 
   * @param {UserService} userService 
   */
-  constructor(private route: ActivatedRoute,private userService: UserService){}
+  constructor(private router: Router, private userService: UserService) { }
 
   /**
    * @method ngOnInit
    */
-  ngOnInit(){
+  ngOnInit() {
 
-    this.id = this.route.snapshot.paramMap.get('id') || ''
+    // Get the current navigation object from the router
+    const navigation = this.router.getCurrentNavigation()
+    // Extract the state object from navigation extras, expecting an 'id' property
+    const state = navigation?.extras?.state as { id?: any }
+
+    // Check if 'id' is available in the navigation state
+    if (state?.id) {
+      // Assign the retrieved ID to the component property
+      this.id = state.id
+      // Store the ID in sessionStorage to persist across refreshes
+      sessionStorage.setItem('id', this.id)
+    } else {
+      // Retrieve the ID from sessionStorage if the page was refreshed
+      this.id = sessionStorage.getItem('id')
+    }
+
+    // If 'id' is still not available, redirect to the home page
+    if (!this.id) {
+      // Redirect user to the home page to prevent access without a valid ID
+      this.router.navigate(['/'])
+    }
 
     this.fetchGuestDetails()
   }
@@ -43,10 +63,10 @@ export class GuestDetailsComponent {
    * @method fetchGuestDetails
    * @description 
    */
-  async fetchGuestDetails() : Promise<void> {
+  async fetchGuestDetails(): Promise<void> {
 
     try {
-      
+
       this.guestDetails = await this.userService.getGuestById(this.id)
 
     } catch (error) {
@@ -55,8 +75,8 @@ export class GuestDetailsComponent {
     }
   }
 
-  editGuest(){}
+  editGuest() { }
 
-  removeGuest(){}
+  removeGuest() { }
 
 }
