@@ -26,6 +26,8 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { ViewProfileComponent } from './components/view-profile/view-profile.component';
 import { LeaveReviewComponent } from './components/leave-review/leave-review.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { AboutComponent } from './components/about/about.component';
+import { ServicesComponent } from './components/services/services.component';
 
 export const routes: Routes = [
 
@@ -34,6 +36,8 @@ export const routes: Routes = [
   { path: 'register', component: SignUpComponent },
   { path: 'rooms', component: RoomsComponent },
   { path: 'contact', component: ContactComponent},
+  { path: 'about', component: AboutComponent},
+  { path: 'services', component: ServicesComponent},
   {
      path: 'book-room', 
      component: BookRoomComponent, 

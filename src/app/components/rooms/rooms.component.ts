@@ -1,90 +1,88 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { RoomService } from '../../services/room.service';
-import { NgFor, NgIf, SlicePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import {MatPaginatorModule, PageEvent} from '@angular/material/paginator'
 import { AuthService } from '../../services/auth.service';
-import { threadId } from 'worker_threads';
-
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { FormsModule } from '@angular/forms';
+import { NgFor, NgIf, SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-rooms',
-  imports: [RouterLink, NgFor, FormsModule,MatPaginatorModule,SlicePipe,NgIf],
+  imports: [FormsModule,RouterLink,SlicePipe,MatPaginator,NgFor,NgIf],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.css'
 })
 export class RoomsComponent {
 
-   /**
+  /**
    * @property {any[]} rooms 
    */
-   rooms: any[] = []
+  rooms: any[] = []
 
-   /**
-   * Temporary array used for intermediate calculations or manipulation.
-   * @property {any[]} originalProducts - Auxiliary array for data processing.
+  /**
+  * Temporary array used for intermediate calculations or manipulation.
+  * @property {any[]} originalProducts - Auxiliary array for data processing.
+  */
+  originalRooms: any[] = []
+
+  /**
+  * Represents the search input entered by the user for filtering rooms.
+  * @property {string} search - Search keyword for filtering rooms.
+  */
+  search: string = ""
+
+  /**
+  * Represents the total number of rooms available.
+  * @property {number} items - Total count of rooms.
+  */
+  items: number = 0
+
+  /**
+  * Represents the current page index in the pagination.
+  * @property {number} currentpage - Zero-based index of the current page.
+  */
+  currentpage: number = 0
+
+  /**
+  * Represents the index of the first product displayed on the current page.
+  * @property {number} lowIndex - Starting index for pagination.
+  */
+  lowIndex: number = 0
+
+  /**
+  * Represents the index of the last product displayed on the current page.
+  * @property {number} highIndex - Ending index for pagination.
+  */
+  highIndex: number = 6
+
+  /**
+   * @property {boolean} isLoggedIn
    */
-   originalRooms: any[] = []
+  isLoggedIn: boolean = false
 
-   /**
-   * Represents the search input entered by the user for filtering rooms.
-   * @property {string} search - Search keyword for filtering rooms.
+  /**
+  * @property {any[]} any
+  */
+  filteredRooms: any[] = []
+
+  /**
+  * @property {string} selectedSortOption
+  */
+  selectedSortOption: string = ''
+
+  /**
+   * @property {string} selectedRoomType
    */
-   search: string = ""
+  selectedRoomType: string = ''
 
-   /**
-   * Represents the total number of rooms available.
-   * @property {number} items - Total count of rooms.
-   */
-   items: number = 0
-
-   /**
-   * Represents the current page index in the pagination.
-   * @property {number} currentpage - Zero-based index of the current page.
-   */
-   currentpage: number = 0
-
-   /**
-   * Represents the index of the first product displayed on the current page.
-   * @property {number} lowIndex - Starting index for pagination.
-   */
-   lowIndex: number = 0
-
-   /**
-   * Represents the index of the last product displayed on the current page.
-   * @property {number} highIndex - Ending index for pagination.
-   */
-   highIndex: number = 6
-
-   /**
-    * @property {boolean} isLoggedIn
-    */
-    isLoggedIn: boolean = false
-
-    /**
-    * @property {any[]} any
-    */
-    filteredRooms: any[] = [] 
-
-    /**
-    * @property {string} selectedSortOption
-    */
-    selectedSortOption: string = ''  
-
-    /**
-     * @property {string} selectedRoomType
-     */
-    selectedRoomType : string = ''
-
-   /**
-   * @constructor
-   * @description 
-   * @param {Router} router 
-   * @param {RoomService} roomService 
-   * @param {AuthService} authService
-   */
-  constructor(private router:Router,private roomService: RoomService,private authService: AuthService){}
+  /**
+  * @constructor
+  * @description 
+  * @param {Router} router 
+  * @param {RoomService} roomService 
+  * @param {AuthService} authService
+  */
+  constructor(private router: Router, private roomService: RoomService, private authService: AuthService) { }
 
   /**
    * @description 
@@ -110,7 +108,7 @@ export class RoomsComponent {
   * @returns {Promise<void>} Resolves when the rooms have been successfully fetched and stored.
   * @throws {Error} Logs an error if the room retrieval process fails.
   */
-  async fetchRooms(): Promise<void>{
+  async fetchRooms(): Promise<void> {
 
     try {
       // Call the room service to fetch room data
@@ -127,13 +125,13 @@ export class RoomsComponent {
 
   }
 
- /**
-  * Fetches sorted room data from the room service and updates the `rooms` list.
-  * @async
-  * @method onSortChange
-  * @description Handles the filter dropdown change event and sorts the rooms based on the selected sort option.
-  * @returns {Promise<void>} - Resolves when the room list is updated.
-  */
+  /**
+   * Fetches sorted room data from the room service and updates the `rooms` list.
+   * @async
+   * @method onSortChange
+   * @description Handles the filter dropdown change event and sorts the rooms based on the selected sort option.
+   * @returns {Promise<void>} - Resolves when the room list is updated.
+   */
   async onSortChange(): Promise<void> {
 
     try {
@@ -186,34 +184,34 @@ export class RoomsComponent {
   * This method filters the `rooms` array using the search term entered by the user.
   * If the search term is empty or invalid, it resets the 'rooms' array to the original list.
   * The search matches against room type, price, capacity, and description fields.
-  */ 
-  onSearch(): void{
+  */
+  onSearch(): void {
 
     try {
-      
+
       const term = this.search?.toLowerCase() || ''
 
       // If the search term is empty, reset the rooms list
       if (!term.trim()) {
         // Create a fresh copy of the original array
-        this.rooms = [...this.originalRooms] 
+        this.rooms = [...this.originalRooms]
         return
       }
 
       // Filter rooms based on the search term
-      this.rooms = this.originalRooms.filter(room =>{
+      this.rooms = this.originalRooms.filter(room => {
 
-      const matchesStringFields = 
-      room.roomType.toLowerCase().includes(term) ||
-      room.description.includes(term) ||
-      room.services.includes(term)
+        const matchesStringFields =
+          room.roomType.toLowerCase().includes(term) ||
+          room.description.includes(term) ||
+          room.services.includes(term)
 
-      const matchesNumberFields =
-      room.price?.toString().includes(term) ||
-      room.capacity?.toString().includes(term) 
-      
-      return matchesStringFields || matchesNumberFields
-    })
+        const matchesNumberFields =
+          room.price?.toString().includes(term) ||
+          room.capacity?.toString().includes(term)
+
+        return matchesStringFields || matchesNumberFields
+      })
 
     } catch (error) {
       console.log('Error occurred during search operation:', error)
@@ -238,7 +236,7 @@ export class RoomsComponent {
       // Store ID in sessionStorage before navigating
       sessionStorage.setItem('id', id)
 
-      this.router.navigate(['/room-details'], {state: {id}})
+      this.router.navigate(['/room-details'], { state: { id } })
 
     } catch (error) {
 
@@ -264,7 +262,7 @@ export class RoomsComponent {
       // Store ID in sessionStorage before navigating
       sessionStorage.setItem('id', id)
 
-      this.router.navigate(['/book-room'], {state : {id} })
+      this.router.navigate(['/book-room'], { state: { id } })
 
     } catch (error) {
 
@@ -283,10 +281,11 @@ export class RoomsComponent {
   * - Updates the lowIndex to reflect the start index of the current page.
   * - Updates the highIndex to reflect the end index of the current page.
   */
-   handlePagenator(event: PageEvent): PageEvent {
+  handlePagenator(event: PageEvent): PageEvent {
     // initialize lowindex and high index property
     this.lowIndex = event.pageIndex * event.pageSize
     this.highIndex = this.lowIndex + event.pageSize
     return event
   }
+
 }

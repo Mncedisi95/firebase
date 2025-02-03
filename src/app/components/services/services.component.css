@@ -1,0 +1,80 @@
+.services-section {
+    padding: 60px;
+    background-color: #fff;
+}
+
+/* Hero Section */
+.services-hero {
+    text-align: center;
+    color: white;
+    padding: 80px 20px;
+    border-radius: 8px;
+}
+
+.services-hero h1 {
+    font-size: 2.5rem;
+}
+
+.services-hero p {
+    font-size: 1.2rem;
+}
+
+/* Services Grid */
+.services-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 40px;
+    gap: 20px;
+}
+
+.service-box {
+    width: 45%;
+    background: #f7f3fc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.service-box img {
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+/* Why Choose Us */
+.why-choose-us {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.why-choose-us ul {
+    list-style: none;
+    padding: 0;
+}
+
+.why-choose-us li {
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+/* Call-to-Action */
+.cta {
+    text-align: center;
+    margin-top: 60px;
+    padding: 30px;
+    background: #BA55D3;
+    color: white;
+    border-radius: 10px;
+}
+
+.cta-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: white;
+    color: #BA55D3;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+}
