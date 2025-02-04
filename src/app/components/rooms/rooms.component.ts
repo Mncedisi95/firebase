@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router, RouterLink } from '@angular/router';
 import { RoomService } from '../../services/room.service';
 import { AuthService } from '../../services/auth.service';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { isPlatformBrowser, NgFor, NgIf, SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf, SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-rooms',
-  imports: [FormsModule,RouterLink,SlicePipe,MatPaginator,NgFor,NgIf],
+  imports: [SlicePipe,NgFor,NgIf,FormsModule,MatPaginator,RouterLink],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.css'
 })
@@ -82,7 +82,11 @@ export class RoomsComponent {
   * @param {RoomService} roomService 
   * @param {AuthService} authService
   */
-  constructor(private router: Router, private roomService: RoomService, private authService: AuthService) { }
+  constructor(
+    private router: Router, 
+    private roomService: RoomService, 
+    private authService: AuthService, 
+    @Inject (PLATFORM_ID) private platformId: object) { }
 
   /**
    * @description 
@@ -93,7 +97,12 @@ export class RoomsComponent {
       this.isLoggedIn = !!user
     })
 
-    this.fetchRooms()
+    setTimeout(() => {
+      if (isPlatformBrowser(this.platformId)) { 
+
+        this.fetchRooms()
+      }
+    }, 1000)
   }
 
   /**
@@ -111,6 +120,7 @@ export class RoomsComponent {
   async fetchRooms(): Promise<void> {
 
     try {
+
       // Call the room service to fetch room data
       this.originalRooms = await this.roomService.getAvailableRooms()
       this.rooms = this.originalRooms

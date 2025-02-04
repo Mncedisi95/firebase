@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { deleteDoc, Firestore } from '@angular/fire/firestore';
-import { addDoc, collection, doc, DocumentReference, getDoc, getDocs, orderBy, Query, query, updateDoc, where } from 'firebase/firestore';
+import { addDoc, collection, doc, DocumentReference, getDoc, getDocs, limit, orderBy, Query, query, updateDoc, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -255,29 +255,33 @@ export class RoomService {
   * Each room object contains an `id` and all other room properties from the Firestore document.
   * @throws {Error} Throws an error if the Firestore query fails.
   */
-  async getAvailableRooms(): Promise<Array<{ id: string;[key: string]: any }>> {
-
+  async getAvailableRooms(): Promise<Array<{ id: string; [key: string]: any }>> {
+   
     try {
 
-      // Construct Firestore query to fetch rooms with status 'Available'
+      console.time('Firestore Query Time')
+
       const roomsQuery = query(
         collection(this.firestore, 'rooms'),
-        where('status', '==', 'Available'))
-
-      // Execute the query and fetch documents
+        where('status', '==', 'Available')
+      )
+  
+      // Fetch Firestore data with abort signal
       const roomSnap = await getDocs(roomsQuery)
 
-      // Map the documents into an array of room objects
+      console.timeEnd('Firestore Query Time')
+      console.log('Rooms fetched:', roomSnap.docs.length)
+
       return roomSnap.docs.map((doc) => ({
-
-        id: doc.id,  // Include the document ID
-        ...doc.data() // Include all other document fields
-      }))
-
+        id: doc.id,
+        ...doc.data(),
+      }));
+  
     } catch (error) {
-      console.log('Error fetching available rooms:', error)
-      throw new Error('Unable to fetch available rooms. Please try again later.')
-    }
+    
+      console.error('Error fetching available rooms:', error);
+      throw new Error('Unable to fetch available rooms. Please try again later.');
+    } 
   }
 
   /**
