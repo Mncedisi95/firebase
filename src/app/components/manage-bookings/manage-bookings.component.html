@@ -6,15 +6,15 @@
     <!-- Breadcrumb -->
     <nav class="breadcrumb">
         <ul>
-             <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
-             <li>Bookings</li>
+            <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li>Bookings</li>
         </ul>
-   </nav>
+    </nav>
 
     <!-- Main Container Start -->
     <div>
-        <!-- Table Start-->
-        <table class="content-table">
+        <!-- Table Start (Only Show If There Are Bookings) -->
+        <table class="content-table" *ngIf="bookings?.length">
             <thead>
                 <tr>
                     <th>Room Number</th>
@@ -25,8 +25,8 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let booking of bookings | sortByDate: 'checkIn'">
-                <tr>
+            <tbody>
+                <tr *ngFor="let booking of bookings | sortByDate: 'checkIn'">
                     <td>{{booking.room?.roomNumber}}</td>
                     <td>{{booking.guest?.name}}</td>
                     <td>{{booking.checkIn}}</td>
@@ -39,8 +39,12 @@
             </tbody>
         </table>
         <!-- End of Table-->
+
+        <!-- No Bookings Message (Shown When There Are No Bookings) -->
+        <div *ngIf="!bookings?.length" class="no-bookings">
+            <p>No bookings yet. Monitor this section for new reservations!</p>
+        </div>
     </div>
     <!-- End of Main Container -->
 </section>
 <!-- End of Section -->
-

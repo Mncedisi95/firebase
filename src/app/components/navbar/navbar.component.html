@@ -14,13 +14,8 @@
               <a class="nav-link" routerLink="/rooms">Rooms</a>
             </li>
             
-            <li class="nav-item dropdown" *ngIf="isLoggedIn">
-                <a class="nav-link" (click)="toggleDropdown()">Bookings
-                    <span class="arrow" [class.open]="isDropdownOpen">&#9662;</span>
-                </a>
-                <ul class="dropdown-menu" [class.show]="isDropdownOpen">
-                    <li><a class="dropdown-item" routerLink="/view-booking">My Bookings</a></li>
-                </ul>
+            <li class="nav-item" *ngIf="isLoggedIn">
+                <a class="nav-link" routerLink="/view-booking">My Bookings</a>
             </li>
 
             <li class="nav-item">
@@ -73,7 +68,7 @@
             <a class="sidebar-link" routerLink="/rooms-admin">Room Management</a>
             <a class="sidebar-link" routerLink="/room-availability">Room Availability</a>
             <a class="sidebar-link" routerLink="/manage-bookings">Booking Management</a>
-            <a class="sidebar-link" routerLink="/manage-guests">Guest Management</a>
+            <a class="sidebar-link" routerLink="/manage-guests">User Management</a>
             <a class="sidebar-link">Financial Insights</a>
             <a class="sidebar-link">Analytics & Reports</a>
             <a class="sidebar-link">Notifications & Alerts</a>

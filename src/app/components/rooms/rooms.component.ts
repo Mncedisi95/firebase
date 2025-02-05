@@ -170,19 +170,23 @@ export class RoomsComponent {
     try {
       // Ensure a valid room type is selected
       if (!this.selectedRoomType || this.selectedRoomType.trim() === '') {
-        console.warn('No room type selected for filtering.')
+        console.log('No room type selected for filtering.')
         return
       }
 
-      // Fetch rooms filtered by the selected room type
-      this.rooms = await this.roomService.filterRoomsByType(this.selectedRoomType);
+      if(this.selectedRoomType.toLowerCase() === 'all'){
+        // Fetch all rooms when 'all' is selected
+        await this.fetchRooms()
+      }
+      else{
+        // Fetch rooms filtered by the selected room type
+        this.rooms = await this.roomService.filterRoomsByType(this.selectedRoomType)
+      }
 
-      console.log('Filtered rooms:', this.rooms);
     } catch (error) {
-      console.log('Error occurred while filtering rooms by type:', error);
+      console.log('Error occurred while filtering rooms by type:', error)
     }
   }
-
 
   /**
   * Filters the list of rooms based on the user's search input.

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { RoomService } from '../../services/room.service';
-import {  NgFor } from '@angular/common';
+import {  NgFor, NgIf } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { SortByDatePipe } from '../../sort-by-date.pipe';
 
 
 @Component({
   selector: 'app-manage-bookings',
-  imports: [NgFor,RouterLink,SortByDatePipe],
+  imports: [NgFor,RouterLink,SortByDatePipe,NgIf],
   templateUrl: './manage-bookings.component.html',
   styleUrl: './manage-bookings.component.css'
 })
@@ -87,7 +87,7 @@ export class ManageBookingsComponent {
   * @param {string} id - The ID of the booking to view.
   * @returns {void}
   */
-  goToViewBooking(id: any){
+  goToViewBooking(id: any) : void {
     
     sessionStorage.setItem('id',id)
 

@@ -1,33 +1,61 @@
 <!-- Section Start-->
 <section class="section">
     <!-- Title -->
-    <h1 class="section-subtitle">Guests Overview</h1>
+    <h1 class="section-subtitle">User Management Overview</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li>Users</li>
+        </ul>
+    </nav>
+
+    <!-- Top Controls -->
+    <div class="filters">
+        <button class="btn-add" (click)="goToAddUser()">Add User</button>
+        <select [(ngModel)]="selectedRole" (change)="onFilterUser()">
+            <option value="" disabled selected>Filter By Role</option>
+            <option value="all">All</option>
+            <option value="guest">guest</option>
+            <option value="staff">staff</option>
+            <option value="admin">admin</option>
+        </select>
+    </div>
+
     <!-- Main Container Start -->
     <div>
         <!-- Table Start-->
-        <table class="content-table">
+        <table class="content-table" *ngIf="users?.length">
             <thead>
                 <tr>
-                    <th>Guest Name</th>
-                    <th>Guest Email</th>
+                    <th>Full Name</th>
+                    <th>User Email</th>
+                    <th>Role</th>
                     <th>Phone Number</th>
-                    <th>Guest Address</th>
+                    <th>User Address</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody *ngFor="let guest of guests">
-                <tr>
-                    <td>{{guest.name}}</td>
-                    <td>{{guest.email}}</td>
-                    <td>{{guest.phone}}</td>
-                    <td>{{guest.address}}</td>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.role}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.address}}</td>
                     <td>
-                        <button (click)="goToGuestDetails(guest.uid)">View More</button>
+                        <button (click)="goToGuestDetails(user.uid)">View More</button>
                     </td>
                 </tr>
             </tbody>
         </table>
         <!-- End of Table-->
+
+        <!-- No Bookings Message (Shown When There Are No Bookings) -->
+        <div *ngIf="!users?.length" class="no-users">
+            <p>No users yet!. This section will update as new users register.</p>
+        </div>
     </div>
     <!-- End of Main Container -->
 </section>

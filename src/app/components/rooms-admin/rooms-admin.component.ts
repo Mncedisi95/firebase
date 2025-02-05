@@ -31,6 +31,16 @@ export class RoomsAdminComponent {
    search: string = ""
 
    /**
+   * @property {string} selectedRoomType 
+   */ 
+   selectedRoomType : string = ''
+
+   /**
+   * @property {string} selectedStatus
+   */
+   selectedStatus: string = '' 
+
+   /**
    * Represents the total number of rooms available.
    * @property {number} items - Total count of rooms.
    */
@@ -234,6 +244,74 @@ export class RoomsAdminComponent {
       } catch (error) {
         console.log('Error occurred during search operation:', error)
       }
+  }
+
+  /**
+  * Filters the list of rooms based on the selected room type.
+  *
+  * @async
+  * @method onFilterRoomType
+  * @description Fetches rooms filtered by the selected room type from the `RoomService` 
+  * and updates the `rooms` list. If 'all' is selected, it fetches all available rooms.
+  *
+  * @returns {Promise<void>} Resolves when the filtering operation is complete.
+  * @throws {Error} Logs an error if the filtering process fails.
+  */
+  async onFilterRoomType() : Promise<void> {
+
+    try {
+      // Ensure a valid room type is selected
+      if (!this.selectedRoomType || this.selectedRoomType.trim() === '') {
+        console.log('No room type selected for filtering.')
+        return
+      }
+
+      if(this.selectedRoomType.toLowerCase() === 'all'){
+        // Fetch all rooms when 'all' is selected
+        await this.fetchRooms()
+      }
+      else{
+        // Fetch rooms filtered by the selected room type
+        this.rooms = await this.roomService.filterRoomsByType(this.selectedRoomType)
+      }
+      
+    } catch (error) {
+      console.log('Error occurred while filtering rooms by type:', error)
     }
+  }
+
+  /**
+  * Filters rooms based on the selected status (e.g., "Available", "Booked", "Maintenance").
+  *
+  * @async
+  * @method onFilterRoomStatus
+  * @returns {Promise<void>} A promise that resolves when filtering is complete.
+  * @description 
+  * - If 'All' is selected, fetches all rooms.
+  * - Otherwise, fetches rooms filtered by the selected status.
+  * - Logs any errors that occur during the filtering process.
+  */
+  async onFilterRoomStatus() : Promise<void> {
+
+    try {
+      // Ensure a valid room status is selected
+      if (!this.selectedStatus || this.selectedStatus.trim() === '') {
+        console.log('Room status is required for filtering.')
+        return
+      }
+
+      if(this.selectedStatus.toLowerCase() === 'all'){
+       // Fetch all rooms when 'all' is selected
+       await this.fetchRooms() 
+      }
+      else{
+        // Fetch rooms filtered by the selected status
+        this.rooms = await this.roomService.filterRoomsByStatus(this.selectedStatus)
+      }
+
+    } catch (error) {
+      console.log('Error occurred while filtering rooms by status:', error)
+    }
+  }
   
 }

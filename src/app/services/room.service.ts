@@ -165,11 +165,9 @@ export class RoomService {
       // Map the documents into a structured array with IDs and data
       return querySnapshot.docs.map((doc) => {
 
-        const data = doc.data()
-
         return {
           id: doc.id, // Include the document ID
-          ...data // Spread the document data
+          ...doc.data() // Spread the document data
         }
       })
     } catch (error) {
@@ -259,8 +257,6 @@ export class RoomService {
    
     try {
 
-      console.time('Firestore Query Time')
-
       const roomsQuery = query(
         collection(this.firestore, 'rooms'),
         where('status', '==', 'Available')
@@ -268,9 +264,6 @@ export class RoomService {
   
       // Fetch Firestore data with abort signal
       const roomSnap = await getDocs(roomsQuery)
-
-      console.timeEnd('Firestore Query Time')
-      console.log('Rooms fetched:', roomSnap.docs.length)
 
       return roomSnap.docs.map((doc) => ({
         id: doc.id,
@@ -406,8 +399,7 @@ export class RoomService {
     }
   }
 
-  /** 
-  * 
+  /**  
   * @async
   * @method deleteRoom
   * @description - Deletes a room from the Firestore database by its ID.
@@ -580,8 +572,32 @@ export class RoomService {
 
       return await this.fetchRooms(roomQuery);
     } catch (error) {
-      console.error('Error filtering rooms by room type:', error);
-      throw new Error('Failed to filter rooms by type');
+      console.error('Error filtering rooms by room type:', error)
+      throw new Error('Failed to filter rooms by type')
+    }
+  }
+
+  /**
+  * Filters rooms based on their status (e.g., "Available", "Booked", "Maintenance").
+  *
+  * @async
+  * @method filterRoomsByStatus
+  * @param {string} status - The status to filter rooms by.
+  * @returns {Promise<any[]>} A promise that resolves to an array of rooms with the specified status.
+  * @throws {Error} Throws an error if the filtering process fails.
+  */
+  async filterRoomsByStatus(status: string): Promise<any[]> {
+
+    try {
+      // Create Firestore query to fetch rooms based on status
+      const roomQuery = query(collection(this.firestore,'rooms'), where('status', '==', status))
+
+      // Fetch and return rooms matching the status
+      return await this.fetchRooms(roomQuery)
+
+    } catch (error) {
+      console.error('Error filtering rooms by room status:', error)
+      throw new Error('Failed to filter rooms by status')
     }
   }
 

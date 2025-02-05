@@ -28,6 +28,7 @@ import { LeaveReviewComponent } from './components/leave-review/leave-review.com
 import { ContactComponent } from './components/contact/contact.component';
 import { AboutComponent } from './components/about/about.component';
 import { ServicesComponent } from './components/services/services.component';
+import { AddUserComponent } from './components/add-user/add-user.component';
 
 export const routes: Routes = [
 
@@ -98,6 +99,12 @@ export const routes: Routes = [
     data: { roles: ['admin']},
   },
   {
+    path:'add-user',
+    component: AddUserComponent,
+    canActivate: [authGuard, roleGuard],
+    data: {roles: ['admin']}
+  },
+  {
     path: 'edit-room',
     component: EditRoomComponent,
     canActivate: [authGuard, roleGuard],
@@ -107,12 +114,11 @@ export const routes: Routes = [
     path: 'room-availability',
     component: RoomAvailabilityComponent,
     canActivate: [authGuard, roleGuard],
-    data: {roles: ['admin'], renderMode: 'client'}
+    data: {roles: ['admin']}
   },
   {
     path: 'room-details',
     component: RoomDetailsComponent,
-    data: {renderMode: 'client'}
   },
   {
     path: 'dashboard',
@@ -124,7 +130,7 @@ export const routes: Routes = [
     path: 'edit-profile',
     component: EditProfileComponent,
     canActivate: [authGuard, roleGuard],
-    data: {roles: ['guest'],renderMode: 'client'}
+    data: {roles: ['guest']}
   },
   {
     path: 'view-profile',

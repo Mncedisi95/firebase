@@ -13,7 +13,32 @@
     <!-- Top Controls -->
     <div class="top-controls">
         <button class="btn-add" (click)="goToAddRoom()" >Add Room</button>
-        <input type="text" [(ngModel)]="search" (input)="onSearch()" [ngModelOptions]="{standalone: true}" placeholder="Search rooms..." class="search-bar" />
+        <div class="filters">
+            <select id="room-type" [(ngModel)]="selectedRoomType" (change)="onFilterRoomType()">
+                <option value="" disabled selected>Filter By Room Type</option>
+                <option value="all">All</option>
+                <option value="Premium King Room">Premium King Room</option>
+                <option value="Deluxe Room">Deluxe Room</option>
+                <option value="Double Room">Double Room</option>
+                <option value="Standard Room">Standard Room</option>
+                <option value="Suite Room">Suite Room</option>
+                <option value="Executive Room">Executive Room</option>
+                <option value="Family Room">Family Room</option>
+                <option value="Accessible Room">Accessible Room</option>
+                <option value="Honeymoon Suite">Honeymoon Suite</option>
+                <option value="Presidential Suite">Presidential Suite</option>
+                <option value="Penthouse Suite">Penthouse Suite</option>
+            </select>
+            <select id="room-status" [(ngModel)]="selectedStatus" (change)="onFilterRoomStatus()">
+                <option value="" disabled selected>Filter by Room Status</option>
+                <option value="all">All</option>
+                <option value="Available">Available</option>
+                <option value="Booked">Booked</option>
+                <option value="Maintenance">Maintenance</option>
+            </select>
+            <label for="search-room">Search:</label>
+            <input type="text" [(ngModel)]="search" (input)="onSearch()" [ngModelOptions]="{standalone: true}" class="search-bar" id="search-room" placeholder="Search rooms...">
+        </div>
     </div>
     
     <!-- Data List Selection -->
