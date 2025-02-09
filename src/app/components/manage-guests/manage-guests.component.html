@@ -23,10 +23,15 @@
         </select>
     </div>
 
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
     <!-- Main Container Start -->
     <div>
         <!-- Table Start-->
-        <table class="content-table" *ngIf="users?.length">
+        <table class="content-table" *ngIf="users?.length && !isLoading">
             <thead>
                 <tr>
                     <th>Full Name</th>
@@ -38,7 +43,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of users">
+                <tr *ngFor="let user of (users | slice : lowIndex : highIndex)">
                     <td>{{user.name}}</td>
                     <td>{{user.email}}</td>
                     <td>{{user.role}}</td>
@@ -52,13 +57,18 @@
         </table>
         <!-- End of Table-->
 
+        <!-- Paginator -->
+        <mat-paginator *ngIf="!isLoading" [length]=items [pageSize]="10" [showFirstLastButtons]="true"
+            [pageIndex]="currentpage" [pageSizeOptions]="[10, 15, 20, 25]" (page)="handlePagenator($event)"
+            aria-label="Select page">
+        </mat-paginator>
+        <!-- End of Paginator -->
+
         <!-- No Bookings Message (Shown When There Are No Bookings) -->
-        <div *ngIf="!users?.length" class="no-users">
+        <div *ngIf="!users?.length && !isLoading" class="no-users">
             <p>No users yet!. This section will update as new users register.</p>
         </div>
     </div>
     <!-- End of Main Container -->
 </section>
 <!-- End of Section -->
-
-

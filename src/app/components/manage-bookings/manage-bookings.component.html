@@ -11,10 +11,15 @@
         </ul>
     </nav>
 
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
     <!-- Main Container Start -->
     <div>
         <!-- Table Start (Only Show If There Are Bookings) -->
-        <table class="content-table" *ngIf="bookings?.length">
+        <table class="content-table" *ngIf="bookings?.length && !isLoading">
             <thead>
                 <tr>
                     <th>Room Number</th>
@@ -40,8 +45,15 @@
         </table>
         <!-- End of Table-->
 
+        <!-- Paginator -->
+        <mat-paginator *ngIf="!isLoading" [length]=items [pageSize]="10" [showFirstLastButtons]="true"
+            [pageIndex]="currentpage" [pageSizeOptions]="[10, 15, 20, 25]" (page)="handlePagenator($event)"
+            aria-label="Select page">
+        </mat-paginator>
+        <!-- End of Paginator -->
+
         <!-- No Bookings Message (Shown When There Are No Bookings) -->
-        <div *ngIf="!bookings?.length" class="no-bookings">
+        <div *ngIf="!bookings?.length && !isLoading" class="no-bookings">
             <p>No bookings yet. Monitor this section for new reservations!</p>
         </div>
     </div>

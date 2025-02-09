@@ -245,3 +245,15 @@
     font-size: 1rem;
     margin-top: 2rem;
 }
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; 
+    margin: 20px 0;
+}
+
+mat-spinner{
+    --mat-sys-primary:  #BA55D3;   
+}

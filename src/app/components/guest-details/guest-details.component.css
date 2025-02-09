@@ -1,8 +1,54 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleFade {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .section {
     padding: 100px;
     background: #fff;
     margin-bottom: 15px;
     border-radius: 8px;
+    width: 80%;
+    margin-left: 100px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -14,7 +60,6 @@
     font-family:"Baloo Paaji", cursive; 
     animation: slideIn 0.8s ease-in-out;
 }
-
 
 .breadcrumb {
     margin: 1rem 0 2rem;
@@ -44,6 +89,7 @@
 .breadcrumb a:hover {
     color:  #DA70D6;
     cursor: pointer;
+    transform: scale(1.1);
 }
 
 .breadcrumb li:not(:last-child)::after {
@@ -60,18 +106,22 @@
     margin-left: 350px;
     width: 600px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
 }
   
 .guest-name {
     font-size: 1.8rem;
     margin-bottom: 1rem;
-    color: #333;
+    color: #BA55D3;
+    font-family:"Baloo Paaji", cursive; 
+    animation: slideInLeft 1s ease-in-out;
 }
 
 .guest-content {
     display: flex;
     gap: 2rem;
     align-items: flex-start;
+    animation: scaleFade 1s ease-in-out;
 }
   
 .guest-image {
@@ -80,6 +130,11 @@
     object-fit: cover;
     border-radius: 50%;
     border: 2px solid #ddd;
+    transition: transform 0.3s ease-in-out;
+}
+
+.guest-image:hover{
+    transform: scale(1.1);
 }
 
 .guest-info {
@@ -88,6 +143,7 @@
     margin: 0;
     font-size: 1rem;
     color: #555;
+    animation: slideInRight 1s ease-in-out;
 }
   
 .guest-info li {
@@ -105,30 +161,32 @@
     gap: 1rem;
 }
   
-.btn-primary {
+.btn-primary,
+.btn-danger {
     padding: 0.5rem 1rem;
-    background-color: #BA55D3;
-    color: white;
+    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-primary{
+    background-color: #BA55D3;
+}
+
+.btn-danger{
+    background-color: #dc3545;
 }
   
 .btn-primary:hover {
     background-color: #DA70D6;
+    transform: scale(1.05);
 }
-  
-.btn-danger {
-    padding: 0.5rem 1rem;
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-  
+    
 .btn-danger:hover {
     background-color: #c82333;
+    transform: scale(1.05);
 }
   
 .status-select {
@@ -136,4 +194,16 @@
     font-size: 0.9rem;
     border: 1px solid #ddd;
     border-radius: 4px;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; 
+    margin: 20px 0;
+}
+
+mat-spinner{
+    --mat-sys-primary:  #BA55D3;   
 }

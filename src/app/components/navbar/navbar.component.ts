@@ -35,7 +35,7 @@ export class NavbarComponent {
    /**
     * @property {boolean} isAdmin
     */
-   isAdmin: boolean = false
+   isAdminOrStaff: boolean = false
 
     /**
     * @property {any} guestDetails 
@@ -46,6 +46,10 @@ export class NavbarComponent {
     * @property {any} id 
     */
     id : any
+
+    /** @property {string} userRole */
+
+    userRole : string = ''
 
    /**
    * @constructor
@@ -71,12 +75,14 @@ export class NavbarComponent {
         // Check if user has admin role
         this.authService.hasRole().then(role =>{
 
-        this.isAdmin = role === 'admin'
+        // Fetch the user role from your authentication service or session storage
+        this.isAdminOrStaff = role === 'admin' || role === 'staff'
+        this.userRole = role
         })
       }
       else {
         this.isLoggedIn = false;
-        this.isAdmin = false;
+        this.isAdminOrStaff = false;
       }
     })
 
@@ -158,7 +164,7 @@ export class NavbarComponent {
 
       this.menuOpen = false;
       this.isLoggedIn = false;
-      this.isAdmin = false;
+      this.isAdminOrStaff = false;
       console.log('User logged out')
       this.router.navigate(['/index'])
     })

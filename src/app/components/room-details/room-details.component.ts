@@ -4,10 +4,11 @@ import { RoomService } from '../../services/room.service';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-room-details',
-  imports: [RouterLink, NgIf, NgFor, DatePipe],
+  imports: [RouterLink, NgIf, NgFor, DatePipe,MatProgressSpinnerModule],
   templateUrl: './room-details.component.html',
   styleUrl: './room-details.component.css'
 })
@@ -40,7 +41,11 @@ export class RoomDetailsComponent {
   * @property {boolean} isLoggedIn - Flag indicating whether the user is logged in.
   * Set to `true` if the user is authenticated, `false` otherwise.
   */
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean = false
+
+  /** @property {boolean} isLoading */
+
+  isLoading: boolean = false
 
   /**
   * Initializes the RoomDetailsComponent with required services.
@@ -118,13 +123,24 @@ export class RoomDetailsComponent {
   async fetchRoomDetails(): Promise<void> {
 
     try {
-      // Attempt to fetch room details from the RoomService
-      this.roomDetails = await this.roomService.getRoomById(this.id)
+      // Set loading state to true before starting the fetch process
+      this.isLoading = true
+
+      // Simulate lazy loading delay
+      setTimeout(async () => {
+        // Attempt to fetch room details from the RoomService
+        this.roomDetails = await this.roomService.getRoomById(this.id)
+        // Hide spinner after data is loaded
+        this.isLoading = false
+
+      }, 1000) // 1-second delay for effect
 
     } catch (error) {
 
       // Log the error in the console
-      console.log('Error fetching room details:', error);
+      console.log('Error fetching room details:', error)
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
   }
 
@@ -137,40 +153,51 @@ export class RoomDetailsComponent {
   * @throws {Error} Logs and handles any errors that occur during the fetch process.
   */
   async fetchRoomReviews(): Promise<void> {
+
     try {
-      // Step 1: Fetch reviews for the room
-      this.roomReviews = await this.roomService.getRoomReviewByRoomId(this.id);
 
-      // Step 2: Enrich reviews with guest details
-      const enrichedReviews = await Promise.all(this.roomReviews.map(async (review) => {
-        try {
+      // Set loading state to true before starting the fetch process
+      this.isLoading = true
 
-          const userId = review.userId
+      // Simulate lazy loading delay
+      setTimeout(async () => {
 
-          const guestDetails = await this.userService.getGuestById(userId)
+        // Step 2: Enrich reviews with guest details
+        const enrichedReviews = await Promise.all(this.roomReviews.map(async (review) => {
+          try {
 
-          return {
-            ...review,
-            guest: guestDetails // Add guest details to the review
+            const userId = review.userId
+
+            const guestDetails = await this.userService.getGuestById(userId)
+
+            return {
+              ...review,
+              guest: guestDetails // Add guest details to the review
+            }
+            // Hide spinner after data is loaded
+            this.isLoading = false
           }
-        }
-        catch (error) {
+          catch (error) {
 
-          console.warn(`Error fetching guest details for userId: ${review.userId}`, error);
-          return {
-            ...review,
-            guest: null, // Fallback to null if guest details can't be fetched
-          };
-        }
-      })
-      );
+            console.warn(`Error fetching guest details for userId: ${review.userId}`, error);
+            return {
+              ...review,
+              guest: null, // Fallback to null if guest details can't be fetched
+            }
+            // Ensure spinner is hidden on error
+            this.isLoading = false
+          }
+        }))
+        // Update the roomReviews property with enriched data
+        this.roomReviews = enrichedReviews
 
-      // Update the roomReviews property with enriched data
-      this.roomReviews = enrichedReviews;
+      }, 1000) // 1-second delay for effect
 
     } catch (error) {
 
-      console.log('Error fetching or enriching room reviews:', error);
+      console.log('Error fetching or enriching room reviews:', error)
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
   }
 

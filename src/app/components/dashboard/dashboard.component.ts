@@ -3,11 +3,12 @@ import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { error } from 'console';
 import { RoomService } from '../../services/room.service';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [MatProgressSpinnerModule,NgIf],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -48,6 +49,10 @@ export class DashboardComponent {
   */
   occupancyRate  : number = 0
 
+  /** @property {boolean} isLoading */
+
+  isLoading : boolean = false
+
   /**
   * @constructor
   * @description 
@@ -62,11 +67,22 @@ export class DashboardComponent {
    */
   ngOnInit(){
 
-    this.fetchRooms()
+    // Set loading state to true before starting the fetch process
+    this.isLoading = true
 
-    this.fetchAvailableRooms()
+    // Simulate lazy loading delay
+    setTimeout(() => {
 
-    this.fetchTodayCheckIns()
+      this.fetchRooms()
+
+      this.fetchAvailableRooms()
+  
+      this.fetchTodayCheckIns()
+  
+      // Hide spinner after data is loaded
+      this.isLoading = false
+
+    }, 1000) // 1-second delay for effect
   }
 
   /**
@@ -176,9 +192,8 @@ export class DashboardComponent {
     this.authService.logout()
     .then(() => {
 
-      console.log('User logged out')
+      // Navigate the user to the home page upon successful logout
       this.router.navigate(['/index'])
-       // Navigate the user to the home page upon successful logout
     })
     .catch((error) => {
        // Log the error and provide feedback to the user

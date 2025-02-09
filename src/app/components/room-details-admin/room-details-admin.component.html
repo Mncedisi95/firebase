@@ -10,7 +10,12 @@
         </nav>
     </div>
 
-    <div class="room-details-card" *ngIf="roomDetails">
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <div class="room-details-card" *ngIf="roomDetails && !isLoading">
         <!-- Room Image -->
         <div class="room-image">
             <img [src]="roomDetails.roomImage" alt="Room Image">
@@ -36,8 +41,8 @@
 
         <!-- Action Buttons -->
         <div class="room-actions">
-            <button class="btn-primary" (click)="goToEditRoom()">Edit Room</button>
-            <button class="btn-danger" (click)="onDeteteRoom()">Delete Room</button>
+            <button class="btn-primary" (click)="goToEditRoom()" *ngIf="userRole !== 'staff'">Edit Room</button>
+            <button class="btn-danger" (click)="onDeteteRoom()" *ngIf="userRole !== 'staff'">Delete Room</button>
         </div>
         <div>
             <input *ngIf="isSuccessVisible" class="alert-success" placeholder={{successMessage}} />

@@ -1,5 +1,5 @@
 <!-- Normal Navbar Start-->
-<nav class="navbar" *ngIf="!isAuthPage && !isAdmin" >
+<nav class="navbar" *ngIf="!isAuthPage && !isAdminOrStaff" >
     <!-- Main Container -->
     <div class="container">
         <!-- Logo -->
@@ -15,7 +15,7 @@
             </li>
             
             <li class="nav-item" *ngIf="isLoggedIn">
-                <a class="nav-link" routerLink="/view-booking">My Bookings</a>
+                <a class="nav-link" routerLink="/view-booking">Bookings</a>
             </li>
 
             <li class="nav-item">
@@ -53,8 +53,7 @@
 <!-- End of Normal Navbar -->
 
 <!-- Admin Navbar -->
-<!-- Admin Navbar -->
-<section *ngIf="!isAuthPage && isAdmin">
+<section *ngIf="!isAuthPage && isAdminOrStaff">
     <nav class="admin-navbar">
         <div>
             <a href="#" class="admin-logo">SuiteSync. Dashboard</a>
@@ -68,7 +67,7 @@
             <a class="sidebar-link" routerLink="/rooms-admin">Room Management</a>
             <a class="sidebar-link" routerLink="/room-availability">Room Availability</a>
             <a class="sidebar-link" routerLink="/manage-bookings">Booking Management</a>
-            <a class="sidebar-link" routerLink="/manage-guests">User Management</a>
+            <a class="sidebar-link" routerLink="/manage-guests" *ngIf="userRole !== 'staff'">User Management</a>
             <a class="sidebar-link">Financial Insights</a>
             <a class="sidebar-link">Analytics & Reports</a>
             <a class="sidebar-link">Notifications & Alerts</a>

@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-manage-guests',
-  imports: [NgFor,RouterLink,FormsModule,NgIf],
+  imports: [NgFor,RouterLink,FormsModule,NgIf,MatProgressSpinnerModule,MatPaginator,SlicePipe],
   templateUrl: './manage-guests.component.html',
   styleUrl: './manage-guests.component.css'
 })
@@ -15,7 +17,7 @@ export class ManageGuestsComponent {
   /**
   * @property {any[]} users
   */
-  users: any 
+  users: any[] = [] 
 
   /**
   * @property {any[]} 
@@ -23,9 +25,38 @@ export class ManageGuestsComponent {
   originalUsers : any 
 
   /**
+  * Represents the total number of users available.
+  * @property {number} items - Total count of users.
+  */
+  items: number = 0
+
+  /**
+  * Represents the current page index in the pagination.
+  * @property {number} currentpage - Zero-based index of the current page.
+  */
+  currentpage: number = 0
+ 
+  /**
+  * Represents the index of the first user displayed on the current page.
+  * @property {number} lowIndex - Starting index for pagination.
+  */
+  lowIndex: number = 0
+ 
+  /**
+  * Represents the index of the last user displayed on the current page.
+  * @property {number} highIndex - Ending index for pagination.
+  */
+  highIndex: number = 10
+
+  /**
   * @property {string} selectedRole
   */
   selectedRole: string = ''
+
+  /**
+  * @property {boolean} isLoading
+  */
+  isLoading : boolean = false
 
   /**
   * @constructor 
@@ -58,13 +89,29 @@ export class ManageGuestsComponent {
   async fetchUsers() : Promise<void> {
 
     try {
-      // Fetch the list of guests using the UserService
-      this.originalUsers = await this.userService.getUsers()
 
-      this.users = this.originalUsers
-      
+      // Set loading state to true before starting the fetch process
+      this.isLoading = true
+
+      // Simulate lazy loading delay
+      setTimeout(async () => {
+
+        // Fetch the list of guests using the UserService
+        this.originalUsers = await this.userService.getUsers()
+        this.users = this.originalUsers
+
+        // Update total room count
+        this.items = this.users.length
+        // Hide spinner
+        this.isLoading = false
+        
+      }, 1000)  // 1-second delay for effect
+
     } catch (error) {
+
       console.error('Error fetching guests:', error)
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
   }
 
@@ -94,12 +141,24 @@ export class ManageGuestsComponent {
         await this.fetchUsers()
       }
       else {
-        // Fetch users filtered by role
-        this.users = await this.userService.filterUserByRole(this.selectedRole)
+        // Set loading state to true before starting the fetch process
+        this.isLoading = true
+
+        setTimeout( async () => {
+
+          // Fetch users filtered by role
+          this.users = await this.userService.filterUserByRole(this.selectedRole)
+
+          // Hide spinner
+          this.isLoading = false
+          
+        }, 1000)  // 1-second delay for effect 
       }
 
     } catch (error) {
       console.log('Error occurred while filtering users by role:', error)
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
   }
 
@@ -125,5 +184,23 @@ export class ManageGuestsComponent {
   goToAddUser(): void {
 
     this.router.navigate(['/add-user'])
+  }
+  
+  /**
+  * @method handlePagenator
+  * @description Helper function to handle pagination events and update the visible data range based on the current page and page size.
+  * 
+  * @param {PageEvent} event - The pagination event containing details such as the current page index and page size.
+  * @returns {PageEvent} - The same pagination event for further handling or reference.
+  * 
+  * Functionality:
+  * - Updates the lowIndex to reflect the start index of the current page.
+  * - Updates the highIndex to reflect the end index of the current page.
+  */
+  handlePagenator(event: PageEvent): PageEvent {
+    // initialize lowindex and high index property
+    this.lowIndex = event.pageIndex * event.pageSize
+    this.highIndex = this.lowIndex + event.pageSize
+    return event
   }
 }

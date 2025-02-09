@@ -54,13 +54,13 @@ export const routes: Routes = [
     path: 'rooms-admin',
     component: RoomsAdminComponent,
     canActivate: [authGuard, roleGuard],
-    data: {roles: ['admin']}
+    data: {roles: ['admin','staff']}
   },
   {
     path: 'room-details-admin',
     component: RoomDetailsAdminComponent,
     canActivate: [authGuard],
-    data: {roles: ['admin']}
+    data: {roles: ['admin','staff']}
   },
   {
     path: 'edit-booking', 
@@ -124,7 +124,7 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [authGuard, roleGuard],
-    data: {roles: ['admin']}
+    data: {roles: ['admin','staff']}
   },
   {
     path: 'edit-profile',

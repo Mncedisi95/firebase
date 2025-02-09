@@ -167,3 +167,15 @@
     font-size: 0.9rem;
     color: #666;
 }
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; 
+    margin: 20px 0;
+}
+
+mat-spinner{
+    --mat-sys-primary:  #BA55D3;   
+}

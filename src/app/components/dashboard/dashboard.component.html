@@ -8,8 +8,13 @@
     </header>
     <!-- End of Header -->
 
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
     <!-- Metrics Section -->
-    <section class="metrics-section">
+    <section class="metrics-section" *ngIf="!isLoading">
         <div class="metric-card">
             <h3>Total Revenue</h3>
             <p>$12,345</p>
@@ -44,7 +49,7 @@
     <!-- End of Metric Card -->
 
     <!-- Insights Section -->
-    <section class="insights-section">
+    <section class="insights-section" *ngIf="!isLoading">
         <h2>Additional Insights</h2>
         <div class="insight-card">
             <h3>Pending Tasks</h3>

@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { RoomService } from '../../services/room.service';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-edit-room',
-  imports: [ReactiveFormsModule, NgIf, RouterLink],
+  imports: [ReactiveFormsModule, NgIf, RouterLink,MatProgressSpinnerModule],
   templateUrl: './edit-room.component.html',
   styleUrl: './edit-room.component.css'
 })
@@ -53,6 +53,10 @@ export class EditRoomComponent {
   * @property {any} roomDetails
   */
   roomDetails: any
+
+  /** @property {boolean} isLoading */
+
+  isLoading : boolean = false
 
   /**
   * @constructor
@@ -121,24 +125,38 @@ export class EditRoomComponent {
     this.fetchRoomDetails()
   }
 
-  /**
-* Fetches the details of a specific room by its ID.
-* @async
-* @method fetchRoomDetails
-* @description Retrieves room details from the RoomService using the room's unique ID.
-* If an error occurs, it logs the error and provides appropriate feedback.
-* @returns {Promise<void>} A promise that resolves when the room details are successfully fetched.
-*/
+ /**
+ * Fetches the details of a specific room by its ID.
+ * @async
+ * @method fetchRoomDetails
+ * @description Retrieves room details from the RoomService using the room's unique ID.
+ * If an error occurs, it logs the error and provides appropriate feedback.
+ * @returns {Promise<void>} A promise that resolves when the room details are successfully fetched.
+ */
   async fetchRoomDetails(): Promise<void> {
 
     try {
+
+      // Set loading state to true before starting the fetch process
+      this.isLoading = true
+
+      // Simulate lazy loading delay
+      setTimeout(async () => {
+
       // Attempt to fetch room details from the RoomService
       this.roomDetails = await this.roomService.getRoomById(this.id)
+
+      // Hide spinner after data is loaded
+      this.isLoading = false
+
+      }, 1000) // 1-second delay for effect
 
     } catch (error) {
 
       // Log the error in the console
-      console.log('Error fetching room details:', error);
+      console.log('Error fetching room details:', error)
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
   }
 
@@ -236,7 +254,6 @@ export class EditRoomComponent {
       reader.readAsDataURL(file)
     })
   }
-
 
   /**
   * Handles the logic for editing a room's details.

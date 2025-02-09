@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signOut } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
 import { Firestore, doc } from '@angular/fire/firestore';
-import { getDoc, setDoc } from 'firebase/firestore';
+import { collection, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { error } from 'console';
 @Injectable({
@@ -33,8 +33,27 @@ export class AuthService {
   * 
   * @returns {Promise<UserCredential>} A promise that resolves with the authenticated user's credentials or rejects with an error.
   */
-  login(email: string, password: string): Promise<UserCredential> {
-    return signInWithEmailAndPassword(this.auth, email, password)
+  async login(email: string, password: string): Promise<UserCredential> {
+
+    try {
+
+      // Sign in the user with Firebase authentication
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password)
+      const user = userCredential.user
+
+      if(user){
+
+        // Call trackPasswordReset AFTER successful login
+        this.trackPasswordReset(user)
+      }
+
+    return userCredential
+      
+    } catch (error) {
+      // Rethrow the error to be handled by the caller
+      console.error('Login failed:', error);
+      throw error
+    }
   }
 
   /**
@@ -70,7 +89,8 @@ export class AuthService {
       profile,
       address,
       uid: userCreditial.user.uid,
-      role: 'guest'
+      role: 'guest',
+      passwordChanged : true
     }) 
 
     return userCreditial;
@@ -172,6 +192,30 @@ export class AuthService {
   */
   resetPassword(email: string): Promise<void> {
     return sendPasswordResetEmail(this.auth, email)
+  }
+
+  /**
+  * @method trackPasswordReset
+  * @description Monitors user authentication state and updates Firestore when a password reset is detected.
+  */
+  private async trackPasswordReset(user: any) {
+
+    try {
+      const userDocRef = doc(this.firestore, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+
+        // ✅ Update only if passwordChanged is false
+        if (!userData?.['passwordChanged']) {
+          await updateDoc(userDocRef, { passwordChanged: true });
+          console.log('Password reset tracked successfully!');
+        }
+      }
+    } catch (error) {
+      console.error('Error updating passwordChanged field:', error);
+    }
   }
 
   /**

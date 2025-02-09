@@ -148,3 +148,6 @@ small{
     color: #fff;
 }
 
+mat-snackbar {
+    --mat-sys-inverse-surface: #f44336 !important;
+}

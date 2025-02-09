@@ -279,3 +279,15 @@ mat-paginator .mat-paginator-navigation-button[disabled] {
     color: rgba(255, 255, 255, 0.5); 
     pointer-events: none; 
 }
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; 
+    margin: 20px 0;
+}
+
+mat-spinner{
+    --mat-sys-primary:  #BA55D3;   
+}

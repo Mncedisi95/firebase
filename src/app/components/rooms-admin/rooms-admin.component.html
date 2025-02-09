@@ -11,8 +11,8 @@
     </nav>
     
     <!-- Top Controls -->
-    <div class="top-controls">
-        <button class="btn-add" (click)="goToAddRoom()" >Add Room</button>
+    <div class="top-controls" *ngIf="!isLoading">
+        <button class="btn-add" (click)="goToAddRoom()" *ngIf="userRole !== 'staff'">Add Room</button>
         <div class="filters">
             <select id="room-type" [(ngModel)]="selectedRoomType" (change)="onFilterRoomType()">
                 <option value="" disabled selected>Filter By Room Type</option>
@@ -40,9 +40,14 @@
             <input type="text" [(ngModel)]="search" (input)="onSearch()" [ngModelOptions]="{standalone: true}" class="search-bar" id="search-room" placeholder="Search rooms...">
         </div>
     </div>
-    
+
+     <!-- Loading Spinner -->
+     <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
     <!-- Data List Selection -->
-    <div class="data-list">
+    <div class="data-list" *ngIf="!isLoading">
         <div class="data-item" *ngFor="let room of (rooms | slice : lowIndex : highIndex)">
             <h1 class="room-type">{{room.roomType}}</h1>
             <img [src]="room.roomImage" alt="Room 101" class="room-image" />
@@ -66,7 +71,7 @@
     <!-- End of Data Selection -->
     
     <!-- Pagination -->
-    <mat-paginator [length]= items [pageSize]="6" [showFirstLastButtons]="true" [pageIndex]="currentpage" [pageSizeOptions]="[6, 9, 12, 15, 18, 21]" (page)="handlePagenator($event)" aria-label="Select page">
+    <mat-paginator *ngIf="!isLoading" [length]= items [pageSize]="6" [showFirstLastButtons]="true" [pageIndex]="currentpage" [pageSizeOptions]="[6, 9, 12, 15, 18, 21]" (page)="handlePagenator($event)" aria-label="Select page">
     </mat-paginator>
     <!-- End of Pagination -->
    

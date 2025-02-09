@@ -5,13 +5,15 @@ import { RoomService } from '../../services/room.service';
 import { AuthService } from '../../services/auth.service';
 import { isPlatformBrowser, NgFor, NgIf, SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-rooms',
-  imports: [SlicePipe,NgFor,NgIf,FormsModule,MatPaginator,RouterLink],
+  imports: [SlicePipe,NgFor,NgIf,FormsModule,MatPaginator,RouterLink,MatProgressSpinnerModule],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.css'
 })
+
 export class RoomsComponent {
 
   /**
@@ -76,6 +78,11 @@ export class RoomsComponent {
   selectedRoomType: string = ''
 
   /**
+  * @property {boolean} false
+  */
+  isLoading: boolean = false
+
+  /**
   * @constructor
   * @description 
   * @param {Router} router 
@@ -121,18 +128,26 @@ export class RoomsComponent {
 
     try {
 
-      // Call the room service to fetch room data
-      this.originalRooms = await this.roomService.getAvailableRooms()
-      this.rooms = this.originalRooms
+      // Set loading state to true before starting the fetch process
+      this.isLoading = true
 
-      // Update total room count
-      this.items = this.rooms.length
+      // Simulate lazy loading delay
+      setTimeout(async () => {
+        this.originalRooms = await this.roomService.getAvailableRooms()
+        this.rooms = this.originalRooms;
+
+        // Update total room count
+        this.items = this.rooms.length
+        // Hide spinner after data is loaded
+        this.isLoading = false 
+      }, 1000) // 1-second delay for effect
 
     } catch (error) {
       // Handle and log errors during the fetch process
       console.log('Error fetching rooms:', error)
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
-
   }
 
   /**
@@ -145,16 +160,31 @@ export class RoomsComponent {
   async onSortChange(): Promise<void> {
 
     try {
-      // Check if a valid sorting option is selected
-      if (this.selectedSortOption === 'priceLowToHigh' || this.selectedSortOption === 'priceHighToLow') {
-        // Fetch sorted rooms from the room service
-        this.rooms = await this.roomService.sortRoomsByPrice(this.selectedSortOption);
-      } else {
-        console.warn('Invalid sort option selected:', this.selectedSortOption);
-      }
+
+      // Set loading state to true before starting the fetch process
+      this.isLoading = true
+
+      // Simulate lazy loading delay
+      setTimeout(async () => {
+
+        // Check if a valid sorting option is selected
+        if (this.selectedSortOption === 'priceLowToHigh' || this.selectedSortOption === 'priceHighToLow') {
+          // Fetch sorted rooms from the room service
+          this.rooms = await this.roomService.sortRoomsByPrice(this.selectedSortOption)
+          // Hide spinner after data is loaded
+          this.isLoading = false 
+        } else {
+          console.log('Invalid sort option selected:', this.selectedSortOption)
+          // Ensure spinner is hidden on error
+          this.isLoading = false
+        }
+
+      }, 1000) // 1-second delay for effect
 
     } catch (error) {
-      console.log('Error occurred while sorting rooms:', error);
+      console.log('Error occurred while sorting rooms:', error)
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
   }
 
@@ -179,12 +209,24 @@ export class RoomsComponent {
         await this.fetchRooms()
       }
       else{
-        // Fetch rooms filtered by the selected room type
-        this.rooms = await this.roomService.filterRoomsByType(this.selectedRoomType)
+
+        // Set loading state to true before starting the fetch process
+        this.isLoading = true
+
+        // Simulate lazy loading delay
+        setTimeout(async () => {
+          // Fetch rooms filtered by the selected room type
+          this.rooms = await this.roomService.filterRoomsByType(this.selectedRoomType)
+          // Hide spinner after data is loaded
+          this.isLoading = false
+
+        }, 1000) // 1-second delay for effect
       }
 
     } catch (error) {
       console.log('Error occurred while filtering rooms by type:', error)
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
   }
 

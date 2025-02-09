@@ -1,34 +1,47 @@
-<section class="services-section">
-    <!-- Hero Section -->
-    <div class="services-hero">
-        <h1>Our Services</h1>
-        <p>We offer premium hospitality services tailored to your needs.</p>
-    </div>
+<section class="section">
+     <!-- Title -->
+     <h1 class="section-subtitle">Our Services</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']">Home</a></li>
+            <li>Services</li>
+        </ul>
+    </nav>
 
     <!-- Services List -->
     <div class="services-container">
         <div class="service-box">
-            <img src="assets/icons/hotel-icon.png" alt="Luxury Accommodation">
-            <h2>Luxury Accommodation</h2>
-            <p>Experience world-class comfort with our premium hotel suites and luxury apartments.</p>
+            <img src="assets/background/Luxury.jpg" alt="Luxury Accommodation">
+            <div>
+                <h2>Luxury Accommodation</h2>
+                <p>Experience world-class comfort with our premium hotel suites and luxury apartments.</p>
+            </div>
         </div>
 
         <div class="service-box">
-            <img src="assets/icons/restaurant-icon.png" alt="Fine Dining">
-            <h2>Fine Dining</h2>
-            <p>Enjoy gourmet meals crafted by top chefs in our exquisite restaurants.</p>
+            <img src="assets/background/fine-dining.jpg" alt="Fine Dining">
+            <div>
+                <h2>Fine Dining</h2>
+                <p>Enjoy gourmet meals crafted by top chefs in our exquisite restaurants.</p>
+            </div>
         </div>
 
         <div class="service-box">
-            <img src="assets/icons/spa-icon.png" alt="Spa & Wellness">
-            <h2>Spa & Wellness</h2>
-            <p>Relax and rejuvenate with our top-tier spa and wellness treatments.</p>
+            <img src="assets/background/Spa.jpg" alt="Spa & Wellness">
+            <div>
+                <h2>Spa & Wellness</h2>
+                <p>Relax and rejuvenate with our top-tier spa and wellness treatments.</p>
+            </div>
         </div>
 
         <div class="service-box">
-            <img src="assets/icons/events-icon.png" alt="Event Management">
-            <h2>Event Management</h2>
-            <p>Host unforgettable events with our professional planning and catering services.</p>
+            <img src="assets/background/Event.jpg" alt="Event Management">
+            <div>
+                <h2>Event Management</h2>
+                <p>Host unforgettable events with our professional planning and catering services.</p>
+            </div>
         </div>
     </div>
 
@@ -47,7 +60,7 @@
     <div class="cta">
         <h2>Book Your Experience Today</h2>
         <p>Let us create an unforgettable stay for you.</p>
-        <a href="contact.html" class="cta-button">Contact Us</a>
+        <a class="cta-button">Contact Us</a>
     </div>
 </section>
 

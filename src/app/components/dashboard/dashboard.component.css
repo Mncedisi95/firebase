@@ -1,3 +1,14 @@
+  @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .overview-page {
     padding: 20px;
     font-family: "Baloo Paaji", cursive;
@@ -91,14 +102,15 @@
     font-size: 1.5rem;
     color: #BA55D3;
 }
-  
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; 
+    margin: 20px 0;
+}
+
+mat-spinner{
+    --mat-sys-primary:  #BA55D3;   
 }

@@ -3,8 +3,8 @@
     <!-- Title -->
     <h1 class="section-subtitle">Our Rooms</h1>
 
-      <!-- Breadcrumb -->
-      <nav class="breadcrumb">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
         <ul>
             <li><a [routerLink]="['/index']">Home</a></li>
             <li>View Rooms</li>
@@ -13,9 +13,10 @@
 
     <!-- Search and Filter -->
     <div class="search-filter">
-         <!-- Search Bar -->
+        <!-- Search Bar -->
         <div class="search-bar">
-            <input id="search" [(ngModel)]="search" (input)="onSearch()" [ngModelOptions]="{standalone: true}" type="text" class="search-input" placeholder="Search by Room Type, Price or Capacity...." />
+            <input id="search" [(ngModel)]="search" (input)="onSearch()" [ngModelOptions]="{standalone: true}"
+                type="text" class="search-input" placeholder="Search by Room Type, Price or Capacity...." />
         </div>
 
         <!-- Filter Dropdown -->
@@ -26,7 +27,7 @@
                 <option value="priceHighToLow">High to Low</option>
             </select>
         </div>
-        
+
         <div class="filter-dropdown">
             <select class="filter-select" [(ngModel)]="selectedRoomType" (change)="onFilterRoomType()">
                 <option value="" disabled selected>Filter by Room Type</option>
@@ -44,10 +45,15 @@
                 <option value="Penthouse Suite">Penthouse Suite</option>
             </select>
         </div>
-    </div> 
+    </div>
 
-      <!-- Rooms Cards -->
-    <div class="rooms-cards">
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Rooms Cards -->
+    <div class="rooms-cards"  *ngIf="!isLoading">
 
         <div class="card" *ngFor="let room of (rooms | slice : lowIndex : highIndex)">
             <img [src]="room.roomImage" alt="Room Image" class="card-image">
@@ -72,7 +78,8 @@
     <!-- End of Rooms Card -->
 
     <!-- Paginator -->
-    <mat-paginator [length]= items [pageSize]="6" [showFirstLastButtons]="true" [pageIndex]="currentpage" [pageSizeOptions]="[6, 9, 12, 15, 18, 21]" (page)="handlePagenator($event)" aria-label="Select page">
+    <mat-paginator *ngIf="!isLoading" [length]=items [pageSize]="6" [showFirstLastButtons]="true" [pageIndex]="currentpage"
+        [pageSizeOptions]="[6, 9, 12, 15, 18, 21]" (page)="handlePagenator($event)" aria-label="Select page">
     </mat-paginator>
     <!-- End of Paginator -->
 </section>

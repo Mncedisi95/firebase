@@ -1,36 +1,47 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { NgIf } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
+/**
+* @class GuestDetailsComponent
+* @author Mncedisi Masondo 
+* @description - GuestDetailsComponent handles guest details retrieval and management.
+*/
 @Component({
   selector: 'app-guest-details',
-  imports: [RouterLink],
+  imports: [RouterLink,MatProgressSpinnerModule,NgIf],
   templateUrl: './guest-details.component.html',
   styleUrl: './guest-details.component.css'
 })
 export class GuestDetailsComponent {
 
-  /**
-  * @property {any} id
-  */
+  /** @property {any} id - The ID of the guest. */
   id: any
-
-  /**
-  * @property {any} guestDetails
-  */
+ 
+  /** @property {any} guestDetails - The details of the guest. */
   guestDetails: any
+
+  /** @property {boolean} isLoading - Indicates if data is being loaded. */
+  isLoading: boolean = false
+
+  /** @private @property {inject(MatSnackBar)} _snackbar */
+  private snackbar = inject(MatSnackBar)
 
   /**
   * @constructor
-  * @description
-  * @param {ActivatedRoute} route 
-  * @param {UserService} userService 
+  * @description Initializes the component with necessary services.
+  * @param {Router} router - Angular router for navigation.
+  * @param {UserService} userService - Service for fetching user details.
   */
   constructor(private router: Router, private userService: UserService) { }
 
   /**
-   * @method ngOnInit
-   */
+  * @method ngOnInit
+  * @description Lifecycle method that initializes component data.
+  */
   ngOnInit() {
 
     // Get the current navigation object from the router
@@ -55,28 +66,51 @@ export class GuestDetailsComponent {
       this.router.navigate(['/'])
     }
 
+    // Fetch the guest details after retrieving ID
     this.fetchGuestDetails()
   }
 
   /**
-   * @async
-   * @method fetchGuestDetails
-   * @description 
-   */
+  * @async
+  * @method fetchGuestDetails
+  * @description Fetches guest details asynchronously and updates the component state.
+  * @returns {Promise<void>} - Resolves when guest details are fetched.
+  */
   async fetchGuestDetails(): Promise<void> {
 
     try {
 
+      // Set loading state to true before starting the fetch process
+      this.isLoading = true
+
+      // Simulate lazy loading delay
+      setTimeout(async () => {
+      // Fetch guest details from the service
       this.guestDetails = await this.userService.getGuestById(this.id)
+      // Hide spinner after data is loaded
+      this.isLoading = false
+
+      }, 1000) // 1-second delay for effect
 
     } catch (error) {
-
+      // Log any errors encountered during the fetch process
       console.error('Error fetching guests:', error)
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
   }
 
+  /**
+  * @async
+  * @method editGuest
+  * @description Edits guest details.
+  */
   editGuest() { }
 
+  /**
+  * @method removeGuest
+  * @description Removes guest from the system.
+  */
   removeGuest() { }
 
 }

@@ -121,7 +121,7 @@ export class AddRoomComponent {
 
   /**
  * @method handleFileInput 
- * @description Handles file input and updates the profile picture field in the form with
+ * @description Handles file input and updates the room image field in the form with
  *  the base64 representation of the file.
  * @param {event} event - The file input event.
  */

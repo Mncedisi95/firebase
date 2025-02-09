@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { doc, Firestore } from '@angular/fire/firestore';
-import { getDoc,collection, updateDoc, query, where, getDocs } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, UserCredential } from 'firebase/auth';
+import { getDoc,collection, updateDoc, query, where, getDocs, setDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class UserService {
   * @description
   * @param {Firestore} firestore 
   */
-  constructor(private firestore: Firestore) { }
+  constructor(private auth: Auth,private firestore: Firestore) { }
 
  /**
   * Fetches a list of guests from the Firestore database.
@@ -132,6 +134,51 @@ export class UserService {
     } catch (error) {
       console.error('Error fetching users by role:', error);
       return [] // Return empty array if an error occurs
+    }
+  }
+
+  /**
+  * Registers a new user with a temporary password and sends an email verification.
+  * @async
+  * @method registerUser
+  * @description 
+  * @param {string} email - The user's email address.
+  * @param {string} fullName - The user's full name.
+  * @param {string} userType - The role assigned to the user.
+  * @param {string} address - The user's address.
+  * @param {string} phone - The user's phone number.
+  * @param {File} profile - The User's profile
+  */
+  async registerUser(name :string ,phone : string,email : string ,address : string,profile : File, role: string):  Promise<void> {
+
+    try {
+      // Generate a random temporary password
+      const tempPassword = Math.random().toString(36).slice(-8) 
+
+      // Create user in Firebase Authentication
+      const  userCreditial = await createUserWithEmailAndPassword(this.auth,email,tempPassword)
+
+      // Reference to Firestore document for the new user
+      const userRef = doc(this.firestore, 'users/' + userCreditial.user.uid)
+
+      // Store additional user data in Firestore
+      await setDoc(userRef, {
+        name,
+        email,
+        phone,
+        profile,
+        address,
+        uid : userCreditial.user.uid,
+        role: role,
+        passwordChanged: false // Track if the user changed their password
+      })
+
+      // Send password reset email
+      await sendPasswordResetEmail(this.auth,email)
+
+    } catch (error) {
+      console.error('Error registering user:', error)
+      throw new Error('Failed to register user')
     }
   }
   

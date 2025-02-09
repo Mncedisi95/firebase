@@ -4,11 +4,12 @@ import { RoomService } from '../../services/room.service';
 import {  NgFor, NgIf } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { SortByDatePipe } from '../../sort-by-date.pipe';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-manage-bookings',
-  imports: [NgFor,RouterLink,SortByDatePipe,NgIf],
+  imports: [NgFor,RouterLink,SortByDatePipe,NgIf,MatProgressSpinnerModule,MatPaginator],
   templateUrl: './manage-bookings.component.html',
   styleUrl: './manage-bookings.component.css'
 })
@@ -19,6 +20,34 @@ export class ManageBookingsComponent {
   * Each booking object includes user and room details after being enriched
   */
   bookings : any[] = []
+
+  /** @property {boolean} isLoading */
+
+  isLoading : boolean = false
+
+   /**
+  * Represents the total number of users available.
+  * @property {number} items - Total count of users.
+  */
+   items: number = 0
+
+   /**
+   * Represents the current page index in the pagination.
+   * @property {number} currentpage - Zero-based index of the current page.
+   */
+   currentpage: number = 0
+  
+   /**
+   * Represents the index of the first user displayed on the current page.
+   * @property {number} lowIndex - Starting index for pagination.
+   */
+   lowIndex: number = 0
+  
+   /**
+   * Represents the index of the last user displayed on the current page.
+   * @property {number} highIndex - Ending index for pagination.
+   */
+   highIndex: number = 10
   
   /**
   * @constructor
@@ -52,32 +81,48 @@ export class ManageBookingsComponent {
   async fetchAllBookings(){
 
     try {
-  
-      // Step 1: Fetch all bookings from the room service
-      this.bookings = await this.roomService.getBookings()
+
+      // Set loading state to true before starting the fetch process
+      this.isLoading = true
+
+      // Simulate lazy loading delay
+      setTimeout(async () => {
+
+         // Step 1: Fetch all bookings from the room service
+         this.bookings = await this.roomService.getBookings()
      
-      // Step 2: Enrich booking data with guest and room details
-      this.bookings = await Promise.all(this.bookings.map(async (booking) => {
+         // Step 2: Enrich booking data with guest and room details
+         this.bookings = await Promise.all(this.bookings.map(async (booking) => {
+   
+           const { userId, roomId } = booking
+   
+           // Fetch guest details by ID
+           const guestDetails = await this.userService.getGuestById(userId)
+   
+           // Fetch room details by ID
+           const roomDetails = await this.roomService.getRoomById(roomId)
+   
+           // Return the enriched booking object
+           return {
+             ...booking,
+             guest: guestDetails,
+             room: roomDetails,
+           }
+         }))
+        
+        // Update total bookings count
+        this.items = this.bookings.length
 
-        const { userId, roomId } = booking
-
-        // Fetch guest details by ID
-        const guestDetails = await this.userService.getGuestById(userId)
-
-        // Fetch room details by ID
-        const roomDetails = await this.roomService.getRoomById(roomId)
-
-        // Return the enriched booking object
-        return {
-          ...booking,
-          guest: guestDetails,
-          room: roomDetails,
-        }
-      })) 
+        // Hide spinner after data is loaded
+        this.isLoading = false
+        
+      }, 1000) // 1-second delay for effect
 
     } catch (error) {
       
       console.log('Error retrieving bookings or related details:', error)
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
   }
 
@@ -92,6 +137,24 @@ export class ManageBookingsComponent {
     sessionStorage.setItem('id',id)
 
     this.router.navigate(['/booking-details'],{state: {id}})
+  }
+
+   /**
+  * @method handlePagenator
+  * @description Helper function to handle pagination events and update the visible data range based on the current page and page size.
+  * 
+  * @param {PageEvent} event - The pagination event containing details such as the current page index and page size.
+  * @returns {PageEvent} - The same pagination event for further handling or reference.
+  * 
+  * Functionality:
+  * - Updates the lowIndex to reflect the start index of the current page.
+  * - Updates the highIndex to reflect the end index of the current page.
+  */
+   handlePagenator(event: PageEvent): PageEvent {
+    // initialize lowindex and high index property
+    this.lowIndex = event.pageIndex * event.pageSize
+    this.highIndex = this.lowIndex + event.pageSize
+    return event
   }
 
 }

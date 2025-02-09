@@ -273,6 +273,18 @@ mat-paginator .mat-paginator-navigation-button[disabled] {
     pointer-events: none; 
 }
 
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; 
+    margin: 20px 0;
+}
+
+mat-spinner{
+    --mat-sys-primary:  #BA55D3;   
+}
+
 @media (max-width: 768px) {
     .data-list {
         grid-template-columns: repeat(2, 1fr); 

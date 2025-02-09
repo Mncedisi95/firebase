@@ -143,7 +143,7 @@ export class SignInComponent {
       break
 
       case 'staff':
-        this.router.navigate(['/manage-booking'])
+        this.router.navigate(['/dashboard'])
       break
 
       case 'guest':

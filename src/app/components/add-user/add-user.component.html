@@ -15,7 +15,7 @@
     <!-- Main Container -->
     <div class="container">
         <!-- Form  Section-->
-        <form [formGroup]="addUserForm" (ngSubmit)="registerUser()" class="form-grid">
+        <form [formGroup]="addUserForm" (ngSubmit)="onRegisterUser()" class="form-grid">
 
             <!-- Full Name -->
             <div class="form-group">
@@ -24,6 +24,16 @@
                 <small *ngIf="addUserForm.get('fname')?.touched && addUserForm.get('fname')?.errors?.['required']">
                     *Full Name is required!
                 </small>
+            </div>
+
+            <!--Email -->
+            <div>
+                <label for="email">Email:</label>
+                <input type="text" formControlName="email" placeholder="Enter Email" />
+                <div>
+                    <small></small>
+                    <small></small>
+                </div>
             </div>
 
             <!-- User Type-->
@@ -61,7 +71,7 @@
             <!-- Profile -->
             <div class="form-group">
                 <label for="profile">Profile:</label>
-                <input type="file" formControlName="profile">
+                <input type="file" formControlName="profile" accept="image/*" (change)="handleFileInput($event)">
                 <small *ngIf="addUserForm.get('profile')?.touched && addUserForm.get('profile')?.errors?.['required']">
                     *Profile is required!
                 </small>

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RoomService } from '../../services/room.service';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-room-availability',
-  imports: [NgFor],
+  imports: [NgFor,MatProgressSpinnerModule,NgIf],
   templateUrl: './room-availability.component.html',
   styleUrl: './room-availability.component.css'
 })
@@ -51,20 +52,36 @@ export class RoomAvailabilityComponent {
   bookedItems : number = 0
 
   /**
+  * @property {boolean} isLoading
+  */
+  isLoading : boolean = false
+
+  /**
   * @constructor
   * @param {RoomService} roomService
   */
   constructor(private roomService: RoomService) { }
 
+ 
   ngOnInit() { 
 
-    this.fetchRooms()
+    // Set loading state to true before starting the fetch process
+    this.isLoading = true
 
-    this.fetchAvailableRooms()
+    setTimeout(() => {
 
-    this.fetchBookedRooms()
+      this.fetchRooms()
 
-    this.fetchMaintenanceRooms()
+      this.fetchAvailableRooms()
+
+      this.fetchBookedRooms()
+
+      this.fetchMaintenanceRooms()
+
+      // Hide spinner
+      this.isLoading = false
+      
+    }, 1200) // 1-second delay for effect
   }
 
     /**
