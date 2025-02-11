@@ -147,3 +147,80 @@ small{
     background-color: #f2dede;
     border-color: #ebccd1;
 }
+
+/* Small Devices: max-width 480px */
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 1rem;
+    }
+    
+    p {
+        font-size: 0.7rem;
+    }
+
+    input {
+        width: 250px;
+    }
+
+    button {
+        width: 280px;
+        font-size: 11px;
+    }
+
+    .container {
+        padding: 30px 15px;
+        max-width: 90%;
+    }
+}
+
+/* Medium Devices: 480px - 768px */
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    h1 {
+        font-size: 1.3rem;
+    }
+
+    p {
+        font-size: 0.8rem;
+    }
+
+    input {
+        width: 280px;
+    }
+
+    button {
+        width: 310px;
+        font-size: 12px;
+    }
+
+    .container {
+        padding: 40px 20px;
+        max-width: 60%;
+    }
+}
+
+/* Large Devices: 768px - 1224px */
+
+@media screen and (min-width: 769px) and (max-width: 1224px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    input {
+        width: 320px;
+    }
+
+    button {
+        width: 350px;
+        font-size: 13px;
+    }
+
+    .container {
+        padding: 50px 30px;
+        max-width: 45%;
+    }
+}

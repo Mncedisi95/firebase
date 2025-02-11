@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { doc, Firestore } from '@angular/fire/firestore';
-import { createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, UserCredential } from 'firebase/auth';
-import { getDoc,collection, updateDoc, query, where, getDocs, setDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, sendPasswordResetEmail} from 'firebase/auth';
+import { getDoc, collection, updateDoc, query, where, getDocs, setDoc } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -14,20 +14,20 @@ export class UserService {
   * @description
   * @param {Firestore} firestore 
   */
-  constructor(private auth: Auth,private firestore: Firestore) { }
+  constructor(private auth: Auth, private firestore: Firestore) { }
 
- /**
-  * Fetches a list of guests from the Firestore database.
-  *
-  * @async
-  * @method getUsers
-  * @description Retrieves all users with the role of 'guest' from the Firestore 'users' collection.
-  *              Each returned guest object includes the document ID and associated data.
-  * 
-  * @returns {Promise<Array<{ id: string; [key: string]: any }>>} A promise that resolves to an array of guest objects.
-  * @throws {Error} Throws an error if there is an issue retrieving the guests from Firestore.
-  */
-  async getUsers() : Promise<Array<{ id: string;[key: string]: any }>> {
+  /**
+   * Fetches a list of guests from the Firestore database.
+   *
+   * @async
+   * @method getUsers
+   * @description Retrieves all users with the role of 'guest' from the Firestore 'users' collection.
+   *              Each returned guest object includes the document ID and associated data.
+   * 
+   * @returns {Promise<Array<{ id: string; [key: string]: any }>>} A promise that resolves to an array of guest objects.
+   * @throws {Error} Throws an error if there is an issue retrieving the guests from Firestore.
+   */
+  async getUsers(): Promise<Array<{ id: string;[key: string]: any }>> {
 
     try {
 
@@ -54,21 +54,21 @@ export class UserService {
   * @method getGuestById 
   * @param {any} guestId
   */
-  async getGuestById(guestId: any) :  Promise<{ [key: string]: any }> {
+  async getGuestById(guestId: any): Promise<{ [key: string]: any }> {
 
     try {
-  
-      const guestDoc = await getDoc(doc(this.firestore, 'users',guestId))
+
+      const guestDoc = await getDoc(doc(this.firestore, 'users', guestId))
 
       if (guestDoc.exists()) {
 
         return guestDoc.data()
-      } 
+      }
       else {
 
         throw new Error('Guest not found');
       }
-    } 
+    }
     catch (error) {
 
       console.error(`Error fetching guest with ID ${guestId}:`, error);
@@ -84,7 +84,7 @@ export class UserService {
   * @param {Partial<any>} updatedData - The data to update
   * @returns {Promise<void>} - A promise that resolves when the profile is updated
   */
-  async updateUserProfile( userId: any, updatedData: Partial<any>): Promise<void> {
+  async updateUserProfile(userId: any, updatedData: Partial<any>): Promise<void> {
 
     try {
 
@@ -113,7 +113,7 @@ export class UserService {
   * @param {string} role - The user role to filter by (e.g., "admin", "guest").
   * @returns {Promise<Array<{ id: string; [key: string]: any }>>} - A promise resolving to an array of user objects.
   */
-  async filterUserByRole(role: string): Promise<Array<{ id: string; [key: string]: any }>>  {
+  async filterUserByRole(role: string): Promise<Array<{ id: string;[key: string]: any }>> {
 
     try {
 
@@ -127,10 +127,10 @@ export class UserService {
 
       // Map the documents into an array of user objects
       return userSnap.docs.map((doc) => ({
-        id : doc.id, // Include the document ID
+        id: doc.id, // Include the document ID
         ...doc.data() // Include all other document fields
       }))
-      
+
     } catch (error) {
       console.error('Error fetching users by role:', error);
       return [] // Return empty array if an error occurs
@@ -149,14 +149,15 @@ export class UserService {
   * @param {string} phone - The user's phone number.
   * @param {File} profile - The User's profile
   */
-  async registerUser(name :string ,phone : string,email : string ,address : string,profile : File, role: string):  Promise<void> {
+  async registerUser(name: string, phone: string, email: string, address: string, profile: File, role: string): Promise<void> {
 
     try {
+
       // Generate a random temporary password
-      const tempPassword = Math.random().toString(36).slice(-8) 
+      const tempPassword = Math.random().toString(36).slice(-8)
 
       // Create user in Firebase Authentication
-      const  userCreditial = await createUserWithEmailAndPassword(this.auth,email,tempPassword)
+      const userCreditial = await createUserWithEmailAndPassword(this.auth, email, tempPassword)
 
       // Reference to Firestore document for the new user
       const userRef = doc(this.firestore, 'users/' + userCreditial.user.uid)
@@ -168,18 +169,18 @@ export class UserService {
         phone,
         profile,
         address,
-        uid : userCreditial.user.uid,
+        uid: userCreditial.user.uid,
         role: role,
         passwordChanged: false // Track if the user changed their password
       })
 
       // Send password reset email
-      await sendPasswordResetEmail(this.auth,email)
+      await sendPasswordResetEmail(this.auth, email)
 
     } catch (error) {
       console.error('Error registering user:', error)
       throw new Error('Failed to register user')
     }
   }
-  
+
 }

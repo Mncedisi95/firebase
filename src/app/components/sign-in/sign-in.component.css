@@ -213,3 +213,79 @@ small{
     background-color: #f2dede;
     border-color: #ebccd1;
 }
+
+/* Media Queries */
+
+/* Small Devices: Up to 480px */
+
+@media only screen and (max-width: 480px) {
+    h1 {
+        font-size: 1.2rem;
+    }
+    p {
+        font-size: 0.7rem;
+    }
+    input {
+        width: 250px;
+    }
+    button {
+        width: 280px;
+    }
+    .container {
+        padding: 30px 15px;
+        max-width: 330px;
+    }
+    .btn-social {
+        max-width: 280px;
+    }
+}
+
+/* Medium Devices: 480px - 768px */
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    h1 {
+        font-size: 1.4rem;
+    }
+    p {
+        font-size: 0.8rem;
+    }
+    input {
+        width: 280px;
+    }
+    button {
+        width: 310px;
+    }
+    .container {
+        padding: 40px 20px;
+        max-width: 380px;
+    }
+
+    .btn-social {
+        max-width: 310px;
+    }
+}
+
+/* Large Devices: 768px - 1224px */
+
+@media only screen and (min-width: 769px) and (max-width: 1224px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+    p {
+        font-size: 0.9rem;
+    }
+    input {
+        width: 320px;
+    }
+    button{
+        width: 350px;
+    }
+    .container {
+        padding: 50px 25px;
+        max-width: 420px;
+    }
+
+    .btn-social {
+        max-width: 350px;
+    }
+}

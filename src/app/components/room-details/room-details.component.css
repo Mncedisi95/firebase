@@ -246,6 +246,64 @@
     margin-top: 2rem;
 }
 
+
+mat-paginator{
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 10px 20px; 
+    background-color: #BA55D3; 
+    color: #fff; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+mat-paginator .mat-paginator-container {
+    display: flex;
+    flex: 1;
+    justify-content: space-between; 
+    align-items: center;
+}
+
+mat-paginator .mat-paginator-range-label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+mat-paginator .mat-paginator-navigation {
+    display: flex;
+    gap: 10px; 
+}
+  
+mat-paginator .mat-paginator-page-size {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+}
+
+mat-paginator .mat-paginator-page-size .mat-select {
+    color: #BA55D3; 
+    background-color: #fff; 
+    border-radius: 4px; 
+}
+  
+mat-paginator .mat-paginator-navigation-button {
+    color: #fff;
+    transition: all 0.3s ease; 
+}
+  
+mat-paginator .mat-paginator-navigation-button:hover {
+    background-color: rgba(255, 255, 255, 0.2); 
+    border-radius: 4px; 
+}
+
+mat-paginator .mat-paginator-navigation-button[disabled] {
+    color: rgba(255, 255, 255, 0.5); 
+    pointer-events: none; 
+}
+
 .loading-container {
     display: flex;
     justify-content: center;
@@ -256,4 +314,98 @@
 
 mat-spinner{
     --mat-sys-primary:  #BA55D3;   
+}
+
+/* Small Devices (Max Width: 480px) */
+
+@media (max-width: 480px) {
+    .section {
+        padding: 60px;
+    }
+
+    .section-subtitle {
+        display: none;
+    }
+    .breadcrumb {
+        display: none;
+    }
+
+    .room-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .room-image {
+        max-width: 100%;
+    }
+
+    .room-info li {
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Medium Devices (481px - 768px) */
+
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+    .section {
+        padding: 80px;
+    }
+
+    .section-subtitle {
+        font-size: 1.6rem;
+    }
+
+    .room-content {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .room-image {
+        max-width: 350px;
+    }
+
+    .btn-primary {
+        font-size: 1rem;
+    }
+
+    .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Large Devices (769px - 1224px) */
+
+@media only screen and (min-width: 769px) and (max-width: 1224px) {
+    .section {
+        padding: 100px;
+    }
+
+    .section-subtitle {
+        font-size: 1.8rem;
+    }
+
+    .room-content {
+        gap: 2rem;
+    }
+
+    .room-image {
+        max-width: 400px;
+    }
+
+    .btn-primary {
+        font-size: 1.1rem;
+    }
+
+    .reviews-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

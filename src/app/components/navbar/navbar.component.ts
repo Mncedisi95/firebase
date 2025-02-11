@@ -50,6 +50,10 @@ export class NavbarComponent {
     /** @property {string} userRole */
 
     userRole : string = ''
+    
+    /**@property {boolean} isMobileMenuOpen */
+
+    isMobileMenuOpen : boolean = false
 
    /**
    * @constructor
@@ -115,6 +119,15 @@ export class NavbarComponent {
       // Handle potential errors gracefully
       console.log('Error fetching guest details:', error);
     }
+  }
+
+  /**
+  * @method toggleMobileMenu
+  * @description 
+  */
+  toggleMobileMenu() {
+    
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
   

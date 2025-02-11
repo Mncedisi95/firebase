@@ -60,6 +60,13 @@
         </div>
     </section>
 
+    <!-- Pagination -->
+    <mat-paginator *ngIf="!isLoading" [length]=items [pageSize]="4" [showFirstLastButtons]="true"
+        [pageIndex]="currentpage" [pageSizeOptions]="[4, 8, 12, 16]" (page)="handlePagenator($event)"
+        aria-label="Select page">
+    </mat-paginator>
+    <!-- End of Pagination -->
+
     <!-- No reviews Message -->
     <div *ngIf="!roomReviews?.length && !isLoading" class="no-reviews">
         <p>No reviews yet. Be the first to review this room!</p>

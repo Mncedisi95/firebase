@@ -1,19 +1,23 @@
 <!-- Normal Navbar Start-->
-<nav class="navbar" *ngIf="!isAuthPage && !isAdminOrStaff" >
+<nav class="navbar" *ngIf="!isAuthPage && !isAdminOrStaff">
     <!-- Main Container -->
     <div class="container">
         <!-- Logo -->
         <a class="logo">SuiteSync.</a>
+
+        <!-- Hamburger Menu (for small & medium devices) -->
+        <div class="hamburger-menu" (click)="toggleMobileMenu()">&#9776;</div>
+
         <!-- Navigation Menu  -->
-        <ul class="nav">
+        <ul class="nav" [class.mobile-active]="isMobileMenuOpen">
             <li class="nav-item">
                 <a class="nav-link" routerLink="/index">Home</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" routerLink="/rooms">Rooms</a>
+                <a class="nav-link" routerLink="/rooms">Rooms</a>
             </li>
-            
+
             <li class="nav-item" *ngIf="isLoggedIn">
                 <a class="nav-link" routerLink="/view-booking">Bookings</a>
             </li>
@@ -39,7 +43,7 @@
 
             <div class="navbar-right">
                 <div *ngIf="isLoggedIn" class="user-menu">
-                    <img [src]="guestDetails.profile" alt="User" class="user-avatar" (click)="toggleMenu()"/>
+                    <img [src]="guestDetails.profile" alt="User" class="user-avatar" (click)="toggleMenu()" />
                     <ul class="user-dropdown-menu" [class.show]="menuOpen">
                         <li routerLink="/view-profile">Profile</li>
                         <li (click)="logout()">Logout</li>

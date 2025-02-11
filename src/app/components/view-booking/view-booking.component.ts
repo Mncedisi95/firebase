@@ -4,10 +4,12 @@ import { RoomService } from '../../services/room.service';
 import { NgFor, NgIf } from '@angular/common';
 import { SortByDatePipe } from '../../sort-by-date.pipe';
 import { AuthService } from '../../services/auth.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-view-booking',
-  imports: [RouterLink, NgFor, SortByDatePipe, NgIf],
+  imports: [RouterLink, NgFor, SortByDatePipe, NgIf,MatProgressSpinnerModule,MatPaginatorModule],
   templateUrl: './view-booking.component.html',
   styleUrl: './view-booking.component.css'
 })
@@ -64,14 +66,42 @@ export class ViewBookingComponent {
   */
   currentBookingId: string | null = null
 
+  /** @property {boolean} isLoading */
+
+  isLoading: boolean = false
+
+  /**
+  * Represents the total number of rooms available.
+  * @property {number} items - Total count of rooms.
+  */
+  items: number = 0
+
+  /**
+  * Represents the current page index in the pagination.
+  * @property {number} currentpage - Zero-based index of the current page.
+  */
+  currentpage: number = 0
+
+  /**
+  * Represents the index of the first product displayed on the current page.
+  * @property {number} lowIndex - Starting index for pagination.
+  */
+  lowIndex: number = 0
+
+  /**
+  * Represents the index of the last product displayed on the current page.
+  * @property {number} highIndex - Ending index for pagination.
+  */
+  highIndex: number = 6
+
   /**
   * @constructor
   * @description 
   * @param router 
   */
   constructor(
-    private router: Router, 
-    private roomService: RoomService, 
+    private router: Router,
+    private roomService: RoomService,
     private authService: AuthService
   ) { }
 
@@ -101,31 +131,48 @@ export class ViewBookingComponent {
 
     try {
 
-      // Step 1: Fetch bookings by guest ID
-      this.bookings = await this.roomService.getBookingsByGuestId(this.guestId)
-     
-      // Step 2: Enrich each booking with room details
-      this.bookings = await Promise.all(this.bookings.map(async (booking) => {
+      // Set loading state to true before starting the fetch process
+      this.isLoading = true
 
-        this.roomId = booking.roomId
+      // Simulate lazy loading delay
+      setTimeout(async () => {
 
-        // Validate that roomId exists before attempting to fetch room details
-        if (!this.roomId) {
-          console.log(`Booking ${booking.id} does not have a valid roomId.`);
-          return { ...booking, room: null };
-        }
+        // Step 1: Fetch bookings by guest ID
+        this.bookings = await this.roomService.getBookingsByGuestId(this.guestId)
 
-        // Fetch room details by ID
-        const roomDetails = await this.roomService.getRoomById(this.roomId)
+        // update the count bookings 
+        this.items = this.bookings.length
 
-        // Return the enriched booking object
-        return { ...booking, room: roomDetails }
-      }))
+        // Step 2: Enrich each booking with room details
+        this.bookings = await Promise.all(this.bookings.map(async (booking) => {
+
+          this.roomId = booking.roomId
+
+          // Validate that roomId exists before attempting to fetch room details
+          if (!this.roomId) {
+            
+            return { ...booking, room: null }
+          }
+
+          // Fetch room details by ID
+          const roomDetails = await this.roomService.getRoomById(this.roomId)
+
+          // Return the enriched booking object
+          return { ...booking, room: roomDetails }
+        }))
+
+        // Hide spinner after data is loaded
+        this.isLoading = false
+
+      }, 1000)  // 1-second delay for effect
+
 
     } catch (error) {
 
-      // Handle and log errors during booking fetch
-      console.log('Error fetching bookings details:', error);
+     // Handle and log errors during booking fetch
+     console.log('Error fetching bookings details:', error)
+     // Ensure spinner is hidden on error
+     this.isLoading = false
     }
   }
 
@@ -205,7 +252,7 @@ export class ViewBookingComponent {
       this.showError('Error during check-in process')
       // Optionally, you can throw or handle the error further depending on your needs
       throw new Error('Failed to complete check-in process. Please try again later.')
-    }  
+    }
   }
 
   /**
@@ -241,14 +288,14 @@ export class ViewBookingComponent {
 
         sessionStorage.setItem('id', id)
 
-        this.router.navigate(['/leave-review'], {state: {id}})
+        this.router.navigate(['/leave-review'], { state: { id } })
       }, 3500)
 
     } catch (error) {
       // Log the error and provide feedback to the user in case of failure
       this.showError('Error during check Out')
       throw error
-    } 
+    }
   }
 
   /**
@@ -268,7 +315,7 @@ export class ViewBookingComponent {
     try {
 
       // Update the booking status to 'Cancelled'
-      await this.roomService.updateBookingStatus(bookingId,'Cancelled')
+      await this.roomService.updateBookingStatus(bookingId, 'Cancelled')
       console.log('Booking and room status updated successfully!')
 
       // Display success feedback to the user
@@ -278,6 +325,24 @@ export class ViewBookingComponent {
       // Display error feedback to the user
       this.showError('Booking cancellation failed. Please try again.')
     }
+  }
+  
+  /**
+  * @method handlePagenator
+  * @description Helper function to handle pagination events and update the visible data range based on the current page and page size.
+  * 
+  * @param {PageEvent} event - The pagination event containing details such as the current page index and page size.
+  * @returns {PageEvent} - The same pagination event for further handling or reference.
+  * 
+  * Functionality:
+  * - Updates the lowIndex to reflect the start index of the current page.
+  * - Updates the highIndex to reflect the end index of the current page.
+  */
+  handlePagenator(event: PageEvent): PageEvent {
+    // initialize lowindex and high index property
+    this.lowIndex = event.pageIndex * event.pageSize
+    this.highIndex = this.lowIndex + event.pageSize
+    return event
   }
 
 }

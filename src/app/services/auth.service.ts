@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signOut } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
 import { Firestore, doc } from '@angular/fire/firestore';
-import { collection, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { error } from 'console';
+
 @Injectable({
   providedIn: 'root'
 })

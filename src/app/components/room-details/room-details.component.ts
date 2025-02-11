@@ -4,11 +4,11 @@ import { RoomService } from '../../services/room.service';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-room-details',
-  imports: [RouterLink, NgIf, NgFor, DatePipe,MatProgressSpinnerModule],
+  imports: [RouterLink, NgIf, NgFor, DatePipe, MatProgressSpinnerModule,MatPaginatorModule],
   templateUrl: './room-details.component.html',
   styleUrl: './room-details.component.css'
 })
@@ -46,6 +46,30 @@ export class RoomDetailsComponent {
   /** @property {boolean} isLoading */
 
   isLoading: boolean = false
+
+  /**
+ * Represents the total number of rooms available.
+ * @property {number} items - Total count of rooms.
+ */
+  items: number = 0
+
+  /**
+  * Represents the current page index in the pagination.
+  * @property {number} currentpage - Zero-based index of the current page.
+  */
+  currentpage: number = 0
+
+  /**
+  * Represents the index of the first product displayed on the current page.
+  * @property {number} lowIndex - Starting index for pagination.
+  */
+  lowIndex: number = 0
+
+  /**
+  * Represents the index of the last product displayed on the current page.
+  * @property {number} highIndex - Ending index for pagination.
+  */
+  highIndex: number = 4
 
   /**
   * Initializes the RoomDetailsComponent with required services.
@@ -104,11 +128,26 @@ export class RoomDetailsComponent {
         this.router.navigate(['/'])
       }
 
-      // Fetch room details and reviews
-      await this.fetchRoomDetails();
-      await this.fetchRoomReviews();
+      // Set loading state to true before starting the fetch process
+      this.isLoading = true
+
+      // Simulate lazy loading delay
+      setTimeout(async () => {
+
+        // Fetch room details and reviews
+        await this.fetchRoomDetails()
+        await this.fetchRoomReviews()
+
+        // Hide spinner after data is loaded
+        this.isLoading = false
+
+      }, 1000)  // 1-second delay for effect
+
     } catch (error) {
-      console.error('Error initializing RoomDetailsComponent:', error);
+      console.error('Error initializing RoomDetailsComponent:', error)
+
+      // Ensure spinner is hidden on error
+      this.isLoading = false
     }
   }
 
@@ -123,24 +162,14 @@ export class RoomDetailsComponent {
   async fetchRoomDetails(): Promise<void> {
 
     try {
-      // Set loading state to true before starting the fetch process
-      this.isLoading = true
 
-      // Simulate lazy loading delay
-      setTimeout(async () => {
-        // Attempt to fetch room details from the RoomService
-        this.roomDetails = await this.roomService.getRoomById(this.id)
-        // Hide spinner after data is loaded
-        this.isLoading = false
-
-      }, 1000) // 1-second delay for effect
+      // Attempt to fetch room details from the RoomService
+      this.roomDetails = await this.roomService.getRoomById(this.id)
 
     } catch (error) {
 
       // Log the error in the console
       console.log('Error fetching room details:', error)
-      // Ensure spinner is hidden on error
-      this.isLoading = false
     }
   }
 
@@ -148,7 +177,7 @@ export class RoomDetailsComponent {
   * Fetches and enriches reviews for the current room by its ID.
   *
   * @async
-  * @method fetchRoomReviews
+  * @msethod fetchRoomReviews
   * @returns {Promise<void>} Resolves when the room reviews are successfully fetched and enriched.
   * @throws {Error} Logs and handles any errors that occur during the fetch process.
   */
@@ -156,48 +185,49 @@ export class RoomDetailsComponent {
 
     try {
 
-      // Set loading state to true before starting the fetch process
-      this.isLoading = true
+      // Step 1: Fetch reviews for the room using the room ID
+      // This retrieves the list of reviews associated with a specific room
+      this.roomReviews = await this.roomService.getRoomReviewByRoomId(this.id)
 
-      // Simulate lazy loading delay
-      setTimeout(async () => {
+      // update the count of the reviews
+      this.items = this.roomReviews.length
 
-        // Step 2: Enrich reviews with guest details
-        const enrichedReviews = await Promise.all(this.roomReviews.map(async (review) => {
-          try {
+      // Step 2: Enrich each review with guest details
+      // Using Promise.all to process all reviews concurrently
+      const enrichedReviews = await Promise.all(this.roomReviews.map(async (review) => {
 
-            const userId = review.userId
+        try {
 
-            const guestDetails = await this.userService.getGuestById(userId)
+          // Extract userId from the review
+          const userId = review.userId
 
-            return {
-              ...review,
-              guest: guestDetails // Add guest details to the review
-            }
-            // Hide spinner after data is loaded
-            this.isLoading = false
+          // Fetch guest details based on the userId
+          const guestDetails = await this.userService.getGuestById(userId)
+
+          // Return the review object with additional guest details
+          return {
+            ...review,
+            guest: guestDetails // Attach guest details to the review
           }
-          catch (error) {
 
-            console.warn(`Error fetching guest details for userId: ${review.userId}`, error);
-            return {
-              ...review,
-              guest: null, // Fallback to null if guest details can't be fetched
-            }
-            // Ensure spinner is hidden on error
-            this.isLoading = false
+        }
+        catch (error) {
+
+          // Return the review with guest set to null as a fallback
+          return {
+            ...review,
+            guest: null // Fallback to null if guest details can't be fetched
           }
-        }))
-        // Update the roomReviews property with enriched data
-        this.roomReviews = enrichedReviews
+        }
+      }))
 
-      }, 1000) // 1-second delay for effect
+      // Step 3: Update the roomReviews property with the enriched data
+      this.roomReviews = enrichedReviews
 
     } catch (error) {
 
+      // Log any errors that occur during the fetching or enrichment process
       console.log('Error fetching or enriching room reviews:', error)
-      // Ensure spinner is hidden on error
-      this.isLoading = false
     }
   }
 
@@ -224,6 +254,24 @@ export class RoomDetailsComponent {
 
       throw new Error("Failed to navigate to the booking page. Please try again.")
     }
+  }
+
+  /**
+  * @method handlePagenator
+  * @description Helper function to handle pagination events and update the visible data range based on the current page and page size.
+  * 
+  * @param {PageEvent} event - The pagination event containing details such as the current page index and page size.
+  * @returns {PageEvent} - The same pagination event for further handling or reference.
+  * 
+  * Functionality:
+  * - Updates the lowIndex to reflect the start index of the current page.
+  * - Updates the highIndex to reflect the end index of the current page.
+  */
+  handlePagenator(event: PageEvent): PageEvent {
+    // initialize lowindex and high index property
+    this.lowIndex = event.pageIndex * event.pageSize
+    this.highIndex = this.lowIndex + event.pageSize
+    return event
   }
 
 }

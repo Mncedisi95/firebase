@@ -146,7 +146,7 @@ export class RoomsAdminComponent {
 
         // Update total room count
         this.items = this.rooms.length
-        // Ensure spinner
+        // Hide spinner after data is loaded
         this.isLoading = false
 
       }, 1000) // 1-second delay for effect

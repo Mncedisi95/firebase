@@ -291,3 +291,80 @@ mat-paginator .mat-paginator-navigation-button[disabled] {
 mat-spinner{
     --mat-sys-primary:  #BA55D3;   
 }
+
+/* Small Devices (Max Width: 480px) */
+
+@media (max-width: 480px) {
+    .section {
+        padding: 50px;
+    }
+
+    .section-subtitle {
+        font-size: 1.4rem;
+    }
+
+    .rooms-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .search-filter {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .filter-dropdown {
+        max-width: 100%;
+    }
+}
+
+/* Medium Devices (481px - 768px) */
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .section {
+        padding: 80px;
+    }
+
+    .section-subtitle {
+        font-size: 1.6rem;
+    }
+
+    .rooms-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .search-input {
+        width: 80%;
+    }
+
+    .filter-dropdown {
+        max-width: 200px;
+    }
+}
+
+/* Large Devices (769px - 1224px) */
+
+@media (min-width: 769px) and (max-width: 1224px) {
+    .section {
+        padding: 100px;
+    }
+
+    .section-subtitle {
+        font-size: 1.8rem;
+    }
+
+    .rooms-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .search-input {
+        width: 60%;
+    }
+
+    .filter-dropdown {
+        max-width: 250px;
+    }
+}
