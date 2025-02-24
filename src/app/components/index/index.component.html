@@ -55,6 +55,18 @@
           <button type="submit" class="btn-secondary">Check Availability</button>
         </div>
       </form>
+
+      <!-- Chatbot -->
+      <div class="chatbot">
+        <div class="chat-header" onclick="toggleChat()">
+          💬 Chat with Me
+        </div>
+        <div class="chat-body" id="chat-body">
+          <div class="chat-messages" id="chat-messages"></div>
+          <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+        </div>
+      </div>
+
     </section>
   </div>
 </div>

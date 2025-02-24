@@ -1,0 +1,105 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Footer Styling */
+.footer {
+    background: linear-gradient(135deg, #BA55D3, #8A2BE2);
+    color: #fff;
+    padding: 50px 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    animation: fadeIn 1s ease-in-out;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer Container */
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 0;
+    align-items: center;
+}
+
+/* Footer Content */
+.footer-content h2 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    font-family: "Baloo Paaji", cursive;
+    letter-spacing: 1px;
+}
+
+.footer-content p {
+    font-size: 1rem;
+    color: #f1f1f1;
+    max-width: 400px;
+    margin: auto;
+    line-height: 1.6;
+}
+
+/* Footer Links */
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #f1f1f1;
+    font-family: "Baloo Paaji", cursive;
+    font-size: 1rem;
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.footer-links a:hover {
+    color: #FFD700;
+    transform: translateX(5px);
+}
+
+/* Social Icons */
+.footer-social {
+    display: flex;
+    gap: 18px;
+    font-size: 1.7rem;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.footer-social a {
+    color: #fff;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.footer-social a:hover {
+    color: #FFD700;
+    transform: scale(1.2);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    margin-top: 25px;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 15px;
+    color: #f1f1f1;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+    }
+}

@@ -178,7 +178,6 @@ export class NavbarComponent {
       this.menuOpen = false;
       this.isLoggedIn = false;
       this.isAdminOrStaff = false;
-      console.log('User logged out')
       this.router.navigate(['/index'])
     })
     .catch((error) => {

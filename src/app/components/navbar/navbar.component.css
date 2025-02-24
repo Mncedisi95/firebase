@@ -36,7 +36,6 @@ ul{
     width: 100%;
     transition: background-color 0.3s ease-in-out;
     font-family: "Baloo Paaji", cursive;
-    background-color: transparent;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     background-color:  #BA55D3;
     z-index: 1000;
@@ -77,6 +76,10 @@ ul{
     position: relative;
 }
 
+.nav-item:hover{
+    transform: scale(1.05);
+}
+
 .nav-link{
     text-decoration: none;
     color: #fff;
@@ -98,22 +101,12 @@ ul{
     left: 0;
     width: 0;
     height: 2px;
-    background-color:#fff ; 
+    background-color: #fff; 
     transition: width 0.3s ease;
 }
 
 .nav-link:hover::after {
     width: 100%; 
-}
-
-.navbar.scrolled {
-    background-color: #695aa6; 
-    color: #fff;
-}
-
-.navbar.scrolled .logo,
-.navbar.scrolled .nav .nav-item .nav-link {
-    color: #fff;
 }
 
 .hamburger-menu {
@@ -197,6 +190,7 @@ button:hover{
     cursor: pointer;
     border: none;
     font-weight: bold;
+    transform: scale(1.05);
 }
 
 .user-menu {

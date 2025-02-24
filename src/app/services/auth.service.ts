@@ -41,13 +41,7 @@ export class AuthService {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password)
       const user = userCredential.user
 
-      if(user){
-
-        // Call trackPasswordReset AFTER successful login
-        this.trackPasswordReset(user)
-      }
-
-    return userCredential
+     return userCredential
       
     } catch (error) {
       // Rethrow the error to be handled by the caller

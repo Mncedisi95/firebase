@@ -1,9 +1,44 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Slide-in animation */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .section {
     padding: 100px;
     background: #fff;
     margin-bottom: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
 }
 
 .section-subtitle {
@@ -12,6 +47,7 @@
     margin: 1.5rem 0;
     font-size: 1.8rem;
     font-family:"Baloo Paaji", cursive; 
+    animation: fadeIn 1.2s ease-in-out;
 }
 
 .breadcrumb {
@@ -20,6 +56,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: fadeIn 1.5s ease-in-out forwards;
 }
 
 .breadcrumb ul {
@@ -75,6 +112,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: hidden; 
+    animation: fadeIn 1.5s ease-in-out;
 }
 
 .contact-info {
@@ -85,6 +123,7 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+    animation: slideInLeft 1.3s ease-in-out;
 }
 
 .contact-info h2 {
@@ -100,6 +139,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    animation: slideInRight 1.3s ease-in-out;
 }
 
 .contact-form h2 {
@@ -125,12 +165,14 @@ label{
     color: #333;
 }
 
-input, textarea {
+input, 
+textarea {
     width: 90%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
+    transition: all 0.3s ease-in-out;
 }
 
 input:focus,
@@ -145,6 +187,7 @@ textarea:focus{
 input:hover,
 textarea:hover{
     border-color: #b4add3;
+    transform: scale(1.02);
 }
 
 .btn-submit {
@@ -156,10 +199,12 @@ textarea:hover{
     border-radius: 5px;
     cursor: pointer;
     font-size: 18px;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
 }
 
 .btn-submit:hover {
     background:  #DA70D6;
+    transform: scale(1.05);
 }
 
 /* Small Screens (Max-width: 480px) */
