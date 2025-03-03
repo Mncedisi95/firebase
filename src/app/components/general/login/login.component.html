@@ -1,0 +1,52 @@
+<div class="container">
+    <!-- Form Section-->
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <h1>Login</h1>
+
+        <!-- Email -->
+        <div>
+            <label for="email">Email:</label>
+            <input id="email" type="text" formControlName="email" placeholder="Email" aria-label="Email" />
+            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                <small *ngIf="loginForm.get('email')?.errors?.['required']">*Email is required!</small>
+                <small *ngIf="loginForm.get('email')?.errors?.['email']">*Enter Valid Email!</small>
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+            <label for="password">Password:</label>
+            <input id="password" type="password" formControlName="password" placeholder="Password" aria-label="Password" />
+            <div *ngIf="loginForm.get('password')?.touched">
+                <small *ngIf="loginForm.get('password')?.errors?.['required']">*Password is required!</small>
+            </div>
+        </div>
+
+        <!-- Forgot Password -->
+        <p [routerLink]="['/forgot-password']" class="text-right">Forgot Password?</p>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-primary">Login</button>
+
+        <!-- Error Message -->
+        <div>
+            <input *ngIf="isErrorVisible" class="alert-danger" placeholder={{errorMessage}} />
+        </div>
+
+        <!-- Login Link -->
+        <p>Don't have an account?<a [routerLink]="['/register']">Sign Up</a></p>
+
+        <!-- Social Media Sign-in Options -->
+        <div>
+            <div class="separator">
+                <span>Or Login in with</span>
+            </div>
+            <button type="button" class="btn-social facebook">
+                <i class="ti-facebook btn-social-icon"></i> Login in with Facebook
+            </button>
+            <button type="button" class="btn-social google">
+                <i class="ti-google btn-social-icon"></i> Login in with Google 
+            </button>
+        </div>
+    </form>
+</div>

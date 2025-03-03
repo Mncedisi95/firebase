@@ -1,0 +1,100 @@
+<!-- Normal Navbar Start-->
+<nav class="navbar" *ngIf="!isAuthPage && !isAdminOrStaff">
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Logo -->
+        <a class="logo">SuiteSync.</a>
+
+        <!-- Hamburger Menu (for small & medium devices) -->
+        <div class="hamburger-menu" (click)="toggleMobileMenu()">&#9776;</div>
+
+        <!-- Navigation Menu  -->
+        <ul class="nav" [class.mobile-active]="isMobileMenuOpen">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/index">Home</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/rooms">Rooms</a>
+            </li>
+
+            <li class="nav-item" *ngIf="isLoggedIn">
+                <a class="nav-link" routerLink="/view-booking">Bookings</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/about">About Us</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink="services">Services</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/contact">Contact</a>
+            </li>
+
+            <li>
+                <button *ngIf="!isLoggedIn" type="submit" (click)="goToLogin()">Login</button>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/register" *ngIf="!isLoggedIn" class="nav-link">Sign Up</a>
+            </li>
+
+            <div class="navbar-right">
+                <div *ngIf="isLoggedIn" class="user-menu">
+                    <img [src]="guestDetails.profile" alt="User" class="user-avatar" (click)="toggleMenu()" />
+                    <ul class="user-dropdown-menu" [class.show]="menuOpen">
+                        <li routerLink="/view-profile">Profile</li>
+                        <li (click)="logout()">Logout</li>
+                    </ul>
+                </div>
+            </div>
+        </ul>
+        <!-- End of Navigation Menu  -->
+    </div>
+</nav>
+<!-- End of Normal Navbar -->
+
+<!-- Admin Navbar -->
+<section *ngIf="!isAuthPage && isAdminOrStaff">
+    <nav class="admin-navbar">
+        <div>
+            <a href="#" class="admin-logo">SuiteSync. Dashboard</a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-menu">
+            <a class="sidebar-link" routerLink="/dashboard">
+                <i class="ti-dashboard"></i> Dashboard
+            </a>
+            <a class="sidebar-link" routerLink="/rooms-admin">
+                <i class="ti-home"></i> Room Management
+            </a>
+            <a class="sidebar-link" routerLink="/room-availability">
+                <i class="ti-calendar"></i> Room Availability
+            </a>
+            <a class="sidebar-link" routerLink="/manage-bookings">
+                <i class="ti-agenda"></i> Booking Management
+            </a>
+            <a class="sidebar-link" routerLink="/manage-guests" *ngIf="userRole !== 'staff'">
+                <i class="ti-user"></i> User Management
+            </a>
+            <a class="sidebar-link">
+                <i class="ti-bar-chart"></i> Financial Insights
+            </a>
+            <a class="sidebar-link">
+                <i class="ti-pie-chart"></i> Analytics & Reports
+            </a>
+            <a class="sidebar-link">
+                <i class="ti-bell"></i> Notifications & Alerts
+            </a>
+            <a class="sidebar-link" (click)="logout()">
+                <i class="ti-power-off"></i> Logout
+            </a>
+        </div>
+    </div>
+</section>
+<!-- End of Admin Navbar -->

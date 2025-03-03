@@ -1,0 +1,92 @@
+
+<div class="container">
+    <form [formGroup]="registerForm" (ngSubmit)="createAccount()">
+        <h1>Sign Up</h1>
+
+        <!-- Name -->
+        <div>
+            <label for="fname">Full Name:</label>
+            <input id="fname" formControlName="fname" type="text" placeholder="Enter Full Name" aria-label="Name"/>
+            <div *ngIf="registerForm.get('fname')?.touched">
+                <small *ngIf="registerForm.get('fname')?.errors?.['required']">*Name is required!</small>
+            </div>
+        </div>
+
+        <!--Email -->
+        <div>
+            <label for="email">Email:</label>
+            <input id="email" formControlName="email" type="email" placeholder="Enter Email"  aria-label="Email"/>
+            <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                <small *ngIf="registerForm.get('email')?.errors?.['required']">*Email is required!</small>
+                <small *ngIf="registerForm.get('email')?.errors?.['email']">*Enter valid email.</small>
+            </div>
+        </div>
+
+        <!-- Phone Number -->
+         <div>
+            <label for="phone">Phone Number:</label>
+            <input id="phone" formControlName="phone" type="text" placeholder="Enter Phone Number" aria-label="Phone Number" />
+            <div *ngIf="registerForm.get('phone')?.touched">
+                <small *ngIf="registerForm.get('phone')?.errors?.['required']">*Phone Number is required!</small>
+               <!-- <small *ngIf="registerForm.get('phone')?.errors?.['pattern']">Invalid phone number. Must be 10 digits.</small> --> 
+            </div>
+         </div>
+
+        <!-- Profile -->
+        <div>
+            <label for="profile">Profile:</label>
+            <input id="profile" formControlName="profile" type="file" accept="image/*" (change)="handleFileInput($event)" aria-label="Profile Picture"/>
+            <div *ngIf="registerForm.get('profile')?.touched">
+                <small *ngIf="registerForm.get('profile')?.errors?.['required']">*Profile Picture is required!</small>
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div>
+            <label for="address">Address:</label>
+            <input id="address" formControlName="address" type="text" placeholder="Enter Address" aria-label="Address" />
+            <div *ngIf="registerForm.get('address')?.touched">
+                <small *ngIf="registerForm.get('address')?.errors?.['required']">*Address is required!</small>
+            </div>
+        </div>
+
+        <!--Password -->
+        <div>
+            <label for="password">Password:</label>
+            <input id="password" formControlName="password" type="password" placeholder="Enter Password" aria-label="Password"/>
+            <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+                <small *ngIf="registerForm.get('password')?.errors?.['required']">*Password is required!</small>
+                <small *ngIf="registerForm.get('password')?.errors?.['pattern']">
+                    *Password must atleast include:<br>*Minimum of 8 characters long,<br>*One uppercase letter,<br>*One lowercase letter,<br>*One number and <br>*One special character.
+                </small>
+            </div>
+        </div>
+
+        <!--Confirm Password -->
+        <div>
+            <label for="confirmPassword">Confirm Password:</label>
+            <input id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="Confirm Password" aria-label="Confirm Password"/>
+            <div *ngIf="registerForm.get('confirmPassword')?.touched">
+                <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">*Confirm Password is required!</small>
+            </div>
+            <div>
+                <small *ngIf="registerForm?.errors?.['mismatch']">*Password does not match!</small>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-primary">SignUp</button>
+
+        <!--Success Message -->
+
+        <div>
+            <input *ngIf="isSuccessVisible" class="alert-success" placeholder= {{successMessage}} />
+        </div>
+
+        <div>
+            <input *ngIf="isErrorVisible" class="alert-danger" placeholder= {{errorMessage}} />
+        </div>
+
+        <p>Already have an account?<a [routerLink]="['/login']">Sign In</a></p>
+    </form>
+</div>

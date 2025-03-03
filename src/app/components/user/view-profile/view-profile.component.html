@@ -1,0 +1,37 @@
+
+<section class="section" *ngIf="isLoggedIn">
+    <!-- Title -->
+    <h1 class="section-subtitle">Guest Details</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']"><i class="ti-home"></i> Home</a></li>
+            <li>Guest Details</li>
+        </ul>
+    </nav>
+
+    <!-- Guest Details -->
+    <div class="guest-details">
+        <h4 class="guest-name">{{guestDetails?.name}}</h4>
+
+        <div class="guest-content">
+            <!-- Guest Image -->
+            <div class="guest-image-container">
+                <img [src]="guestDetails?.profile" alt="Guest Photo" class="guest-image" />
+            </div>
+
+            <!-- Guest Information -->
+            <ul class="guest-info">
+                <li><strong>Email:</strong>{{guestDetails?.email}}</li>
+                <li><strong>Phone:</strong>{{guestDetails?.phone}}</li>
+                <li><strong>Address:</strong>{{guestDetails?.address}}</li>
+            </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+            <button class="btn-primary" (click)="editProfile()">Edit Guest</button>
+        </div>
+    </div>
+</section>

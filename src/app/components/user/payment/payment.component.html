@@ -1,0 +1,72 @@
+<section class="payment-page">
+    <div class="container">
+      <h1 class="section-title">Payment</h1>
+      <p class="description">Finalize your booking by completing the payment below.</p>
+  
+      <!-- Confirmation Section -->
+      <div class="confirmation-section">
+        <h3>Booking Summary</h3>
+        <ul>
+          <li><strong>Room:</strong>{{roomDetails.roomNumber}}</li>
+          <li><strong>Check-in Date:</strong>{{bookingDetails.checkIn}}</li>
+          <li><strong>Check-out Date:</strong>{{bookingDetails.checkOut}}</li>
+          <li><strong>Nights:</strong>{{nights}}</li>
+          <li><strong>Guests:</strong>{{bookingDetails.numberOfGuest}}</li>
+          <li><strong>Total Price:</strong>{{totalPrice}}</li>
+        </ul>
+      </div>
+  
+      <!-- Payment Form -->
+      <form [formGroup]="paymentForm"  (ngSubmit)="submitPayment()">
+
+        <!-- Card Holder Name -->
+        <div class="form-group">
+          <label for="cardHolder">Card Holder Name:</label>
+          <input id="cardHolder" formControlName="cardHolder" type="text" placeholder="Enter name on the card"/>
+          <small *ngIf="paymentForm.get('cardHolder')?.touched && paymentForm.get('cardHolder')?.invalid">
+            *Card Holder Name is required!
+          </small>
+        </div>
+  
+        <!-- Card Number -->
+        <div class="form-group">
+          <label for="cardNumber">Card Number:</label>
+          <input id="cardNumber" formControlName="cardNumber" type="text" maxlength="16" placeholder="1234 5678 9012 3456"/>
+          <small *ngIf="paymentForm.get('cardNumber')?.touched && paymentForm.get('cardNumber')?.invalid">
+            *Card Number must be 16 digits!
+          </small>
+        </div>
+  
+        <!-- Expiry Date -->
+        <div class="form-group">
+          <label for="expiryDate">Expiry Date:</label>
+          <input id="expiryDate" formControlName="expiryDate" type="text" placeholder="MM/YY"/>
+          <small *ngIf="paymentForm.get('expiryDate')?.touched && paymentForm.get('expiryDate')?.invalid">
+            *Enter a valid expiry date (MM/YY)!
+          </small>
+        </div>
+  
+        <!-- CVV -->
+        <div class="form-group">
+          <label for="cvv">CVV:</label>
+          <input id="cvv" formControlName="cvv" type="text" maxlength="3" placeholder="123"/>
+          <small *ngIf="paymentForm.get('cvv')?.touched && paymentForm.get('cvv')?.invalid">
+            *CVV must be 3 digits.
+          </small>
+        </div>
+  
+        <!-- Confirm Payment -->
+        <button class="btn-primary" type="submit">Confirm Payment</button>
+      </form>
+  
+      <!-- Success/Error Message -->
+      <div>
+        <input *ngIf="paymentSuccess" class="alert-success" placeholder={{successMessage}} readonly />
+     </div>
+     <div>
+        <input *ngIf="paymentError" class="alert-danger" placeholder={{errorMessage}} readonly />
+     </div>
+    
+    </div>
+  </section>
+  

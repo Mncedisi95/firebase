@@ -1,0 +1,91 @@
+<!-- Section Start -->
+<section class="section">
+    <!-- Title -->
+    <h1 class="section-subtitle">Our Rooms</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']"><i class="ti-home"></i> Home</a></li>
+            <li>View Rooms</li>
+        </ul>
+    </nav>
+
+    <!-- Search and Filter -->
+    <div class="search-filter">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input id="search" [(ngModel)]="search" (input)="onSearch()" [ngModelOptions]="{standalone: true}"
+                type="text" class="search-input" placeholder="Search by Room Type, Price or Capacity...." />
+        </div>
+
+        <!-- Filter Dropdown -->
+        <div class="filter-dropdown">
+            <select class="filter-select" [(ngModel)]="selectedSortOption" (change)="onSortChange()">
+                <option value="" disabled selected>Filter By Price</option>
+                <option value="priceLowToHigh">Low to High</option>
+                <option value="priceHighToLow">High to Low</option>
+            </select>
+        </div>
+
+        <div class="filter-dropdown">
+            <select class="filter-select" [(ngModel)]="selectedRoomType" (change)="onFilterRoomType()">
+                <option value="" disabled selected>Filter by Room Type</option>
+                <option value="all">All</option>
+                <option value="Premium King Room">Premium King Room</option>
+                <option value="Deluxe Room">Deluxe Room</option>
+                <option value="Double Room">Double Room</option>
+                <option value="Standard Room">Standard Room</option>
+                <option value="Suite Room">Suite Room</option>
+                <option value="Executive Room">Executive Room</option>
+                <option value="Family Room">Family Room</option>
+                <option value="Accessible Room">Accessible Room</option>
+                <option value="Honeymoon Suite">Honeymoon Suite</option>
+                <option value="Presidential Suite">Presidential Suite</option>
+                <option value="Penthouse Suite">Penthouse Suite</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Rooms Cards -->
+    <div class="rooms-cards"  *ngIf="!isLoading">
+
+        <div class="card" *ngFor="let room of (rooms | slice : lowIndex : highIndex)">
+            <img [src]="room.roomImage" alt="Room Image" class="card-image">
+            <div class="card-content">
+                <div class="card-header">
+                    <h2 class="room-title">{{ room.roomType }}</h2>
+                    <h3 class="room-price"> ${{ room.price }}<span class="price-unit">/Per night</span></h3>
+                </div>
+                <div class="room-details">
+                    <li><i class="ti-ruler"></i> <strong>Size:</strong> {{ room.size }}m<sup>2</sup></li>
+                    <li><i class="ti-user"></i> <strong>Capacity:</strong> Max person {{ room.capacity }}</li>
+                    <li><i class="ti-home"></i> <strong>Bed:</strong> {{ room.bedType }}</li>
+                    <li><i class="ti-check-box"></i> <strong>Services:</strong> {{ room.services }}</li>
+                </div>
+                <div class="card-actions">
+                    <p><i (click)="goToRoomDetails(room.id)" class="ti-eye"></i>
+                        <span>View More</span>
+                    </p>
+                    <p *ngIf="isLoggedIn"><i (click)="goToBookRoom(room.id)" class="ti-calendar"></i>
+                        <span>Book Now</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- End of Rooms Card -->
+
+    <!-- Paginator -->
+    <mat-paginator *ngIf="!isLoading" [length]=items [pageSize]="6" [showFirstLastButtons]="true" [pageIndex]="currentpage"
+        [pageSizeOptions]="[6, 9, 12, 15, 18, 21]" (page)="handlePagenator($event)" aria-label="Select page">
+    </mat-paginator>
+    <!-- End of Paginator -->
+</section>
+<!-- End Of Section -->

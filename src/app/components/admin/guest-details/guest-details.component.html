@@ -1,0 +1,42 @@
+<!-- Section -->
+<section class="section">
+    <!-- Title -->
+    <h1 class="section-subtitle">Guest Details</h1>
+  
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <ul>
+        <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+        <li><a [routerLink]="['/manage-guests']">Guest Management</a></li>
+        <li>Guest Details</li>
+      </ul>
+    </nav>
+  
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <!-- Guest Details -->
+    <div class="guest-details" *ngIf="!isLoading">
+      <h4 class="guest-name">{{guestDetails?.name}}</h4>
+  
+      <div class="guest-content">
+        <img [src]="guestDetails?.profile" alt="Guest Photo" class="guest-image" />
+  
+        <ul class="guest-info">
+          <li><strong>Email:</strong>{{guestDetails?.email}}</li>
+          <li><strong>Phone:</strong>{{guestDetails?.phone}}</li>
+          <li><strong>Address</strong>{{guestDetails?.address}}</li>
+        </ul>
+      </div>
+  
+      <!-- Action Buttons -->
+      <div class="button-group">
+        <button class="btn-primary" (click)="editGuest()">Edit Guest</button>
+        <button class="btn-danger" (click)="removeGuest()">Remove Guest</button>
+      </div>
+      <!-- End of Action Buttons -->
+    </div>
+    <!-- End Of Guest Details -->
+  </section>

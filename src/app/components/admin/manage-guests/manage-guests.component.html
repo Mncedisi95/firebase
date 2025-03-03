@@ -1,0 +1,74 @@
+<!-- Section Start-->
+<section class="section">
+    <!-- Title -->
+    <h1 class="section-subtitle">User Management Overview</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li>Users</li>
+        </ul>
+    </nav>
+
+    <!-- Top Controls -->
+    <div class="filters">
+        <button class="btn-add" (click)="goToAddUser()">Add User</button>
+        <select [(ngModel)]="selectedRole" (change)="onFilterUser()">
+            <option value="" disabled selected>Filter By Role</option>
+            <option value="all">All</option>
+            <option value="guest">guest</option>
+            <option value="staff">staff</option>
+            <option value="admin">admin</option>
+        </select>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Main Container Start -->
+    <div>
+        <!-- Table Start-->
+        <table class="content-table" *ngIf="users?.length && !isLoading">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>User Email</th>
+                    <th>Role</th>
+                    <th>Phone Number</th>
+                    <th>User Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of (users | slice : lowIndex : highIndex)">
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.role}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.address}}</td>
+                    <td>
+                        <button (click)="goToGuestDetails(user.uid)">View More</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- End of Table-->
+
+        <!-- Paginator -->
+        <mat-paginator *ngIf="!isLoading" [length]=items [pageSize]="10" [showFirstLastButtons]="true"
+            [pageIndex]="currentpage" [pageSizeOptions]="[10, 15, 20, 25]" (page)="handlePagenator($event)"
+            aria-label="Select page">
+        </mat-paginator>
+        <!-- End of Paginator -->
+
+        <!-- No Bookings Message (Shown When There Are No Bookings) -->
+        <div *ngIf="!users?.length && !isLoading" class="no-users">
+            <p>No users yet!. This section will update as new users register.</p>
+        </div>
+    </div>
+    <!-- End of Main Container -->
+</section>
+<!-- End of Section -->

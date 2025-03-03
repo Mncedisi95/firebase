@@ -1,0 +1,77 @@
+<!-- Section Start -->
+<section class="section">
+
+    <!-- Header Title -->
+    <h1 class="section-subtitle">Room Details</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']"><i class="ti-home"></i> Home</a></li>
+            <li><a [routerLink]="['/rooms']">Rooms</a></li>
+            <li>Room Details</li>
+        </ul>
+    </nav>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Room Details-->
+    <div class="room-details" *ngIf="roomDetails && !isLoading">
+        <h4 class="room-title">{{roomDetails.roomType}}</h4>
+        <div class="room-content">
+            <img [src]="roomDetails.roomImage" alt="" class="room-image" />
+            <ul class="room-info">
+                <li><strong>Room Number:</strong>{{roomDetails.roomNumber}}</li>
+                <li><strong>Room Price:</strong>${{roomDetails.price}}/Per night </li>
+                <li><strong>Room Capacity:</strong>Max person {{roomDetails.capacity}}</li>
+                <li><strong>Room Bed:</strong>{{roomDetails.bedType}}</li>
+                <li><strong>Room Size:</strong>{{roomDetails.size}}m<sup>2</sup></li>
+                <li><strong>Room Rating:</strong>{{generateStars(roomDetails.averageRating)}}</li>
+                <li><strong>Room Status:</strong>{{roomDetails.status}}</li>
+                <li><strong>Room Services:</strong>{{roomDetails.services}}</li>
+            </ul>
+        </div>
+        <p class="room-description"><strong>Room Description:</strong>{{roomDetails.description}}</p>
+        <div class="button-group">
+            <button class="btn-primary" *ngIf="isLoggedIn" (click)="goToBookRoom()">Book Now</button>
+        </div>
+    </div>
+    <!-- End of Room Details -->
+
+    <!-- Review Section -->
+    <section class="reviews-section" *ngIf="roomReviews?.length  != 0 && !isLoading">
+        <h2 class="section-subtitle">Guest Reviews</h2>
+        <div class="reviews-grid">
+            <div class="review-card" *ngFor="let review of roomReviews">
+                <div class="review-header">
+                    <img [src]="review.guest?.profile" alt="Guest Profile" class="guest-profile-image" />
+                    <div class="review-meta">
+                        <h4 class="guest-name">{{review.guest?.name}}</h4>
+                        <p class="review-date">{{review.creationDate | date }}</p>
+                    </div>
+                </div>
+                <div class="review-content">
+                    <p class="rating">Rating: {{review.rating}}/ 5</p>
+                    <p class="comment">{{review.comment}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pagination -->
+    <mat-paginator *ngIf="!isLoading && roomReviews.length" [length]=items [pageSize]="4" [showFirstLastButtons]="true"
+        [pageIndex]="currentpage" [pageSizeOptions]="[4, 8, 12, 16]" (page)="handlePagenator($event)"
+        aria-label="Select page">
+    </mat-paginator>
+    <!-- End of Pagination -->
+
+    <!-- No reviews Message -->
+    <div *ngIf="!roomReviews?.length && !isLoading" class="no-reviews">
+        <p>No reviews yet. Be the first to review this room!</p>
+    </div>
+
+</section>
+<!-- End of Section -->

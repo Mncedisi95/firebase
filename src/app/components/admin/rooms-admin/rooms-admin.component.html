@@ -1,0 +1,79 @@
+<!-- Rooms Section -->
+<section id="rooms" class="dashboard-section">
+    <h2>Manage Rooms</h2>
+    
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li>Room Management</li>
+        </ul>
+    </nav>
+    
+    <!-- Top Controls -->
+    <div class="top-controls" *ngIf="!isLoading">
+        <button class="btn-add" (click)="goToAddRoom()" *ngIf="userRole !== 'staff'">Add Room</button>
+        <div class="filters">
+            <select id="room-type" [(ngModel)]="selectedRoomType" (change)="onFilterRoomType()">
+                <option value="" disabled selected>Filter By Room Type</option>
+                <option value="all">All</option>
+                <option value="Premium King Room">Premium King Room</option>
+                <option value="Deluxe Room">Deluxe Room</option>
+                <option value="Double Room">Double Room</option>
+                <option value="Standard Room">Standard Room</option>
+                <option value="Suite Room">Suite Room</option>
+                <option value="Executive Room">Executive Room</option>
+                <option value="Family Room">Family Room</option>
+                <option value="Accessible Room">Accessible Room</option>
+                <option value="Honeymoon Suite">Honeymoon Suite</option>
+                <option value="Presidential Suite">Presidential Suite</option>
+                <option value="Penthouse Suite">Penthouse Suite</option>
+            </select>
+            <select id="room-status" [(ngModel)]="selectedStatus" (change)="onFilterRoomStatus()">
+                <option value="" disabled selected>Filter by Room Status</option>
+                <option value="all">All</option>
+                <option value="Available">Available</option>
+                <option value="Booked">Booked</option>
+                <option value="Maintenance">Maintenance</option>
+            </select>
+            <label for="search-room">Search:</label>
+            <input type="text" [(ngModel)]="search" (input)="onSearch()" [ngModelOptions]="{standalone: true}" class="search-bar" id="search-room" placeholder="Search rooms...">
+        </div>
+    </div>
+
+     <!-- Loading Spinner -->
+     <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Data List Selection -->
+    <div class="data-list" *ngIf="!isLoading">
+        <div class="data-item" *ngFor="let room of (rooms | slice : lowIndex : highIndex)">
+            <h1 class="room-type">{{room.roomType}}</h1>
+            <img [src]="room.roomImage" alt="Room 101" class="room-image" />
+            <h3>Room {{room.roomNumber}}</h3>
+            <p>Price: ${{room.price}}/Pernight</p>
+            <ul class="room-features">
+                <li><i class="fas fa-wifi"></i>{{room.services}}</li>
+            </ul>
+            <button class="btn-primary" (click)="goToRoomDetails(room.id)">View More</button>
+            
+            <!-- Conditional Button -->
+            <button class="btn-secondary"
+                [ngClass]="{'btn-booked': room.status === 'Booked','btn-pending': room.status === 'Maintenance'}"
+                (click)="goToBookRoom(room.id)" [disabled]="room.status === 'Booked' || room.status === 'Maintenance'">
+                {{ room.status === 'Booked' ? 'Booked' : room.status === 'Maintenance' ? 'Maintenance' : 'Book Now' }}
+            </button>
+           
+        </div>
+        <!-- Additional Data Items -->
+    </div>
+    <!-- End of Data Selection -->
+    
+    <!-- Pagination -->
+    <mat-paginator *ngIf="!isLoading" [length]= items [pageSize]="6" [showFirstLastButtons]="true" [pageIndex]="currentpage" [pageSizeOptions]="[6, 9, 12, 15, 18, 21]" (page)="handlePagenator($event)" aria-label="Select page">
+    </mat-paginator>
+    <!-- End of Pagination -->
+   
+</section>
+<!-- End Of Rooms Section -->

@@ -1,0 +1,121 @@
+.review-page {
+    max-width: 600px;
+    margin: 4rem auto;
+    padding: 30px;
+    margin-top: 150px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-family: "Poppins", sans-serif; 
+    color: #BA55D3;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #777;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+input {
+    width: 400px;
+    height: 4px;
+    padding: 14px;
+    font-size: 12px;
+    border: 1.5px solid #ddd;
+    margin: 5px 0 10px;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+}
+
+label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: "Poppins", sans-serif; 
+    color: #333;
+}
+
+.form-control {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-control:focus {
+    color: #495057;
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgba(105, 90, 166, 0.5);
+    border-color: #b4add3;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.form-control:hover{
+    border-color: #b4add3;
+}
+
+small {
+    color: #d9534f;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+textarea{
+    width: 97%;
+}
+
+select{
+    width: 100%;
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: #BA55D3;
+    color: #fff;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-primary:hover{
+    background-color:  #DA70D6;
+}
+
+.alert-danger,
+.alert-success {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    max-width: 100%;
+    border-radius: 0.2857rem;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 80px;
+}
+
+.alert-success{
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.alert-danger{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+

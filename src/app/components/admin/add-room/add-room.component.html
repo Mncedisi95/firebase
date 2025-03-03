@@ -1,0 +1,150 @@
+<!-- Section -->
+<section class="section">
+
+    <!-- Title -->
+    <h1 class="section-subtitle">Add New Room</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li><a [routerLink]="['/rooms-admin']">Room Management</a></li>
+            <li>Add New Room</li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <form [formGroup]="addRoomForm" (ngSubmit)="onAddRoom()" class="form-grid">
+
+            <!-- Room Number -->
+            <div class="form-group">
+                <label for="roomNumber">Room Number:</label>
+                <input id="roomNumber" formControlName="roomNumber" type="number" placeholder="Enter Room Number" aria-label="Room Number"/>
+                <small *ngIf="addRoomForm.get('roomNumber')?.touched && addRoomForm.get('roomNumber')?.errors?.['required']">
+                    *Room Number is required!
+                </small>
+            </div>
+
+            <!-- Room Type -->
+            <div class="form-group">
+                <label for="roomType">Room Type:</label>
+                <select id="roomType" formControlName="roomType" class="select-box" aria-label="RoomType">
+                    <option value="" disabled selected>Select Room Type</option>
+                    <option value="Premium King Room">Premium King Room</option>
+                    <option value="Deluxe Room">Deluxe Room</option>
+                    <option value="Double Room">Double Room</option>
+                    <option value="Standard Room">Standard Room</option>
+                    <option value="Suite Room">Suite Room</option>
+                    <option value="Executive Room">Executive Room</option>
+                    <option value="Family Room">Family Room</option>
+                    <option value="Accessible Room">Accessible Room</option>
+                    <option value="Honeymoon Suite">Honeymoon Suite</option>
+                    <option value="Presidential Suite">Presidential Suite</option>
+                    <option value="Penthouse Suite">Penthouse Suite</option>
+                </select>
+                <small
+                    *ngIf="addRoomForm.get('roomType')?.touched && addRoomForm.get('roomType')?.errors?.['required']">
+                    *Room Type is required
+                </small>
+            </div>
+
+            <!-- Room Image -->
+            <div class="form-group">
+                <label for="roomImage">Room Image:</label>
+                <input id="roomImage" formControlName="roomImage" type="file" accept="image/*" (change)="handleFileInput($event)" aria-label="Room Image" />
+                <small
+                    *ngIf="addRoomForm.get('roomImage')?.touched && addRoomForm.get('roomImage')?.errors?.['required']">
+                    *Room Image is required!
+                </small>
+            </div>
+
+            <!-- Room Price -->
+            <div class="form-group">
+                <label for="roomPrice">Room Price:</label>
+                <input id="price" formControlName="price" type="number" placeholder="Enter Room Price"
+                    aria-label="Room Price" />
+                <small *ngIf="addRoomForm.get('price')?.touched && addRoomForm.get('price')?.errors?.['required']">
+                    *Room Price is required!
+                </small>
+            </div>
+
+            <!-- Room Capacity -->
+            <div class="form-group">
+                <label for="roomCapacity">Room Capacity:</label>
+                <input id="capacity" formControlName="capacity" type="number" placeholder="Enter Room Capacity"
+                    aria-label="Room Capacity" />
+                <small *ngIf="addRoomForm.get('capacity')?.touched && addRoomForm.get('capacity')?.errors?.['required']">
+                    *Room Capacity is required!
+                </small>
+            </div>
+
+            <!-- Room Size -->
+            <div class="form-group">
+                <label for="roomSize">Room Size:</label>
+                <input id="size" formControlName="size" type="number" placeholder="Enter Room Size"
+                    aria-label="Room Size" />
+                <small *ngIf="addRoomForm.get('size')?.touched && addRoomForm.get('size')?.errors?.['required']">
+                    *Room Size is required!
+                </small>
+            </div>
+
+            <!-- Room Bed -->
+            <div class="form-group">
+                <label for="bedType">Room Bed:</label>
+                <select id="bedType" formControlName="bedType" class="select-box" aria-label="Room Bed">
+                    <option value="" selected disabled>Select Room Bed</option>
+                    <option value="Single Bed">Single Bed</option>
+                    <option value="Double Bed">Double Bed</option>
+                    <option value="King Bed">King Bed</option>
+                    <option value="Queen Bed">Queen Bed</option>
+                    <option value="Suite Bed">Suite Bed</option>
+                    <option value="Murphy Bed">Murphy Bed</option>
+                    <option value="Sofa Bed">Sofa Bed</option>
+                    <option value="Bunk Bed">Bunk Bed</option>
+                    <option value="Canopy Bed">Canopy Bed</option>
+                    <option value="Four-Poster Bed">Four-Poster Bed</option>
+                </select>
+                <small *ngIf="addRoomForm.get('bedType')?.touched && addRoomForm.get('bedType')?.errors?.['required']">
+                    *Room Bed is required!
+                </small>
+            </div>
+
+            <!-- Room Services -->
+            <div class="form-group">
+                <label for="roomServices">Room Services:</label>
+                <input id="services" formControlName="services" type="text" placeholder="Enter Room Services"
+                    aria-label="Room Services" />
+                <small
+                    *ngIf="addRoomForm.get('services')?.touched && addRoomForm.get('services')?.errors?.['required']">
+                    *Room Services is required!
+                </small>
+            </div>
+
+            <!-- Room Description -->
+            <div class="form-group description-group">
+                <label for="roomDescription">Room Description:</label>
+                <textarea id="description" formControlName="description"
+                    placeholder="Enter Room Description"></textarea>
+                <small
+                    *ngIf="addRoomForm.get('description')?.touched && addRoomForm.get('description')?.errors?.['required']">
+                    *Room Description is required!
+                </small>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-buttons">
+                <button type="submit" class="btn-primary">Add Room</button>
+                <div>
+                    <input *ngIf="isSuccessVisible" class="alert-success" placeholder={{successMessage}} />
+                </div>
+                <div>
+                    <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
+                </div>
+            </div>
+        </form>
+        <!-- End of Form -->
+    </div>
+    <!-- End of Main Container-->
+</section>
+<!-- End of Section -->

@@ -1,0 +1,181 @@
+.room-availability {
+    padding: 100px;
+    font-family: "Poppins", sans-serif; 
+}
+
+.availability-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: 100px;
+}
+
+.availability-header h1 {
+    font-size: 2rem;
+    color: #BA55D3;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filters label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.filters select,
+.filters input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.key-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 30px;
+    margin-left: 200px;
+}
+
+.metric-card {
+    background-color: #BA55D3;
+    color: #fff;
+    padding: 15px;
+    width: 350px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card h3 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.metric-card p {
+    font-size: 1.5rem;
+}
+
+.interactive-map {
+    margin-bottom: 30px;
+    padding: 20px;
+    font-family: "Poppins", sans-serif; 
+    margin-left: 200px;
+}
+
+.interactive-map .room {
+    background: #f1f1f1;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.interactive-map .room[data-status="available"] {
+    background: #d4edda;
+}
+
+.interactive-map .room[data-status="booked"] {
+    background: #f8d7da;
+}
+
+.interactive-map .room[data-status="maintenance"] {
+    background: #fff3cd;
+}
+
+.interactive-map .room:hover {
+    transform: scale(1.05);
+}
+
+.availability-calendar {
+    text-align: center;
+}
+
+.availability-calendar h2 {
+    color: #BA55D3;
+}
+
+
+.room-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.room-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.room {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.room:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.room .room-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.room-number {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.status-indicator {
+    font-size: 1.2rem;
+}
+
+.status-indicator.available {
+    color: #28a745;
+}
+
+.status-indicator.booked {
+    color: #dc3545;
+}
+
+.status-indicator.maintenance {
+    color: #ffc107;
+}
+
+.room p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; 
+    margin: 20px 0;
+}
+
+mat-spinner{
+    --mat-sys-primary:  #BA55D3;   
+}

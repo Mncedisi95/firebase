@@ -1,0 +1,62 @@
+<!-- Section Start-->
+<section class="section">
+    <!-- Title -->
+    <h1 class="section-subtitle">Room Booking Overview</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li>Bookings</li>
+        </ul>
+    </nav>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Main Container Start -->
+    <div>
+        <!-- Table Start (Only Show If There Are Bookings) -->
+        <table class="content-table" *ngIf="bookings?.length && !isLoading">
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Guest Name</th>
+                    <th>Check-In</th>
+                    <th>Check-Out</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let booking of bookings | sortByDate: 'checkIn'">
+                    <td>{{booking.room?.roomNumber}}</td>
+                    <td>{{booking.guest?.name}}</td>
+                    <td>{{booking.checkIn}}</td>
+                    <td>{{booking.checkOut}}</td>
+                    <td>{{booking.status}}</td>
+                    <td>
+                        <button (click)="goToViewBooking(booking.id)">View More</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- End of Table-->
+
+        <!-- Paginator -->
+        <mat-paginator *ngIf="!isLoading && bookings.length" [length]=items [pageSize]="10" [showFirstLastButtons]="true"
+            [pageIndex]="currentpage" [pageSizeOptions]="[10, 15, 20, 25]" (page)="handlePagenator($event)"
+            aria-label="Select page">
+        </mat-paginator>
+        <!-- End of Paginator -->
+
+        <!-- No Bookings Message (Shown When There Are No Bookings) -->
+        <div *ngIf="!bookings?.length && !isLoading" class="no-bookings">
+            <p>No bookings yet. Monitor this section for new reservations!</p>
+        </div>
+    </div>
+    <!-- End of Main Container -->
+</section>
+<!-- End of Section -->

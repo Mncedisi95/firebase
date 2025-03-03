@@ -1,0 +1,48 @@
+<section class="section">
+    <!-- Title -->
+    <h1 class="section-subtitle"> Our Services</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']"><i class="ti-home"></i> Home</a></li>
+            <li>Services</li>
+        </ul>
+    </nav>
+
+    <!-- Services List -->
+    <div class="services-container">
+        <div class="service-box" *ngFor="let list of data.services">
+            <img [src]="list.image">
+            <div>
+                <h2><i class={{list.icon}}></i> {{list.service}}</h2>
+                <p>{{list.description}}</p>
+            </div>
+        </div>     
+    </div>
+
+    <!-- Why Choose Us -->
+    <div class="why-choose-us">
+        <h2><i class="ti-thumb-up"></i> Why Choose Us?</h2>
+        <div class="why-choose-grid">
+            <div class="why-item" *ngFor="let list of data.strengths">
+                <i class={{list?.icon}}></i>
+                <h3>{{list?.strength}}</h3>
+                <p>{{list?.description}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Your Experience Today -->
+    <div class="cta">
+        <div class="cta-content">
+            <h2>{{data.bookservice?.name}}</h2>
+            <p>{{data.bookservice?.description}}</p>
+            <a class="cta-button">Contact Us</a>
+        </div>
+        <div class="cta-image">
+            <img [src]="data.bookservice?.image" alt="Luxury Experience">
+        </div>
+    </div>
+
+</section>

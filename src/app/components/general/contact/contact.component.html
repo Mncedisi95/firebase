@@ -1,0 +1,52 @@
+<section class="section">
+
+    <h1 class="section-subtitle">Contact Us</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a routerLink="/index"><i class="ti-home"></i> Home</a></li>
+            <li>Contact</li>
+        </ul>
+    </nav>
+
+    <div class="contact-container">
+        <!-- Contact Form -->
+        <form class="contact-form">
+            <h2><i class="ti-email"></i> We'd love to hear from you!</h2>
+
+            <label for="name"><i class="ti-user"></i> Full Name:</label>
+            <input type="text" id="name" name="name" required />
+
+            <label for="email"><i class="ti-email"></i> Email:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="message"><i class="ti-pencil-alt"></i> Message:</label>
+            <textarea id="message" rows="5" name="message" required></textarea>
+
+            <button type="submit" class="btn-submit"><i class="ti-location-arrow"></i> Send Message</button>
+        </form>
+
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <h2><i class="ti-info"></i> Contact Info</h2>
+            <p class="contact-message">We are open for any suggestions or just to have a chat!</p>
+
+            <div class="info-item">
+                <i class="ti-email"></i>
+                <p><strong>Email:</strong> {{data.contact?.email}}</p>
+            </div>
+
+            <div class="info-item">
+                <i class="ti-mobile"></i>
+                <p><strong>Phone:</strong> {{data.contact?.phone}}</p>
+            </div>
+
+            <div class="info-item">
+                <i class="ti-location-pin"></i>
+                <p><strong>Address:</strong> {{data.contact?.address}}</p>
+                <p><strong>Opening Hours:</strong> {{data.contact?.opening}}</p>
+            </div>
+        </div>
+    </div>
+</section>

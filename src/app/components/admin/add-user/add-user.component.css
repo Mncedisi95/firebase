@@ -1,0 +1,153 @@
+.section {
+    padding: 100px;
+    background: #fff;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #BA55D3;
+    margin: 1.5rem 0;
+    font-size: 1.8rem;
+    font-family: "Poppins", sans-serif; 
+    animation: slideIn 0.8s ease-in-out;
+}
+
+.breadcrumb {
+    margin: 1rem 0 2rem;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.breadcrumb ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.breadcrumb li {
+    display: inline;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color:  #BA55D3;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color:  #DA70D6;
+    cursor: pointer;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: '>';
+    margin: 0 0.5rem;
+    color: #6c757d;
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    align-items: center;
+    margin-left: 120px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+
+label{
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif; 
+    font-size: 0.8rem;
+    color: #333;
+}
+
+input{
+    width: 400px;
+    height: 4px;
+    padding: 14px;
+    font-size: 12px;
+    border: 1.5px solid #ddd;
+    margin: 5px 0 10px;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+}
+
+.select-box {
+    height: 35px;
+    width: 430px;
+    margin-bottom: 5px;
+    animation: slideIn 1.5s ease-in-out forwards;
+}
+
+input:focus,
+.select-box:focus{
+    color: #495057;
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgba(105, 90, 166, 0.5);
+    border-color: #b4add3;
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+input:hover,
+.select-box:hover{
+    border-color: #b4add3;
+}
+
+small{
+    color: #d9534f;
+    margin-top: 5px;
+    font-size: 0.85rem;
+}
+
+.form-buttons {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.btn-primary {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #BA55D3;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 200px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    animation: slideIn 1.8s ease-in-out forwards;
+}
+
+.btn-primary:hover {
+    background-color:  #DA70D6;
+}
+
+.success-snackbar {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+mat-snackbar {
+    --mat-sys-inverse-surface: #f44336 !important;
+}

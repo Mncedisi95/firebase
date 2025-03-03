@@ -1,0 +1,83 @@
+<section class="room-availability">
+    <div class="availability-header">
+        <h1>Room Availability Overview</h1>
+        <div class="filters">
+            <label for="room-type">Room Type:</label>
+            <select id="room-type">
+                <option value="all">All</option>
+                <option value="single">Single</option>
+                <option value="double">Double</option>
+                <option value="suite">Suite</option>
+            </select>
+            <label for="room-status">Status:</label>
+            <select id="room-status">
+                <option value="all">All</option>
+                <option value="available">Available</option>
+                <option value="booked">Booked</option>
+                <option value="maintenance">Maintenance</option>
+            </select>
+            <label for="search-room">Search:</label>
+            <input type="text" id="search-room" placeholder="Room number or guest name">
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <div class="key-metrics" *ngIf="!isLoading">
+        <div class="metric-card">
+            <h3>Total Rooms</h3>
+            <p id="total-rooms">{{items}}</p>
+        </div>
+        <div class="metric-card">
+            <h3>Available Rooms</h3>
+            <p id="available-rooms">{{availableItems}}</p>
+        </div>
+        <div class="metric-card">
+            <h3>Booked Rooms</h3>
+            <p id="booked-rooms">{{bookedItems}}</p>
+        </div>
+        <div class="metric-card">
+            <h3>Under Maintenance</h3>
+            <p id="maintenance-rooms">{{MaintenanceItems}}</p>
+        </div>
+    </div>
+
+    <div class="interactive-map" *ngIf="!isLoading">
+        <h2>Interactive Room Map</h2>
+        <div class="room-map">
+            <div class="room-container">
+                <div class="room" data-status="available" *ngFor="let room of availableRooms">
+                    <div class="room-info" >
+                        <span class="room-number">{{room.roomNumber}}</span>
+                        <span class="status-indicator available">🟢</span>
+                    </div>
+                    <p>Available</p>
+                </div>
+    
+                <div class="room" data-status="booked" *ngFor="let room of bookedRooms">
+                    <div class="room-info">
+                        <span class="room-number">{{room.roomNumber}}</span>
+                        <span class="status-indicator booked">🔴</span>
+                    </div>
+                    <p>Booked</p>
+                </div>
+    
+                <div class="room" data-status="maintenance" *ngFor="let room of MaintenanceRooms">
+                    <div class="room-info">
+                        <span class="room-number">{{room.roomNumber}}</span>
+                        <span class="status-indicator maintenance">🟡</span>
+                    </div>
+                    <p>Maintenance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="availability-calendar">
+        <h2>Room Availability Calendar</h2>
+        <p>Feature under development: Display room statuses over time.</p>
+    </div>
+</section>

@@ -1,0 +1,178 @@
+<!-- Section Start-->
+<section class="section">
+
+    <!-- Title -->
+    <h1 class="section-subtitle">Edit Room</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li><a [routerLink]="['/rooms-admin']">Room Management</a></li>
+            <li><a [routerLink]="['/room-details-admin']">Room Details</a></li>
+            <li>Edit Room</li>
+        </ul>
+    </nav>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Main Container Start -->
+    <div class="container" *ngIf="roomDetails && !isLoading">
+        <form [formGroup]="editRoomForm" (ngSubmit)="onEditRoom()" class="form-grid">
+
+            <!-- Room Number -->
+            <div class="form-group">
+                <label for="roomNumber">Room Number:</label>
+                <input id="roomNumber" formControlName="roomNumber" type="text" placeholder={{roomDetails.roomNumber}}
+                    aria-label="Room Number" />
+                <small
+                    *ngIf="editRoomForm.get('roomNumber')?.touched && editRoomForm.get('roomNumber')?.errors?.['required']">
+                    *Room Number is required!
+                </small>
+            </div>
+
+            <!-- Room Type -->
+            <div class="form-group">
+                <label for="roomType">Room Type:</label>
+                <select id="roomType" formControlName="roomType" class="select-box" aria-label="RoomType">
+                    <option value="" disabled selected>{{roomDetails.roomType}}</option>
+                    <option value="Premium King Room">Premium King Room</option>
+                    <option value="Deluxe Room">Deluxe Room</option>
+                    <option value="Double Room">Double Room</option>
+                    <option value="Standard Room">Standard Room</option>
+                    <option value="Suite Room">Suite Room</option>
+                    <option value="Executive Room">Executive Room</option>
+                    <option value="Family Room">Family Room</option>
+                    <option value="Accessible Room">Accessible Room</option>
+                    <option value="Honeymoon Suite">Honeymoon Suite</option>
+                    <option value="Presidential Suite">Presidential Suite</option>
+                    <option value="Penthouse Suite">Penthouse Suite</option>
+                </select>
+                <small
+                    *ngIf="editRoomForm.get('roomType')?.touched && editRoomForm.get('roomType')?.errors?.['required']">
+                    *Room Type is required
+                </small>
+            </div>
+
+            <!-- Room Status -->
+            <div class="form-group">
+                <label for="bedType">Room Status:</label>
+                <select id="status" formControlName="status" class="select-box" aria-label="Room Status">
+                    <option value="" selected disabled>{{roomDetails.status}}</option>
+                    <option value="Available">Available</option>
+                    <option value="Booked">Booked</option>
+                    <option value="Maintenance">Maintenance</option>
+                </select>
+                <small *ngIf="editRoomForm.get('status')?.touched && editRoomForm.get('status')?.errors?.['required']">
+                    *Room status required!
+                </small>
+            </div>
+
+            <!-- Room Price -->
+            <div class="form-group">
+                <label for="roomPrice">Room Price:</label>
+                <input id="price" formControlName="price" type="text" placeholder={{roomDetails.price}}
+                    aria-label="Room Price" />
+                <small *ngIf="editRoomForm.get('price')?.touched && editRoomForm.get('price')?.errors?.['required']">
+                    *Room Price is required!
+                </small>
+            </div>
+
+            <!-- Room Capacity -->
+            <div class="form-group">
+                <label for="roomCapacity">Room Capacity:</label>
+                <input id="capacity" formControlName="capacity" type="text" placeholder={{roomDetails.capacity}}
+                    aria-label="Room Capacity" />
+                <small
+                    *ngIf="editRoomForm.get('capacity')?.touched && editRoomForm.get('capacity')?.errors?.['required']">
+                    *Room Capacity is required!
+                </small>
+            </div>
+
+            <!-- Room Size -->
+            <div class="form-group">
+                <label for="roomSize">Room Size:</label>
+                <input id="size" formControlName="size" type="text" placeholder={{roomDetails.size}}
+                    aria-label="Room Size" />
+                <small *ngIf="editRoomForm.get('size')?.touched && editRoomForm.get('size')?.errors?.['required']">
+                    *Room Size is required!
+                </small>
+            </div>
+
+            <!-- Room Bed -->
+            <div class="form-group">
+                <label for="bedType">Room Bed:</label>
+                <select id="bedType" formControlName="bedType" class="select-box" aria-label="Room Bed">
+                    <option value="" selected disabled>{{roomDetails.bedType}}</option>
+                    <option value="Single Bed">Single Bed</option>
+                    <option value="Double Bed">Double Bed</option>
+                    <option value="King Bed">King Bed</option>
+                    <option value="Queen Bed">Queen Bed</option>
+                    <option value="Suite Bed">Suite Bed</option>
+                    <option value="Murphy Bed">Murphy Bed</option>
+                    <option value="Sofa Bed">Sofa Bed</option>
+                    <option value="Bunk Bed">Bunk Bed</option>
+                    <option value="Canopy Bed">Canopy Bed</option>
+                    <option value="Four-Poster Bed">Four-Poster Bed</option>
+                </select>
+                <small
+                    *ngIf="editRoomForm.get('bedType')?.touched && editRoomForm.get('bedType')?.errors?.['required']">
+                    *Room Bed is required!
+                </small>
+            </div>
+
+            <!-- Room Services -->
+            <div class="form-group">
+                <label for="roomServices">Room Services:</label>
+                <input id="services" formControlName="services" type="text" placeholder={{roomDetails.services}}
+                    aria-label="Room Services" />
+                <small
+                    *ngIf="editRoomForm.get('services')?.touched && editRoomForm.get('services')?.errors?.['required']">
+                    *Room Services is required!
+                </small>
+            </div>
+
+            <!-- Room Image -->
+            <div class="form-group">
+                <label for="roomImage">Room Image:</label>
+                <div class="image-preview">
+                    <img [src]="roomDetails.roomImage" alt="Room Picture" class="room-image" />
+                </div>
+                <input id="roomImage" formControlName="roomImage" type="file" accept="image/*"
+                    (change)="handleFileInput($event)" aria-label="Room Image" placeholder={{roomDetails.roomImage}} />
+                <small
+                    *ngIf="editRoomForm.get('roomImage')?.touched && editRoomForm.get('roomImage')?.errors?.['required']">
+                    *Room Image is required!
+                </small>
+            </div>
+
+            <!-- Room Description -->
+            <div class="form-group description-group">
+                <label for="roomDescription">Room Description:</label>
+                <textarea id="description" formControlName="description"
+                    placeholder={{roomDetails.description}}></textarea>
+                <small
+                    *ngIf="editRoomForm.get('description')?.touched && editRoomForm.get('description')?.errors?.['required']">
+                    *Room Description is required!
+                </small>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-buttons">
+                <button type="submit" class="btn-primary">Edit Room</button>
+                <div>
+                    <input *ngIf="isSuccessVisible" class="alert-success" placeholder={{successMessage}} />
+                </div>
+                <div>
+                    <input *ngIf="isErrorVisible" class="alert-danger" placeholder="{{ errorMessage }}" />
+                </div>
+            </div>
+        </form>
+        <!-- End of Form -->
+    </div>
+    <!-- End of Main Container -->
+</section>
+<!-- End Of Section -->

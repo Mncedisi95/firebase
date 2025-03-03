@@ -1,0 +1,72 @@
+<div class="home-container">
+    <div class="content">
+      <img src="assets/background/background-1.jpg" class="home-background-image" alt="Background 1" />
+      <h1>
+        Welcome to SuiteSync.
+      </h1>
+      <p>
+        Embark on a journey of comfort and elegance — explore exceptional services and unforgettable experiences crafted
+        just for you!
+      </p>
+  
+      <!-- Book Room Section -->
+      <section class="section">
+        <form>
+          <!-- Check In -->
+          <div>
+            <label for="checkin">Check In:</label>
+            <input id="checkin" formControlName="checkIn" type="date" />
+          </div>
+  
+          <!-- Check Out -->
+          <div>
+            <label for="checkout">Check Out:</label>
+            <input id="checkout" formControlName="checkOut" type="date" />
+          </div>
+  
+          <!-- Room -->
+          <div>
+            <label for="room">Room:</label>
+            <select id="room" formControlName="roomType" class="select-box">
+              <option value="" disabled selected>Select A Room Type</option>
+              <option value="Double Room">Double Room</option>
+              <option value="Deluxe Room">Deluxe Room</option>
+              <option value="Premium King Room">Premium King Room</option>
+            </select>
+          </div>
+  
+          <!-- Guests -->
+          <div>
+            <label for="guests">Guests:</label>
+            <select id="guests" formControlName="guest" class="select-box">
+              <option value="" disabled selected>Select Number of Guests</option>
+              <option value="1 Adult">1 Adult</option>
+              <option value="2 Adults">2 Adults</option>
+              <option value="3 Adults">3 Adults</option>
+              <option value="4 Adults">4 Adults</option>
+              <option value="5 Adults">5 Adults</option>
+              <option value="6 Adults">6 Adults</option>
+            </select>
+          </div>
+  
+          <!-- Buttons -->
+          <div class="action-button">
+            <button type="submit" class="btn-primary">Book Room</button>
+            <button type="submit" class="btn-secondary">Check Availability</button>
+          </div>
+        </form>
+  
+        <!-- Chatbot -->
+        <div class="chatbot">
+          <div class="chat-header" onclick="toggleChat()">
+            💬 Chat with Me
+          </div>
+          <div class="chat-body" id="chat-body">
+            <div class="chat-messages" id="chat-messages"></div>
+            <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+          </div>
+        </div>
+  
+      </section>
+    </div>
+  </div>

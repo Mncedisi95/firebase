@@ -1,0 +1,103 @@
+{
+    "purpose": [
+        {
+            "name": "Our Mission",
+            "description": "We strive to provide luxurious and seamless hospitality experiences through innovation and exceptional service.",
+            "icon": "ti-flag-alt"
+        },
+        {
+            "name": "Our Vision",
+            "description": "Our vision is to be the most preferred hospitality brand worldwide, offering comfort, elegance, and excellence.",
+            "icon": "ti-eye"
+        }
+    ],
+    "services": [
+        {
+            "image": "assets/background/Luxury.jpg",
+            "service": "Luxury Accommodation",
+            "description": "Experience world-class comfort with our premium hotel suites and luxury apartments.",
+            "icon": "ti-crown"
+        },
+        {
+            "image": "assets/background/fine-dining.jpg",
+            "service": "Fine Dining",
+            "description": "Enjoy gourmet meals crafted by top chefs in our exquisite restaurants.",
+            "icon": "ti-home"
+        },
+        {
+            "image": "assets/background/Spa.jpg",
+            "service": "Spa & Wellness",
+            "description": "Relax and rejuvenate with our top-tier spa and wellness treatments.",
+            "icon": "ti-heart"
+        },
+        {
+            "image": "assets/background/Event.jpg",
+            "service": "Event Management",
+            "description": "Host unforgettable events with our professional planning and catering services.",
+            "icon": "ti-calendar"
+        }
+    ],
+    "strengths": [
+        {
+            "strength": "Unmatched Luxury & Comfort",
+            "icon": "ti-star",
+            "description": "Indulge in the finest experiences with premium strengths and exquisite comfort."
+        },
+        {
+            "strength": "Personalized Customer Service",
+            "icon": "ti-user",
+            "description": "Every guest is treated with tailored services to meet their unique needs."
+        },
+        {
+            "strength": "Award-Winning Hospitality",
+            "icon": "ti-cup",
+            "description": "Our hospitality excellence is recognized globally for outstanding guest satisfaction."
+        },
+        {
+            "strength": "Prime Locations Around the World",
+            "icon": "ti-world",
+            "description": "Stay at the heart of top destinations with easy access to attractions and business hubs."
+        }
+    ],
+    "bookservice": {
+        "name": "Book Your Experience Today",
+        "description":"Let us create an unforgettable stay for you. Whether it's luxury, relaxation, or fine dining, we have it all.",
+        "image": "assets/background/background-2.jpg"
+    },
+    "team": [
+        {
+            "id": 1,
+            "profile": "assets/team/avatar-1.jpg",
+            "name": "Jane Smith",
+            "position": "Founder & CEO",
+            "email": "jane.smith@suitesync.com"
+        },
+        {
+            "id": 2,
+            "profile": "assets/team/avatar-2.jpg",
+            "name": "Emily Brown",
+            "position": "Marketing Director",
+            "email": "emily.brown@suitesync.com"
+        },
+        {
+            "id": 3,
+            "profile": "assets/team/avatar-3.jpg",
+            "name": "Michael Lee",
+            "position": "HR Manager",
+            "email": "michael.lee@suitesync.com"
+        },
+        {
+            "id": 4,
+            "profile": "assets/team/avatar-4.jpg",
+            "name": "Sophia Martinez",
+            "position": "Customer Service Lead",
+            "email": "sophia.martinez@suitesync.com"
+        }
+    ],
+    "contact": {
+        "phone": "+27 87 654 3210",
+        "email": "info@suitesync.co.za",
+        "address": "45 Sandton Drive, Sandton, Johannesburg, 2196",
+        "opening": "Mon - Fri: 9:00 AM - 6:00 PM"
+    }
+}

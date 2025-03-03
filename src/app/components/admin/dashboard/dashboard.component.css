@@ -1,0 +1,112 @@
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.overview-page {
+    padding: 20px;
+    font-family: "Poppins", sans-serif; 
+    color: #333;
+}
+  
+.overview-header {
+    text-align: center;
+    padding: 120px; 
+    margin-left: 200px;
+    margin-bottom: -70px;
+}
+  
+.overview-header h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: #BA55D3;
+}
+  
+.overview-header p {
+    font-size: 1.1rem;
+    color: #777;
+}
+  
+.metrics-section {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+    gap: 15px;
+    margin-left: 200px;
+}
+  
+.metric-card {
+    background: linear-gradient(135deg, #BA55D3, #DA70D6);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s;
+    opacity: 0;
+    animation: fadeInUp 0.6s forwards ease-in-out;
+}
+  
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+  
+.metric-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+  
+.metric-card p {
+    font-size: 2rem;
+    margin: 0;
+}
+  
+.metric-card span {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+  
+.insights-section {
+    margin-top: 20px;
+}
+  
+.insights-section h2 {
+    font-family: "Poppins", sans-serif; 
+    font-size: 1.8rem;
+    margin-left: 200px;
+    margin-bottom: 20px;
+    color: #BA55D3;
+    text-align: center;
+}
+  
+.insight-card {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-left: 200px;
+}
+  
+.insight-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+}
+  
+.insight-card p {
+    font-size: 1.5rem;
+    color: #BA55D3;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; 
+    margin: 20px 0;
+}
+
+mat-spinner{
+    --mat-sys-primary:  #BA55D3;   
+}

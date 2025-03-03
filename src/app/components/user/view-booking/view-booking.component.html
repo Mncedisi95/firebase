@@ -1,0 +1,71 @@
+<!-- Main Content -->
+<section class="section">
+
+    <!--Title -->
+    <h1 class="section-subtitle">My Bookings</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/index']"><i class="ti-home"></i> Home</a></li>
+            <li>My Bookings</li>
+        </ul>
+    </nav>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Reservation Cards -->
+    <div class="reservation-cards" *ngIf="!isLoading">
+
+        <div class="card" *ngFor="let booking of bookings | sortByDate: 'checkIn'">
+            <img [src]="booking.room?.roomImage" alt="Deluxe Room" class="card-image">
+            <div class="card-content">
+                <h2>{{booking.room?.roomType}}</h2>
+                <ul class="reservation-details">
+                    <li><strong>Check-In:</strong>{{booking.checkIn}}</li>
+                    <li><strong>Check-Out:</strong>{{booking.checkOut}}</li>
+                    <li><strong>Guests:</strong>{{booking.numberOfGuest}}</li>
+                    <li><strong>Status:</strong><span class="status confirmed">{{booking.status}}</span></li>
+                </ul>
+                <div class="card-actions">
+
+                    <button *ngIf="!booking.hasCheckedOut"
+                        [disabled]="booking.status === 'Pending' || (booking.hasCheckedIn ? today > booking.checkOut : today !== booking.checkIn)"
+                        (click)="booking.hasCheckedIn ? onCheckOut(booking.id) : onCheckIn(booking.id)"
+                        class="btn-primary">
+                        {{ booking.hasCheckedIn ? 'Check Out' : 'Check In' }}
+                    </button>
+
+                    <button *ngIf="!booking.hasCheckedOut" (click)="onCancelBooking(booking.id)"
+                        [disabled]="booking.status === 'Cancelled' || today >= booking.checkIn"
+                        class="btn-cancel">Cancel
+                        Reservation</button>
+                </div>
+                <div>
+                    <input *ngIf="isSuccessVisible && currentBookingId === booking.id" class="alert-success"
+                        placeholder={{successMessage}} />
+                </div>
+                <div>
+                    <input *ngIf="isErrorVisible  && currentBookingId === booking.id" class="alert-danger"
+                        placeholder="{{ errorMessage }}" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <mat-paginator *ngIf="!isLoading && bookings?.length" [length]=items [pageSize]="6" [showFirstLastButtons]="true"
+        [pageIndex]="currentpage" [pageSizeOptions]="[6, 9, 12, 15, 18, 21]" (page)="handlePagenator($event)"
+        aria-label="Select page">
+    </mat-paginator>
+    <!-- End of Pagination -->
+
+    <!-- No Booking Message -->
+    <div *ngIf="!bookings?.length && !isLoading" class="no-bookings">
+        <p>No bookings found. Start planning your stay with us today!</p>
+    </div>
+    <!-- End of No Booking Section -->
+</section>

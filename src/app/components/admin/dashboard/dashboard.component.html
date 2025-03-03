@@ -1,0 +1,69 @@
+<!-- Overview Section -->
+<div class="overview-page">
+
+    <!-- Header -->
+    <header class="overview-header">
+        <h1>Dashboard Overview</h1>
+        <p>Your one-stop view of key performance metrics.</p>
+    </header>
+    <!-- End of Header -->
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <!-- Metrics Section -->
+    <section class="metrics-section" *ngIf="!isLoading">
+        <div class="metric-card">
+            <h3>Total Revenue</h3>
+            <p>R12,345</p>
+            <span>Monthly Overview</span>
+        </div>
+        <div class="metric-card">
+            <h3>Occupancy Rate</h3>
+            <p>{{occupancyRate}}%</p>
+            <span>As of Today</span>
+        </div>
+        <div class="metric-card">
+            <h3>Booked Rooms</h3>
+            <p>{{availableItems}} / {{items}}</p>
+            <span>Available Rooms</span>
+        </div>
+        <div class="metric-card">
+            <h3>Average Daily Rate</h3>
+            <p>R200</p>
+            <span>Calculated This Month</span>
+        </div>
+        <div class="metric-card">
+            <h3>Revenue Per Room</h3>
+            <p>R170</p>
+            <span>RevPAR</span>
+        </div>
+        <div class="metric-card">
+            <h3>Check-ins Today</h3>
+            <p>{{todayCheckInsItems}}</p>
+            <span>Scheduled</span>
+        </div>
+    </section>
+    <!-- End of Metric Card -->
+
+    <!-- Insights Section -->
+    <section class="insights-section" *ngIf="!isLoading">
+        <h2>Additional Insights</h2>
+        <div class="insight-card">
+            <h3>Pending Tasks</h3>
+            <p>3</p>
+        </div>
+        <div class="insight-card">
+            <h3>Feedback Score</h3>
+            <p>4.7 / 5</p>
+        </div>
+        <div class="insight-card">
+            <h3>Top Performing Room Type</h3>
+            <p>{{topPerformingRoom?.roomType}}</p>
+        </div>
+    </section>
+    <!-- End of Insights Section -->
+</div>
+<!-- End of Overview Section -->

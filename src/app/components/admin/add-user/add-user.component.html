@@ -1,0 +1,88 @@
+<section class="section">
+
+    <!-- Title -->
+    <h1 class="section-subtitle">New User Registration</h1>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <ul>
+            <li><a [routerLink]="['/dashboard']">Dashboard</a></li>
+            <li><a [routerLink]="['/manage-guests']">User Management</a></li>
+            <li>Add User</li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Form  Section-->
+        <form [formGroup]="addUserForm" (ngSubmit)="onRegisterUser()" class="form-grid">
+
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="fname">Full Name:</label>
+                <input type="text" formControlName="fname" placeholder="Enter Full Name" /> 
+                <small *ngIf="addUserForm.get('fname')?.touched && addUserForm.get('fname')?.errors?.['required']">
+                    *Full Name is required!
+                </small>
+            </div>
+
+            <!--Email -->
+            <div>
+                <label for="email">Email:</label>
+                <input type="text" formControlName="email" placeholder="Enter Email" />
+                <div>
+                    <small></small>
+                    <small></small>
+                </div>
+            </div>
+
+            <!-- User Type-->
+            <div class="form-group">
+                <label for="type">User Type:</label>
+                <select formControlName="userType" class="select-box">
+                    <option value="" disabled selected>Select User Type</option>
+                    <option value="admin">Admin</option>
+                    <option value="guest">Guest</option>
+                    <option value="staff">Staff</option>
+                </select>
+                <small *ngIf="addUserForm.get('userType')?.touched && addUserForm.get('userType')?.errors?.['required']">
+                    *User Type is required!
+                </small>
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" formControlName="phone" placeholder="Enter Phone Number">
+                <small *ngIf="addUserForm.get('phone')?.touched && addUserForm.get('phone')?.errors?.['required']">
+                    *Phone number is required!
+                </small>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" formControlName="address" placeholder="Enter Address">
+                <small *ngIf="addUserForm.get('address')?.touched && addUserForm.get('address')?.errors?.['required']">
+                    *Address is required!
+                </small>
+            </div>
+
+            <!-- Profile -->
+            <div class="form-group">
+                <label for="profile">Profile:</label>
+                <input type="file" formControlName="profile" accept="image/*" (change)="handleFileInput($event)">
+                <small *ngIf="addUserForm.get('profile')?.touched && addUserForm.get('profile')?.errors?.['required']">
+                    *Profile is required!
+                </small>
+            </div>
+
+            <!-- Submit Button-->
+            <div class="form-buttons">
+                <button type="submit" class="btn-primary">Create Account</button>
+            </div>
+
+        </form>
+    </div>
+
+</section>

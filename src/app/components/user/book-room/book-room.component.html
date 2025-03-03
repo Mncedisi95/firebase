@@ -1,0 +1,100 @@
+<section class="section">
+    <h1 class="section-subtitle">Booking</h1>
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <ul>
+            <li><a routerLink="/index"><i class="ti-home"></i> Home</a></li>
+            <li><a [routerLink]="['/rooms']">Rooms</a></li>
+            <li>Book A Room</li>
+        </ul>
+    </nav>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Form Section -->
+        <form class="form-section" [formGroup]="bookRoomForm">
+           
+            <!-- Check-In Date -->
+            <div>
+                <label for="checkin">Check In:</label>
+                <input id="checkin" formControlName="checkIn" type="date" aria-label="CheckIn" />
+                <div *ngIf="bookRoomForm.get('checkIn')?.touched">
+                    <small *ngIf="bookRoomForm.get('checkIn')?.errors?.['required']">*Check In date is required!</small>
+                </div>
+            </div>
+
+            <!-- Check-Out Date -->
+            <div>
+                <label for="checkout">Check Out:</label>
+                <input id="checkout" formControlName="checkOut" type="date" aria-label="CheckOut" />
+                <div *ngIf="bookRoomForm.get('checkOut')?.touched">
+                    <small *ngIf="bookRoomForm.get('checkOut')?.errors?.['required']">*Check Out date is required!</small>
+                    <small *ngIf="bookRoomForm.errors?.['dateInvalid']">*Check Out date must be after Check In date!</small>
+                </div>
+            </div>
+
+            <!-- Guests -->
+            <div>
+                <label for="guests">Guests:</label>
+                <select id="guest" formControlName="guest" class="select-box" aria-label="Guest">
+                    <option value="" disabled selected>Select Number of Guests</option>
+                    <option value="1">1 Adult</option>
+                    <option value="2">2 Adults</option>
+                    <option value="3">3 Adults</option>
+                    <option value="4">4 Adults</option>
+                    <option value="5">5 Adults</option>
+                    <option value="6">6 Adults</option>
+                </select>
+                <div *ngIf="bookRoomForm.get('guest')?.touched">
+                    <small *ngIf="bookRoomForm.get('guest')?.errors?.['required']">*Number of guests is
+                        required!</small>
+                </div>
+            </div>
+
+            <!-- Special Request -->
+            <div>
+                <label for="specialRequest">Special Request:</label>
+                <textarea id="specialRequest" type="text" formControlName="specialRequest" rows="4"
+                    placeholder="Enter any special requests (e.g., late check-in, extra bed, etc.)"
+                    aria-label="SpecialRequest"></textarea>
+                <div *ngIf="bookRoomForm.get('specialRequest')?.touched">
+                    <small *ngIf="bookRoomForm.get('specialRequest')?.errors?.['maxlength']">
+                        *Special requests must not exceed 250 characters.
+                    </small>
+                </div>
+            </div>
+
+            <!-- Book Room Button -->
+            <button type="submit" class="btn-primary" (click)="bookRoom()">Book Room</button>
+
+             <!-- Success/Error Message -->
+            <div>
+                <input *ngIf="isSuccessVisible" class="alert-success" placeholder={{successMessage}} readonly />
+            </div>
+            <div>
+                <input *ngIf="isErrorVisible" class="alert-danger" placeholder={{errorMessage}} readonly />
+            </div>
+
+        </form>
+
+        <!-- Payment Section -->
+        <div class="payment-section" *ngIf="isRoomBooked">
+            <h3>Booking Confirmed!</h3>
+            <p>Congratulations! Your room has been successfully reserved.</p>
+
+            <h4>📅 Booking Details:</h4>
+            <ul>
+                <li>Check-in Date: {{ bookRoomForm.get('checkIn')?.value }}</li>
+                <li>Check-out Date: {{ bookRoomForm.get('checkOut')?.value }}</li>
+                <li>Guests: {{ bookRoomForm.get('guest')?.value }}</li>
+            </ul>
+
+            <h4>💳 Next Step:</h4>
+            <p>
+                To finalize your reservation, please complete the payment below. Your booking will
+                be held for the next <strong>{{ bookingHoldTime }} minutes</strong>.
+            </p>
+            <button class="btn-secondary" (click)="processPayment()">Proceed to Payment</button>
+        </div>
+    </div>
+</section>

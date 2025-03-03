@@ -1,0 +1,45 @@
+
+<section class="about-section">
+    <div class="container">
+        <!-- Page Title -->
+        <h1 class="section-title">About Us</h1>
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <ul>
+                <li><a [routerLink]="['/index']"><i class="ti-home"></i> Home</a></li>
+                <li>About Us</li>
+            </ul>
+        </nav>
+
+        <!-- Company Overview -->
+        <div class="company-overview">
+            <div class="company-content" *ngFor="let value of data.purpose">
+                <h2><i class= {{value.icon}}></i> {{value.name}}</h2>
+                <p>{{value.description}}</p>
+            </div>
+        </div>
+
+        <!-- Why Choose Us -->
+        <div class="why-choose-us">
+            <h2><i class="ti-thumb-up ti-icon"></i> Why Choose Us?</h2>
+            <div class="choose-list">
+                <div class="choose-item" *ngFor="let list of data.strengths"><i class={{list.icon}}> {{list.strength}}</i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Team -->
+        <div class="team">
+            <h2><i class="ti-user ti-icon"></i> Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member" *ngFor="let member of data.team">
+                    <img [src]="member?.profile">
+                    <h3>{{member?.name}}</h3>
+                    <p>{{member?.position}}</p>
+                    <p><i class="ti-email"></i> <a>{{member?.email}}</a></p>
+                </div>   
+            </div>
+        </div>
+    </div>
+</section>
